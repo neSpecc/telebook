@@ -1,24 +1,51 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import Placeholder from './components/Placeholder.vue';
 </script>
 
 <template>
-  <div>
-    <a href="/">
-      <img src="/issuegram.svg" class="logo" alt="Issuegram logo" />
-    </a>
+  <div class="app">
+    <Placeholder 
+      image="/issuegram.svg"
+      title="Issuegram"
+      caption="A simple issue tracker"
+      linkText="Start exploring"
+    />
   </div>
-  <HelloWorld msg="Issuegram" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style>
+:root {
+  color-scheme: light dark;
+  background-color: #000;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #0B8AFF);
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 1fr;
+  min-height: 100%;
+  width: 100%;
+  font-family: system-ui, Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  @media (min-width: 768px) {
+    max-width: 390px;
+  }
+}
+
+.app {
+  background-color: var(--color-bg);
+  color: var(--color-text);
 }
 </style>

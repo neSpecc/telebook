@@ -1,0 +1,163 @@
+:root {
+    --rounded-family: SF Pro Rounded, system-ui;
+
+    --title-1 {
+        font-size: 28px;
+        line-height: 34px;
+        letter-spacing: 0.38px;
+    }
+
+    --title-2 {
+        font-size: 22px;
+        line-height: 28px;
+        letter-spacing: -0.26px;
+    }
+
+    --title-2-semibold {
+        @apply --title-2;
+
+        font-weight: 600;
+    }
+
+    --title-3 {
+        font-size: 20px;
+        line-height: 24px;
+        letter-spacing: -0.45px;
+    }
+
+    --title-3-bold {
+        @apply --title-3;
+
+        font-weight: 700;
+    }
+
+    --title-3-rounded-semibold {
+        @apply --title-3-bold;
+
+        font-weight: 600;
+        font-family: var(--rounded-family);
+    }
+
+    --headline {
+        font-size: 17px;
+        line-height: 22px;
+        letter-spacing: -0.43px;
+    }
+
+    --body {
+        font-size: 17px;
+        line-height: 22px;
+        letter-spacing: -0.43px;
+    }
+
+    --body-medium {
+        @apply --body;
+
+        font-weight: 500;
+    }
+
+    --body-semibold {
+        @apply --body;
+
+        font-weight: 600;
+    }
+
+    --body-strikethrough {
+        @apply --body;
+
+        text-decoration: line-through;
+    }
+
+    --body-mono {
+        @apply --body;
+
+        font-family: SF Mono, Monospace;
+    }
+
+    --body-mono-numbers {
+        @apply --body-mono;
+
+        font-feature-settings: 'tnum' on, 'lnum' on;
+    }
+
+    --callout {
+        font-size: 16px;
+        line-height: 22px;
+        letter-spacing: -0.31px;
+    }
+
+    --callout-medium {
+        @apply --callout;
+
+        font-weight: 500;
+    }
+
+    --callout-semibold {
+        @apply --callout;
+
+        font-weight: 600;
+    }
+
+    --subheadline-1 {
+        font-size: 15px;
+        line-height: 18px;
+        letter-spacing: -0.23px;
+    }
+
+    --subheadline-rounded-semibold {
+        @apply --subheadline-1;
+
+        font-weight: 600;
+        font-family: var(--rounded-family);
+        letter-spacing: 0.45px;
+    }
+
+    --subheadline-2 {
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: -0.15px;
+    }
+
+    --subheadline-2-semibold {
+        @apply --subheadline-2;
+
+        font-weight: 600;
+    }
+
+    --subheadline-2-rounded-semibold {
+        @apply --subheadline-2-semibold;
+
+        font-family: var(--rounded-family);
+        letter-spacing: 0.49px;
+    }
+
+    --footnote {
+        font-size: 13px;
+        line-height: 18px;
+        letter-spacing: -0.08px;
+    }
+
+    --footnote-caps {
+        @apply --footnote;
+
+        text-transform: uppercase;
+    }
+
+    --caption-1 {
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    --caption-2 {
+        font-size: 11px;
+        line-height: 13px;
+        letter-spacing: 0.06px;
+    }
+
+    --caption-2-medium {
+        @apply --caption-2;
+
+        font-weight: 500;
+    }
+  }
+  
