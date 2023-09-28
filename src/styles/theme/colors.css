@@ -1,23 +1,23 @@
 :root {
-    --color-bg: var(--tg-theme-bg-color, #1c1c1d);
-    --color-bg-secondary: #1c1c1d;
-    --color-bg-button: #3e88f7;
+  --color-bg: var(--tg-theme-bg-color, #1c1c1d);
+  --color-bg-secondary: var(--tg-theme-secondary-bg-color, #1c1c1d);
+  --color-bg-button: var(--tg-theme-button-color, #3e88f7);
 
-    --color-text: var(--tg-theme-text-color, #fff);
-    --color-text-button: #fff;
-    --color-hint: #98989e;
-    --color-link: #3e88f7;
+  --color-text: var(--tg-theme-text-color, #fff);
+  --color-text-button: var(--tg-theme-button-text-color, #fff);
+  --color-hint: var(--tg-theme-hint-color, #98989e);
+  --color-link: var(--tg-theme-link-color, #3e88f7);
 
 
-    /* @todo support tg variables */
-    @media (prefers-color-scheme: light) {
-        --color-bg: #fff;
-        --color-bg-secondary: #efeff4;
-        --color-bg-button: #007aff;
+  /* @todo support tg variables */
+  @media (prefers-color-scheme: light) {
+    --color-bg: var(--tg-theme-bg-color, #fff);
+    --color-bg-secondary: var(--tg-theme-secondary-bg-color, #efeff4);
+    --color-bg-button: var(--tg-theme-button-color, #007aff);
 
-        --color-text: #000;
-        --color-text-button: #fff;
-        --color-hint: #8e8e93;
-        --color-link: #007aff;
-    }
+    --color-text: var(--tg-theme-text-color, #000);
+    --color-text-button: var(--tg-theme-button-text-color, #fff);
+    --color-hint: var(--tg-theme-hint-color, #8e8e93);
+    --color-link: var(--tg-theme-link-color, #007aff);
+  }
 }

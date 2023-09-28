@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import Placeholder from './components/Placeholder.vue';
+import Placeholder from './components/Placeholder.vue'
 </script>
 
 <template>
   <div class="app">
-    <Placeholder 
+    <Placeholder
       image="/issuegram.svg"
       title="Issuegram"
       caption="A simple issue tracker"
-      linkText="Start exploring"
+      link-text="Start exploring"
     />
   </div>
 </template>

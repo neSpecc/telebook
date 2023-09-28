@@ -19,30 +19,37 @@ defineProps<{
    * Link text of CTA link
    */
   linkText: string;
+
+  /**
+   * Whether the placeholder should be compact
+   */
+  compact?: boolean;
 }>()
-
-
 </script>
 
 <template>
-  <div class="placeholder">
-
+  <div
+    class="placeholder"
+    :class="{
+      'placeholder--compact': compact
+    }"
+  >
     <div class="pic">
-      <img 
-        :src="image" 
+      <img
+        :src="image"
         aria-hidden="true"
-      />
+      >
     </div>
 
     <h1 class="title">
       {{ title }}
     </h1>
-  
+
     <p class="caption">
       {{ caption }}
     </p>
 
-    <a 
+    <a
       class="link"
       href="/"
     >
@@ -55,7 +62,10 @@ defineProps<{
 @import '../styles/theme/typescale.css';
 
 .placeholder {
-  padding: 40px 28px;
+  --padding: 40px 28px;
+  --pic-size: 112px;
+
+  padding: var(--padding);
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
@@ -64,9 +74,16 @@ defineProps<{
 
   @apply --body;
 
+  &--compact {
+    --padding: 16px 28px 32px;
+    --pic-size: 92px;
+
+    @apply --footnote;
+  }
+
   .pic {
-    width: 112px;
-    height: 112px;
+    width: var(--pic-size);
+    height: var(--pic-size);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,8 +99,16 @@ defineProps<{
     margin-top: var(--spacing-10);
   }
 
+  &--compact .title {
+    @apply --body-semibold;
+  }
+
   .caption {
     margin-top: var(--spacing-8);
+  }
+
+  &--compact .caption {
+    margin-top: var(--spacing-3);
   }
 
   .link {
@@ -91,6 +116,10 @@ defineProps<{
     margin: 0 auto;
     margin-top: var(--spacing-28);
     color: var(--color-link);
+  }
+
+  &--compact .link {
+    margin-top: var(--spacing-20);
   }
 }
 </style>
