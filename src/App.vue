@@ -15,10 +15,9 @@ import SectionTitle from './components/SectionTitle.vue'
       caption="Book a profi appointment"
       link-text="Start exploring"
     />
-
     <Sections>
-      <Section>
-        <List padded>
+      <Section padded>
+        <List>
           <ListItem
             :id="1"
             icon="market-fill"
@@ -38,7 +37,10 @@ import SectionTitle from './components/SectionTitle.vue'
         </List>
       </Section>
 
-      <Section with-background>
+      <Section
+        with-background
+        padded
+      >
         <SectionTitle>
           History
         </SectionTitle>

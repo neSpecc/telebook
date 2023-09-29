@@ -1,15 +1,12 @@
 <script setup lang="ts">
-defineProps<{
-  padded?: boolean;
-}>()
+// defineProps<{
+//   padded?: boolean;
+// }>()
 </script>
 
 <template>
   <div
     class="list"
-    :class="{
-      'list--padded': padded
-    }"
   >
     <slot />
   </div>
@@ -20,9 +17,5 @@ defineProps<{
 .list {
   display: grid;
   grid-gap: 6px;
-
-  &--padded {
-    padding-inline: 16px;
-  }
 }
 </style>

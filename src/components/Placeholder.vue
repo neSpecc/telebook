@@ -71,6 +71,7 @@ defineProps<{
   grid-template-rows: auto;
   justify-content: center;
   place-items: center;
+  background-color: var(--color-bg);
 
   @apply --body;
 

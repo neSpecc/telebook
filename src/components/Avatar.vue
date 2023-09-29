@@ -131,7 +131,23 @@ const backgroundColor = computed(() => {
   }
 
   .icon {
-    fill: #fff
+    fill: #fff;
+
+    animation: jump-in 250ms ease;
+  }
+}
+
+@keyframes jump-in {
+  0% {
+    transform: scale(0.8);
+  }
+
+  80% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 </style>
