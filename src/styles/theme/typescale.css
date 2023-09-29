@@ -1,5 +1,5 @@
 :root {
-  --rounded-family: SF Pro Rounded, system-ui;
+  --rounded-family: SF Pro Rounded, "ui-rounded", system-ui;
 
   --title-1 {
     font-size: 28px;
@@ -10,7 +10,7 @@
   --title-2 {
     font-size: 22px;
     line-height: 28px;
-    letter-spacing: -0.26px;
+    /* letter-spacing: -0.26px; */
   }
 
   --title-2-semibold {
@@ -79,6 +79,18 @@
 
     font-feature-settings: 'tnum' on, 'lnum' on;
   }
+
+  --body-compact {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  --body-compact-medium {
+    @apply --body-compact;
+
+    font-weight: 500;
+  }
+
 
   --callout {
     font-size: 16px;
