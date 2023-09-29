@@ -16,15 +16,18 @@ defineProps<{
   subtitle?: string;
   withArrow?: boolean;
   standalone?: boolean;
+  to?: string;
 }>()
 </script>
 
 <template>
-  <div
+  <component
+    :is="to ? 'router-link' : 'div'"
     class="list-item"
     :class="{
       'list-item--standalone': standalone
     }"
+    :to="to"
   >
     <div class="left-row">
       <Avatar
@@ -54,7 +57,7 @@ defineProps<{
         <Icon name="chevron-right" />
       </div>
     </div>
-  </div>
+  </component>
 </template>
 
 <style scoped lang="postcss">
