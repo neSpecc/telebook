@@ -475,6 +475,11 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.3.tgz#9a726e116beb26c24f1ccd6850201e1246122e04"
   integrity sha512-OxepLK9EuNEIPxWNME+C6WwbRAOOI2o2BaQEGzz5Lu2e4Z5eDnEo+/aVEDMIXywoJitJ7xWd641wrGLZdtwRyw==
 
+"@types/web-bluetooth@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@types/web-bluetooth/-/web-bluetooth-0.0.17.tgz#5c9f3c617f64a9735d7b72a7cc671e166d900c40"
+  integrity sha512-4p9vcSmxAayx72yn70joFoL44c9MO/0+iVEBIQXe3v2h2SiAsEIo/G5v6ObFWvNKRFjbrVadNf9LqEEZeQPzdA==
+
 "@typescript-eslint/eslint-plugin@^6.7.3":
   version "6.7.3"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-6.7.3.tgz#d98046e9f7102d49a93d944d413c6055c47fafd7"
@@ -702,6 +707,28 @@
   dependencies:
     "@volar/typescript" "~1.10.0"
     "@vue/language-core" "1.8.14"
+
+"@vueuse/core@^10.4.1":
+  version "10.4.1"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-10.4.1.tgz#fc2c8a83a571c207aaedbe393b22daa6d35123f2"
+  integrity sha512-DkHIfMIoSIBjMgRRvdIvxsyboRZQmImofLyOHADqiVbQVilP8VVHDhBX2ZqoItOgu7dWa8oXiNnScOdPLhdEXg==
+  dependencies:
+    "@types/web-bluetooth" "^0.0.17"
+    "@vueuse/metadata" "10.4.1"
+    "@vueuse/shared" "10.4.1"
+    vue-demi ">=0.14.5"
+
+"@vueuse/metadata@10.4.1":
+  version "10.4.1"
+  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-10.4.1.tgz#9d2ff5c67abf17a8c07865c2413fbd0e92f7b7d7"
+  integrity sha512-2Sc8X+iVzeuMGHr6O2j4gv/zxvQGGOYETYXEc41h0iZXIRnRbJZGmY/QP8dvzqUelf8vg0p/yEA5VpCEu+WpZg==
+
+"@vueuse/shared@10.4.1":
+  version "10.4.1"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-10.4.1.tgz#d5ce33033c156efb60664b5d6034d6cd4e2f530c"
+  integrity sha512-vz5hbAM4qA0lDKmcr2y3pPdU+2EVw/yzfRsBdu+6+USGa4PxqSQRYIUC9/NcT06y+ZgaTsyURw2I9qOFaaXHAg==
+  dependencies:
+    vue-demi ">=0.14.5"
 
 acorn-jsx@^5.3.2:
   version "5.3.2"
@@ -2684,6 +2711,11 @@ vite@^4.4.5:
   optionalDependencies:
     fsevents "~2.3.2"
 
+vue-demi@>=0.14.5:
+  version "0.14.6"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.14.6.tgz#dc706582851dc1cdc17a0054f4fec2eb6df74c92"
+  integrity sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==
+
 vue-eslint-parser@^9.3.1:
   version "9.3.1"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-9.3.1.tgz#429955e041ae5371df5f9e37ebc29ba046496182"
@@ -2696,11 +2728,6 @@ vue-eslint-parser@^9.3.1:
     esquery "^1.4.0"
     lodash "^4.17.21"
     semver "^7.3.6"
-
-vue-inline-svg@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/vue-inline-svg/-/vue-inline-svg-3.1.2.tgz#bc83ad67aacfda6c7c76364d89775a06e8270136"
-  integrity sha512-K01sLANBnjosObee4JrBu/igXpYIFhQfy4EcEyVWxEWf6nmrxp7Isz6pmeRCsWx6XGrGWfrQH3uNwt4nOmrFdA==
 
 vue-router@4:
   version "4.2.5"

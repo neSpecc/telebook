@@ -1,11 +1,25 @@
 <script setup lang="ts">
+import WebApp from '@twa-dev/sdk'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+function onBackButtonClicked(): void {
+  router.back()
+  WebApp.BackButton.hide()
+}
+
+WebApp.BackButton.onClick(onBackButtonClicked)
 </script>
 
 <template>
   <div class="app">
     <RouterView v-slot="{ Component, route }">
-      <transition :name="route.meta.transition ?? 'fade'">
-        <component :is="Component" />
+      <transition :name="route.meta.transition ?? ''">
+        <component
+          :is="Component"
+          class="will-be-animated"
+        />
       </transition>
     </RouterView>
   </div>
@@ -45,5 +59,49 @@ body {
 
 .app {
   color: var(--color-text);
+  position: relative;
+}
+
+.will-be-animated {
+  will-change: opacity, transform;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 200ms ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* .slide-left-enter-active,
+.slide-left-leave-active {
+  transition: transform 30s ease, opacity 30s ease;
+}
+
+.slide-left-enter-from {
+  transform: translateX(40px);
+  opacity: 0;
+}
+
+.slide-left-leave-to {
+  opacity: 0;
+} */
+
+.slide-left-enter-active {
+  animation: slide-left 200ms;
+}
+
+@keyframes slide-left {
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 </style>

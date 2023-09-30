@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
+import { useRouter } from 'vue-router'
 
-defineProps<{
+const router = useRouter()
+
+const props = defineProps<{
   /**
    * Picture src
    */
@@ -11,6 +14,7 @@ defineProps<{
     src?: string;
     placeholder?: string;
   };
+  transactionIcon?: string;
   icon?: string;
   label?: string;
   subtitle?: string;
@@ -37,7 +41,8 @@ defineProps<{
         :placeholder="avatar.placeholder"
       />
       <Avatar
-        v-else-if="icon"
+        v-else-if="transactionIcon || icon"
+        :transaction-icon="transactionIcon"
         :icon="icon"
       />
     </div>
@@ -68,9 +73,16 @@ defineProps<{
   align-items: center;
   padding-left: 16px;
 
+  &:active {
+    /**
+     * Make background color darker when pressed using filter
+     */
+    filter: brightness(0.9);
+  }
+
   &--standalone {
     background-color: var(--color-bg);
-    border-radius: 14px;
+    border-radius: var(--size-border-radius-big);
     padding-block: 2px;
   }
 

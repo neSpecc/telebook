@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
-import InlineSvg from 'vue-inline-svg'
+import { useIcon } from '@/application/services/useIcon'
 
 const props = defineProps<{
   /**
@@ -9,22 +8,15 @@ const props = defineProps<{
   name: string;
 }>()
 
-const source = ref()
-
-watchEffect(async () => {
-  try {
-    source.value = (await import(/* @vite-ignore */ `../assets/icons/${props.name}.svg`)).default
-  } catch (e) {
-    console.error(e)
-  }
-})
+const { source } = useIcon(props.name)
 </script>
 
 <template>
-  <InlineSvg
+  <!-- eslint-disable vue/no-v-html -->
+  <div
     class="icon"
-    :src="source"
+    v-html="source"
   />
 </template>
-<style scoped>
+<style>
 </style>

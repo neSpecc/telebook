@@ -20,6 +20,7 @@ const props = defineProps<{
    */
   placeholder?: string;
 
+  transactionIcon?: string;
   icon?: string;
 }>()
 
@@ -74,13 +75,14 @@ const backgroundColor = computed(() => {
   <div
     class="avatar"
     :class="{
+      'avatar--with-transaction-icon': transactionIcon,
       'avatar--with-icon': icon,
+      'avatar--with-placeholder': !icon && !transactionIcon && !src
     }"
   >
     <Icon
-      v-if="icon"
-      :name="icon"
-      class="icon"
+      v-if="icon || transactionIcon"
+      :name="icon || transactionIcon"
     />
     <img
       v-else-if="src"
@@ -107,10 +109,13 @@ const backgroundColor = computed(() => {
 
   width: var(--size);
   height: var(--size);
-  background: v-bind(backgroundColor);
   border-radius: 50%;
 
-  &--with-icon {
+  &--with-placeholder {
+    background: v-bind(backgroundColor);
+  }
+
+  &--with-transaction-icon {
     background: linear-gradient(156.88deg, #00E7FF 14.96%, #007AFF 85.04%);
   }
 
@@ -130,7 +135,7 @@ const backgroundColor = computed(() => {
     color: #fff;
   }
 
-  .icon {
+  :deep(.icon) svg {
     fill: #fff;
 
     animation: jump-in 250ms ease;

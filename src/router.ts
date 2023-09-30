@@ -8,8 +8,12 @@ const routes: RouteRecordRaw[] = [
     component: Home,
   },
   {
+    name: 'services',
     path: '/services',
     component: Services,
+    meta: {
+      transition: 'slide-left',
+    }
   },
 ]
 
