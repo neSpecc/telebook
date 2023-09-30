@@ -176,10 +176,6 @@ onBeforeUnmount(() => {
   <div
     class="list-card-wrapper"
   >
-    <!-- <Teleport
-      to=".card-modal"
-      :disabled="!expanded"
-    > -->
     <div
       ref="card"
       class="list-card"
@@ -202,7 +198,6 @@ onBeforeUnmount(() => {
         <slot />
       </div>
     </div>
-    <!-- </Teleport> -->
   </div>
 </template>
 
@@ -224,14 +219,15 @@ onBeforeUnmount(() => {
     border-radius var(--speed) ease,
     left var(--speed) var(--timing),
     top var(--speed) var(--timing),
-    height var(--speed) var(--timing),
+    height var(--speed) ease,
     width var(--speed) var(--timing),
     box-shadow 200ms ease;
 
   height: var(--height);
   z-index: 9;
   will-change: border-radius, left, top, height, width;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2), 0 3px 20px -5px rgba(0,0,0,0.14);
+  /* box-shadow: 0 0 10px rgba(0,0,0,0.2), 0 3px 20px -5px rgba(0,0,0,0.14); */
+  box-shadow: 0 0 24px -10px rgba(0,0,0,0.74);
 
   .picture-container {
     position: relative;

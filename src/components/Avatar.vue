@@ -22,6 +22,7 @@ const props = defineProps<{
 
   transactionIcon?: string;
   icon?: string;
+  big?: boolean;
 }>()
 
 const bgColors = [
@@ -77,7 +78,8 @@ const backgroundColor = computed(() => {
     :class="{
       'avatar--with-transaction-icon': transactionIcon,
       'avatar--with-icon': icon,
-      'avatar--with-placeholder': !icon && !transactionIcon && !src
+      'avatar--with-placeholder': !icon && !transactionIcon && !src,
+      'avatar--big': big === true
     }"
   >
     <Icon
@@ -102,6 +104,8 @@ const backgroundColor = computed(() => {
 @import '../styles/theme/typescale.css';
 .avatar {
   --size: var(--size-avatar-medium);
+  --radius: 50%;
+
   display: flex;
   flex-shrink: 0;
   align-items: center;
@@ -109,7 +113,7 @@ const backgroundColor = computed(() => {
 
   width: var(--size);
   height: var(--size);
-  border-radius: 50%;
+  border-radius: var(--radius);
 
   &--with-placeholder {
     background: v-bind(backgroundColor);
@@ -119,10 +123,15 @@ const backgroundColor = computed(() => {
     background: linear-gradient(156.88deg, #00E7FF 14.96%, #007AFF 85.04%);
   }
 
+  &--big {
+    --size: var(--size-avatar-big);
+    --radius: var(--size-border-radius-big);
+  }
+
   img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    border-radius: var(--radius);
   }
 
   .placeholder {

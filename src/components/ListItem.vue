@@ -21,6 +21,7 @@ const props = defineProps<{
   withArrow?: boolean;
   standalone?: boolean;
   to?: string;
+  bigAvatar?: boolean;
 }>()
 </script>
 
@@ -29,7 +30,8 @@ const props = defineProps<{
     :is="to ? 'router-link' : 'div'"
     class="list-item"
     :class="{
-      'list-item--standalone': standalone
+      'list-item--standalone': standalone,
+      'list-item--big-avatar': bigAvatar
     }"
     :to="to"
   >
@@ -39,6 +41,7 @@ const props = defineProps<{
         :id="avatar.id"
         :src="avatar.src"
         :placeholder="avatar.placeholder"
+        :big="bigAvatar"
       />
       <Avatar
         v-else-if="transactionIcon || icon"
@@ -56,10 +59,15 @@ const props = defineProps<{
         </div>
       </div>
       <div
-        v-if="withArrow"
+        v-if="withArrow || $slots.right"
         class="right"
       >
-        <Icon name="chevron-right" />
+        <Icon
+          v-if="withArrow"
+          name="chevron-right"
+        />
+
+        <slot name="right" />
       </div>
     </div>
   </component>
@@ -69,8 +77,8 @@ const props = defineProps<{
 @import '../styles/theme/typescale.css';
 .list-item {
   display: grid;
-  grid-template-columns: 50px auto;
-  align-items: center;
+  grid-template-columns: auto 1fr;
+  align-items: stretch;
   padding-left: 16px;
 
   &:active {
@@ -86,22 +94,41 @@ const props = defineProps<{
     padding-block: 2px;
   }
 
-  .right-row {
-    padding-right: 16px;
+  .left-row {
     display: grid;
-    grid-template-columns: 1fr auto;
+    padding-right: 15px;
     align-items: center;
+  }
+
+  &--big-avatar .left-row {
+    align-items: start;
+  }
+
+  &--big-avatar .left-row {
+    padding-block: 14px;
+  }
+
+  .right-row {
+    display: grid;
+
+    /**
+     * First and second column should stretched to the parent height, then should be a separator line
+     */
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 0.33px;
 
     &::after {
       content: '';
-      height: 1px;
-      background-color: var(--color-hint);
+      height: 0.33px;
+      background-color: var(--separator-color);
       display: block;
-      opacity: 0.07;
+      grid-column: 1 / -1;
     }
 
     .right {
-      padding-left: 16px;
+      padding-inline-end: 16px;
+      display: grid;
+      align-content: center;
 
       .icon {
         stroke: var(--color-hint);
@@ -119,6 +146,10 @@ const props = defineProps<{
 
   .body {
     padding: 10px 0;
+    padding-inline-end: 16px;
+
+    display: grid;
+    align-content: center;
   }
 
   .label {
@@ -131,6 +162,12 @@ const props = defineProps<{
     color: var(--color-hint);
 
     @apply --subheadline-2;
+
+    /** 3 lines max */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 </style>

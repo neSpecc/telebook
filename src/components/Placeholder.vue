@@ -1,11 +1,6 @@
 <script setup lang="ts">
 defineProps<{
   /**
-   * Image URL. Will be displayed in the top-center of the placeholder.
-   */
-  image: string;
-
-  /**
    * Title of the placeholder. Will be displayed in a large font below the picture.
    */
   title: string;
@@ -18,12 +13,17 @@ defineProps<{
   /**
    * Link text of CTA link
    */
-  linkText: string;
+  linkText?: string;
 
   /**
    * Whether the placeholder should be compact
    */
   compact?: boolean;
+
+  /**
+   * Whether the placeholder should have a background
+   */
+  withBackground?: boolean;
 }>()
 </script>
 
@@ -31,14 +31,12 @@ defineProps<{
   <div
     class="placeholder"
     :class="{
-      'placeholder--compact': compact
+      'placeholder--compact': compact,
+      'placeholder--bg': withBackground
     }"
   >
     <div class="pic">
-      <img
-        :src="image"
-        aria-hidden="true"
-      >
+      <slot name="picture" />
     </div>
 
     <h1 class="title">
@@ -50,6 +48,7 @@ defineProps<{
     </p>
 
     <a
+      v-if="linkText"
       class="link"
       href="/"
     >
@@ -71,7 +70,6 @@ defineProps<{
   grid-template-rows: auto;
   justify-content: center;
   place-items: center;
-  background-color: var(--color-bg);
 
   @apply --body;
 
@@ -82,16 +80,16 @@ defineProps<{
     @apply --footnote;
   }
 
+  &--bg {
+    background-color: var(--color-bg);
+  }
+
   .pic {
     width: var(--pic-size);
     height: var(--pic-size);
     display: flex;
     align-items: center;
     justify-content: center;
-
-    img {
-      max-width: 70%;
-    }
   }
 
   .title {

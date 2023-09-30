@@ -1,12 +1,18 @@
 <script setup lang="ts">
-// defineProps<{
-//   padded?: boolean;
-// }>()
+defineProps<{
+  /**
+   * Whether to add a gap between each item
+   */
+  gapped?: boolean;
+}>()
 </script>
 
 <template>
   <div
     class="list"
+    :style="{
+      '--gap': gapped ? '6px' : '0',
+    }"
   >
     <slot />
   </div>
@@ -16,6 +22,6 @@
 @import '../styles/theme/typescale.css';
 .list {
   display: grid;
-  grid-gap: 6px;
+  grid-gap: var(--gap);
 }
 </style>

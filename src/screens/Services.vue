@@ -8,8 +8,11 @@ import SectionTitle from '@/components/SectionTitle.vue'
 <template>
   <div>
     <Sections>
-      <Section with-background standalone="">
-        <List>
+      <Section
+        with-background
+        standalone
+      >
+        <List gapped>
           <ListItem
             :id="1"
             icon="settings-user"

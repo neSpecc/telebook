@@ -7,8 +7,12 @@ import Section from '@/components/Section.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import ListCards from '@/components/ListCards.vue'
 import ListCard from '@/components/ListCard.vue'
-import { onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import WebApp from '@twa-dev/sdk'
+
+// onMounted(() => {
+//   WebApp.headerColor = window.getComputedStyle(document.documentElement).getPropertyValue('--tg-theme-secondary-bg-color') as '#{string}';
+// })
 
 onUnmounted(() => {
   WebApp.BackButton.show()
@@ -20,11 +24,18 @@ onUnmounted(() => {
       image="/issuegram.svg"
       title="Telebook"
       caption="Book a profi appointment"
-      link-text="Start exploring"
-    />
+    >
+      <template #picture>
+        <img
+          src="/issuegram.svg"
+          aria-hidden="true"
+          width="68"
+        >
+      </template>
+    </Placeholder>
     <Sections>
       <Section padded>
-        <List>
+        <List gapped>
           <ListItem
             :id="1"
             transaction-icon="market-fill"
@@ -52,14 +63,14 @@ onUnmounted(() => {
             picture="/pics/hotel-1.jpg"
           >
             <Sections>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea nobis exercitationem reprehenderit quam corrupti, ipsa sunt ex alias dolor nisi et animi quo recusandae, possimus rerum vel. Expedita, nulla architecto.
-              <List>
+              Compfortable hotel with a beautiful view to the sea. The hotel has a restaurant, a bar, a swimming pool, a gym and a spa.
+              <List gapped>
                 <ListItem
                   :id="1"
                   transaction-icon="clock-fill"
                   label="Check rooms"
                   subtitle="There are 14 rooms available"
-                  to="services"
+                  to="/rooms/1"
                   with-arrow
                   standalone
                 />
@@ -70,7 +81,7 @@ onUnmounted(() => {
             title="Swan Lake"
             picture="/pics/hotel-2.jpg"
           >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea nobis exercitationem reprehenderit quam corrupti, ipsa sunt ex alias dolor nisi et animi quo recusandae, possimus rerum vel. Expedita, nulla architecto.
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea nobis exercitationem reprehenderit quam corrupti, ipsa sunt ex alias dolor nisi et animi quo recusandae, possimus rerum vel. Expedita, nulla architecto.
           </ListCard>
         </ListCards>
       </Section>
