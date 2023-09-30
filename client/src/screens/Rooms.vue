@@ -55,8 +55,7 @@ const rooms = [
 
     <DataOverview />
     <Sections>
-      <Section padded
-      >
+      <Section padded>
         <List gapped>
           <ListItem
             v-for="room in rooms"
@@ -67,7 +66,7 @@ const rooms = [
             :avatar="room.avatar"
             :to="`/room/${room.hotelId}/${room.id}`"
             big-avatar
-            standalone=""
+            standalone
           >
             <template #right>
               <div class="room-cell-right">

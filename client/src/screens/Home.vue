@@ -7,12 +7,8 @@ import Section from '@/components/Section.vue'
 import SectionTitle from '@/components/SectionTitle.vue'
 import ListCards from '@/components/ListCards.vue'
 import ListCard from '@/components/ListCard.vue'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onUnmounted } from 'vue'
 import WebApp from '@twa-dev/sdk'
-
-// onMounted(() => {
-//   WebApp.headerColor = window.getComputedStyle(document.documentElement).getPropertyValue('--tg-theme-secondary-bg-color') as '#{string}';
-// })
 
 onUnmounted(() => {
   WebApp.BackButton.show()

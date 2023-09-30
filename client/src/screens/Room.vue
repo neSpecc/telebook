@@ -2,7 +2,7 @@
 import WebApp from '@twa-dev/sdk'
 import { onBeforeUnmount, onMounted } from 'vue'
 
-function buttonClicked() {
+function buttonClicked(): void {
   console.log('Main button clicked')
 
   WebApp.openInvoice('https://t.me/invoice/12333', (data) => {

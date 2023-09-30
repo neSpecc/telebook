@@ -1,5 +1,4 @@
-import { createSharedComposable } from '@vueuse/core'
-import { type Ref, watch, onMounted, ref, toRef } from 'vue'
+import { type Ref, ref, toRef } from 'vue'
 
 interface useIconComposableState {
   source: Ref<string | undefined>;
