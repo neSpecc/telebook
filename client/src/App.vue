@@ -51,7 +51,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  @media (min-width: 1268px) {
+  @media (min-width: 600px) {
     max-width: 390px;
     margin: 0 auto;
   }
