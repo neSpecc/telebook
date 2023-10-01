@@ -2,7 +2,7 @@ import { type LabeledPrice } from '@/domain/entity/LabeledPrice'
 import { useApi } from './useApi'
 
 interface useInvoiceComposableState {
-  create: (params: CreateInvoiceParams) => Promise<void>;
+  create: (params: CreateInvoiceParams) => Promise<string | null>;
 }
 
 /**
@@ -25,11 +25,6 @@ interface CreateInvoiceParams {
    * Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
    */
   payload: string;
-
-  /**
-   * Payment provider token, obtained via BotFather
-   */
-  provider_token: string;
 
   /**
    * Three-letter ISO 4217 currency code, see more on currencies
@@ -115,10 +110,16 @@ export default function useInvoice(): useInvoiceComposableState {
    *
    * @param params - Params for creating a new invoice
    */
-  const create = async (params: CreateInvoiceParams): Promise<void> => {
-    const response = await post('/createInvoice', params)
+  const create = async (params: CreateInvoiceParams): Promise<string | null> => {
+    try {
+      const response = await post('/createInvoice', params)
 
-    console.log(response)
+      console.log(response)
+
+      return (response as {invoiceLink: string}).invoiceLink
+    } catch (e) {
+      return null;
+    }
   }
 
   return {

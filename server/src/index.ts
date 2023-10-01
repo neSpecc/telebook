@@ -2,13 +2,14 @@ import Config from './config.js'
 import HttpApi from './api/http.js'
 import Bot from './api/bot.js'
 
-const api = new HttpApi(Config)
-const bot = new Bot(Config.botToken, Config.isTestEnvironment)
 
+const bot = new Bot(Config.botToken, Config.isTestEnvironment)
 /**
  * Listen for messages from Telegram
- */
-bot.run()
+*/
+const botApi = bot.run();
+
+const api = new HttpApi(Config, botApi)
 
 /**
  * Listen for HTTP requests

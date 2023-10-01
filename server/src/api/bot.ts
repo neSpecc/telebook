@@ -14,7 +14,7 @@ export default class Bot {
   /**
    * Listen for messages from Telegram
    */
-  public run(): void {
+  public run(): TelegramBot {
     console.log('this.token', this.token);
 
     const bot = new TelegramBot(this.token, {
@@ -31,15 +31,33 @@ export default class Bot {
           console.log('error', e);
       });
 
+
+    bot.on('pre_checkout_query', (update) => {
+      console.log('pre_checkout_query', update);
+
+      /**
+       * @todo validate order
+       */
+      bot.answerPreCheckoutQuery(update.id, true)
+    })
+
     bot.on('message', (msg) => {
       const chatId = msg.chat.id
 
       console.log('message', msg);
 
+      if (msg.successful_payment) {
+        console.log('successful_payment', msg.successful_payment);
+        bot.sendMessage(chatId, '🎉')
+      }
+
 
       // send a message to the chat acknowledging receipt of their message
-      bot.sendMessage(chatId, 'Received your message')
+      // bot.sendMessage(chatId, 'Received your message')
+      // bot.sendMessage(chatId, '🎉')
     })
+
+    return bot;
 
   }
 }
