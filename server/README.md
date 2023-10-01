@@ -1,0 +1,7 @@
+# Bot server
+
+...
+
+## Configuration
+
+...

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import DataOverviewItem from '@/components/DataOverviewItem.vue'
-import Number from '@/components/Number.vue'
-import Icon from '@/components/Icon.vue'
+import DataOverviewItem from './DataOverviewItem.vue'
+import Number from './Number.vue'
+import Icon from './Icon.vue'
 
 const rating = {
   votesCount: '9k',
@@ -104,6 +104,8 @@ const chart = {
       text-align: center;
     }
     .icon {
+      width: 11px;
+      height: 23px;
       fill: var(--color-hint);
     }
   }

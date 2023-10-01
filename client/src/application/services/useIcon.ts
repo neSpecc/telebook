@@ -15,7 +15,7 @@ export const useIcon = (name: string): useIconComposableState => {
 
   const source = ref<string | undefined>()
 
-  void import(/* @vite-ignore */ `../../assets/icons/${name}.svg?raw`)
+  void import(/* @vite-ignore */ `../../presentation/assets/icons/${name}.svg?raw`)
     .then((module) => {
       source.value = module.default
 

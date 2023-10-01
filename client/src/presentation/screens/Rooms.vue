@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import List from '@/components/List.vue'
-import ListItem from '@/components/ListItem.vue'
-import Sections from '@/components/Sections.vue'
-import Section from '@/components/Section.vue'
-import Number from '@/components/Number.vue'
-import Placeholder from '@/components/Placeholder.vue'
-import DataOverview from '@/components/DataOverview.vue'
-import Avatar from '@/components/Avatar.vue'
+import List from '@/presentation/components/List.vue'
+import ListItem from '@/presentation/components/ListItem.vue'
+import Sections from '@/presentation/components/Sections.vue'
+import Section from '@/presentation/components/Section.vue'
+import Number from '@/presentation/components/Number.vue'
+import Placeholder from '@/presentation/components/Placeholder.vue'
+import DataOverview from '@/presentation/components/DataOverview.vue'
+import Avatar from '@/presentation/components/Avatar.vue'
 
 const rooms = [
   {

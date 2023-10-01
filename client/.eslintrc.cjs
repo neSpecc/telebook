@@ -15,9 +15,6 @@ module.exports = {
     ],
     ecmaVersion: 2022,
     extraFileExtensions: ['.vue'],
-    ecmaFeatures: {
-      jsx: true,
-    },
   },
   plugins: [
     'clean-timer',

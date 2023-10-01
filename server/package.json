@@ -16,11 +16,14 @@
     "lint:fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
+    "dotenv": "^16.3.1",
     "fastify": "^4.23.2",
+    "node-telegram-bot-api": "^0.63.0",
     "nodemon": "^3.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.8.0",
+    "@types/node-telegram-bot-api": "^0.61.8",
     "eslint": "^8.50.0",
     "eslint-config-codex": "^1.8.3",
     "typescript": "^5.2.2"
