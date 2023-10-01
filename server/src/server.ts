@@ -1,10 +1,20 @@
-import Fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
+import type { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
+import Fastify from 'fastify'
 
+/**
+ * HTTP server implementation using Fastify.
+ */
 export default class Server {
-  fastify: any;
+  private fastify: any
+  /**
+   *
+   */
   constructor() {}
 
-  run(){
+  /**
+   *
+   */
+  run() {
     this.fastify = Fastify()
 
     this.fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {

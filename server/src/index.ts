@@ -1,5 +1,5 @@
-import Server from "./server.js";
+import Server from './server.js'
 
-const server = new Server();
+const server = new Server()
 
-server.run();
+server.run()

@@ -11,7 +11,9 @@
     "build": "tsc -p tsconfig.json",
     "start": "node ./src/index.js",
     "start:dev": "npm run build && node dist/index.js",
-    "dev": "nodemon --watch './src/**/*.ts' --ext ts --exec 'npm run start:dev'"
+    "dev": "nodemon --watch './src/**/*.ts' --ext ts --exec 'npm run start:dev'",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
     "fastify": "^4.23.2",
@@ -19,6 +21,8 @@
   },
   "devDependencies": {
     "@types/node": "^20.8.0",
+    "eslint": "^8.50.0",
+    "eslint-config-codex": "^1.8.3",
     "typescript": "^5.2.2"
   }
 }
