@@ -40,5 +40,6 @@ export default class Bot {
       // send a message to the chat acknowledging receipt of their message
       bot.sendMessage(chatId, 'Received your message')
     })
+
   }
 }

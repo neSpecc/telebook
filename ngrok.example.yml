@@ -1,0 +1,9 @@
+version: 2
+authtoken:
+tunnels:
+  client:
+    proto: http
+    addr:
+  server:
+    proto: http
+    addr:

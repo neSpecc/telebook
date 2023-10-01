@@ -12,4 +12,5 @@ export default {
   port: process.env.PORT || '3000',
   botToken: process.env.BOT_TOKEN,
   isTestEnvironment: process.env.IS_TEST_ENVIRONMENT === 'true',
+  allowedOrigins: process.env.ALLOWED_ORIGINS || '*',
 }

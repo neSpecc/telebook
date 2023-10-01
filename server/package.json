@@ -16,6 +16,7 @@
     "lint:fix": "eslint . --ext .ts --fix"
   },
   "dependencies": {
+    "@fastify/cors": "^8.4.0",
     "dotenv": "^16.3.1",
     "fastify": "^4.23.2",
     "node-telegram-bot-api": "^0.63.0",
