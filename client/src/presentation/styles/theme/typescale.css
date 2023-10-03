@@ -41,7 +41,12 @@
   --headline {
     font-size: 17px;
     line-height: 22px;
-    letter-spacing: -0.43px;
+  }
+
+  --headline--semibold {
+    @apply --headline;
+
+    font-weight: 590;
   }
 
   --body {
@@ -153,6 +158,13 @@
     @apply --footnote;
 
     text-transform: uppercase;
+  }
+
+  --footnote-caps-semibold {
+    @apply --footnote-caps;
+
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-weight: 590;
   }
 
   --footnote-rounded-semibold {

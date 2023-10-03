@@ -7,6 +7,7 @@ import Section from '@/presentation/components/Section.vue'
 import SectionTitle from '@/presentation/components/SectionTitle.vue'
 import ListCards from '@/presentation/components/ListCards.vue'
 import ListCard from '@/presentation/components/ListCard.vue'
+import DatePicker from '@/presentation/components/DatePicker.vue'
 import { onUnmounted } from 'vue'
 import WebApp from '@twa-dev/sdk'
 
@@ -29,6 +30,25 @@ onUnmounted(() => {
         >
       </template>
     </Placeholder>
+    <Section with-background>
+      <List>
+        <ListItem
+          :id="1"
+          transaction-icon="market-fill"
+          label="Select service"
+          subtitle="The service you want to use"
+        />
+        <ListItem
+          :id="2"
+          transaction-icon="user-circle-fill"
+          label="Select provider"
+          subtitle="If you prefer a particular profi"
+        />
+      </List>
+    </Section>
+    <Section padded>
+      <DatePicker />
+    </Section>
     <Sections>
       <Section padded>
         <List gapped>
