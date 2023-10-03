@@ -268,11 +268,11 @@ onBeforeUnmount(() => {
 @import '../styles/theme/typescale.css';
 
 .date-picker {
-  --h-paddings: 16px;
-  background-color: var(--color-bg);
-  border-radius: var(--size-border-radius-big);
+  /* background-color: var(--color-bg); */
+  /* border-radius: var(--size-border-radius-big); */
   padding-top: 6px;
   overflow: hidden;
+  user-select: none
 }
 
 .month-and-year {
@@ -283,7 +283,7 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 9px var(--h-paddings) 11px
+  padding: 9px var(--size-cell-h-padding) 11px
 }
 
 .arrows {
@@ -308,7 +308,7 @@ onBeforeUnmount(() => {
   display: grid;
   grid-template-columns: repeat(7, 32px);
   justify-content: space-between;
-  padding: 1px var(--h-paddings);
+  padding: 1px var(--size-cell-h-padding);
 }
 
 .weekday {
@@ -321,7 +321,7 @@ onBeforeUnmount(() => {
   display: grid;
   grid-template-columns: repeat(7, 40px);
   row-gap: 7px;
-  padding: 3px var(--h-paddings) 11px;
+  padding: 3px var(--size-cell-h-padding) 11px;
   justify-content: space-between;
   will-change: opacity, transform;
   min-height: 313px;

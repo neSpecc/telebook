@@ -23,7 +23,7 @@ defineProps<{
 .section {
   &--bg {
     background-color: var(--color-bg);
-    padding-top: 10px;
+    /* padding-top: 10px; */
   }
 
   &--padded {

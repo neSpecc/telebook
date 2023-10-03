@@ -17,14 +17,14 @@ import Section from '@/presentation/components/Section.vue'
             icon="settings-user"
             label="Select service"
             to="services"
-            with-arrow
+            right-icon="chevron-right"
           />
           <ListItem
             :id="1"
             icon="settings-faq"
             label="FAQ"
             to="services"
-            with-arrow
+            right-icon="chevron-right"
           />
         </List>
       </Section>

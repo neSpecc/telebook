@@ -2,14 +2,26 @@
 import Placeholder from '@/presentation/components/Placeholder.vue'
 import List from '@/presentation/components/List.vue'
 import ListItem from '@/presentation/components/ListItem.vue'
+import ListItemExpandable from '@/presentation/components/ListItemExpandable.vue'
 import Sections from '@/presentation/components/Sections.vue'
 import Section from '@/presentation/components/Section.vue'
 import SectionTitle from '@/presentation/components/SectionTitle.vue'
 import ListCards from '@/presentation/components/ListCards.vue'
 import ListCard from '@/presentation/components/ListCard.vue'
 import DatePicker from '@/presentation/components/DatePicker.vue'
-import { onUnmounted } from 'vue'
+import DatePickerCompact from '@/presentation/components/DatePickerCompact.vue'
+import { onUnmounted, ref } from 'vue'
 import WebApp from '@twa-dev/sdk'
+
+/**
+ * Whether to show the start date picker
+ */
+const startDatePickerShowed = ref(false)
+
+/**
+ * Whether to show the end date picker
+ */
+const endDatePickerShowed = ref(false)
 
 onUnmounted(() => {
   WebApp.BackButton.show()
@@ -30,26 +42,42 @@ onUnmounted(() => {
         >
       </template>
     </Placeholder>
-    <Section with-background>
-      <List>
-        <ListItem
-          :id="1"
-          transaction-icon="market-fill"
-          label="Select service"
-          subtitle="The service you want to use"
-        />
-        <ListItem
-          :id="2"
-          transaction-icon="user-circle-fill"
-          label="Select provider"
-          subtitle="If you prefer a particular profi"
-        />
-      </List>
-    </Section>
-    <Section padded>
-      <DatePicker />
-    </Section>
     <Sections>
+      <Section
+        with-background
+        standalone
+      >
+        <List>
+          <ListItem title="Travel date">
+            <template #right>
+              <DatePickerCompact
+                @click="startDatePickerShowed = !startDatePickerShowed; endDatePickerShowed = false"
+              />
+            </template>
+          </ListItem>
+          <ListItemExpandable :opened="startDatePickerShowed">
+            <DatePicker />
+          </ListItemExpandable>
+          <ListItem title="End date">
+            <template #right>
+              <DatePickerCompact
+                @click="endDatePickerShowed = !endDatePickerShowed; startDatePickerShowed = false"
+              />
+            </template>
+          </ListItem>
+          <ListItemExpandable :opened="endDatePickerShowed">
+            <DatePicker />
+          </ListItemExpandable>
+          <ListItem
+            title="Destination"
+            right-icon="chevron-right"
+            right-icon-label="London"
+          />
+        </List>
+      </Section>
+      <!-- <Section padded>
+        <DatePicker />
+      </Section> -->
       <Section padded>
         <List gapped>
           <ListItem
@@ -58,7 +86,7 @@ onUnmounted(() => {
             label="Select service"
             subtitle="The service you want to use"
             to="services"
-            with-arrow
+            right-icon="chevron-right"
             standalone
           />
           <ListItem
@@ -66,7 +94,7 @@ onUnmounted(() => {
             transaction-icon="user-circle-fill"
             label="Select provider"
             subtitle="If you prefer a particular profi"
-            with-arrow
+            right-icon="chevron-right"
             standalone
           />
         </List>
@@ -87,7 +115,7 @@ onUnmounted(() => {
                   label="Check rooms"
                   subtitle="There are 14 rooms available"
                   to="/rooms/1"
-                  with-arrow
+                  right-icon="chevron-right"
                   standalone
                 />
               </List>
@@ -104,7 +132,7 @@ onUnmounted(() => {
 
       <Section
         with-background
-        padded
+        standalone
       >
         <SectionTitle>
           History

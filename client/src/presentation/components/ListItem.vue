@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import Avatar from './Avatar.vue'
 import Icon from './Icon.vue'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
 
 const props = defineProps<{
   /**
@@ -16,13 +13,22 @@ const props = defineProps<{
   };
   transactionIcon?: string;
   icon?: string;
+  title?: string;
   label?: string;
   subtitle?: string;
-  withArrow?: boolean;
+  rightIcon?: string;
+  rightIconLabel?: string;
   standalone?: boolean;
   to?: string;
   bigAvatar?: boolean;
 }>()
+
+// /**
+//  * Determines if the left column should be rendered
+//  */
+// const hasLeftCol = computed(() => {
+//   return props.avatar !== undefined || props.transactionIcon !== undefined || props.icon !== undefined
+// })
 </script>
 
 <template>
@@ -35,7 +41,9 @@ const props = defineProps<{
     }"
     :to="to"
   >
-    <div class="left-row">
+    <div
+      class="left-col"
+    >
       <Avatar
         v-if="avatar"
         :id="avatar.id"
@@ -51,23 +59,42 @@ const props = defineProps<{
     </div>
     <div class="right-row">
       <div class="body">
-        <div class="label">
+        <div
+          v-if="title"
+          class="title"
+        >
+          {{ title }}
+        </div>
+        <div
+          v-if="label"
+          class="label"
+        >
           {{ label }}
         </div>
-        <div class="subtitle">
+        <div
+          v-if="subtitle"
+          class="subtitle"
+        >
           {{ subtitle }}
         </div>
       </div>
       <div
-        v-if="withArrow || $slots.right"
+        v-if="rightIcon !== undefined || $slots.right"
         class="right"
       >
-        <Icon
-          v-if="withArrow"
-          name="chevron-right"
-        />
-
         <slot name="right" />
+
+        <span
+          v-if="rightIconLabel !== undefined"
+          class="right-icon-label"
+        >
+          London
+        </span>
+
+        <Icon
+          v-if="rightIcon !== undefined"
+          :name="rightIcon"
+        />
       </div>
     </div>
   </component>
@@ -79,7 +106,8 @@ const props = defineProps<{
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: stretch;
-  padding-left: 16px;
+  padding-left: var(--size-cell-h-padding);
+  min-height: 44px;
 
   &:active {
     /**
@@ -94,17 +122,20 @@ const props = defineProps<{
     padding-block: 2px;
   }
 
-  .left-row {
+  .left-col {
     display: grid;
-    padding-right: 15px;
     align-items: center;
+
+    & > * {
+      margin-right: 15px;
+    }
   }
 
-  &--big-avatar .left-row {
+  &--big-avatar .left-col {
     align-items: start;
   }
 
-  &--big-avatar .left-row {
+  &--big-avatar .left-col {
     padding-block: 14px;
   }
 
@@ -115,23 +146,28 @@ const props = defineProps<{
      * First and second column should stretched to the parent height, then should be a separator line
      */
     grid-template-columns: 1fr auto;
-    grid-template-rows: auto 0.33px;
+    grid-template-rows: auto var(--size-separator-height);
 
     &::after {
       content: '';
-      height: 0.33px;
+      height: var(--size-separator-height);
       background-color: var(--separator-color);
       display: block;
       grid-column: 1 / -1;
     }
 
     .right {
-      padding-inline-end: 16px;
+      padding-inline-end: var(--size-cell-h-padding);
       display: grid;
       align-content: center;
+      grid-auto-flow: column;
+      align-items: center;
+      gap: 4px;
 
       .icon {
         stroke: var(--color-hint);
+        display: inline-flex;
+        justify-content: center;
       }
     }
   }
@@ -158,6 +194,10 @@ const props = defineProps<{
     @apply --body-compact-medium;
   }
 
+  .title {
+    @apply --headline;
+  }
+
   .subtitle {
     color: var(--color-hint);
 
@@ -169,5 +209,12 @@ const props = defineProps<{
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+}
+
+.right-icon-label {
+  display: inline-flex;
+  margin-right: 6px;
+  color: var(--color-hint);
+  @apply --headline;
 }
 </style>
