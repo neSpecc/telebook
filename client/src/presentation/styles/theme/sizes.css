@@ -3,7 +3,12 @@
   --size-avatar-big: 76px;
   --size-border-radius-medium: 10px;
   --size-border-radius-big: 13px;
+  --size-border-radius-large: 16px;
 
   --size-cell-h-padding: 16px;
+  --size-separator-height: 1px;
+}
+
+.is-ios {
   --size-separator-height: 0.33px;
 }

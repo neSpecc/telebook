@@ -3,6 +3,7 @@ import Home from '@/presentation/screens/Home.vue'
 import Services from '@/presentation/screens/Services.vue'
 import Rooms from '@/presentation/screens/Rooms.vue'
 import Room from '@/presentation/screens/Room.vue'
+import Location from '@/presentation/screens/Location.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -16,6 +17,10 @@ const routes: RouteRecordRaw[] = [
     meta: {
       transition: 'slide-left',
     },
+  },
+  {
+    path: '/location',
+    component: Location,
   },
   {
     path: '/rooms/:hotelId',

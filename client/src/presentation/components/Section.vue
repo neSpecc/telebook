@@ -31,7 +31,7 @@ defineProps<{
   }
 
   &--standalone {
-    border-radius: 16px;
+    border-radius: var(--size-border-radius-big);
     margin: 0 16px;
   }
 }

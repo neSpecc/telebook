@@ -72,6 +72,7 @@ onUnmounted(() => {
             title="Destination"
             right-icon="chevron-right"
             right-icon-label="London"
+            to="/location"
           />
         </List>
       </Section>

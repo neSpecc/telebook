@@ -24,6 +24,12 @@ import './presentation/styles/index.css'
  * @todo check all border-radius consistency
  */
 
+const platform = WebApp.platform
+
+if (platform !== 'unknown') {
+  document.body.classList.add(`is-${platform}`)
+}
+
 WebApp.ready()
 
 const app = createApp(App)

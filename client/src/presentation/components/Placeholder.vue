@@ -104,6 +104,7 @@ defineProps<{
 
   .caption {
     margin-top: var(--spacing-8);
+    color: var(--color-hint)
   }
 
   &--compact .caption {

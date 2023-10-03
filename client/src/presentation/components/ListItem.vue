@@ -44,6 +44,7 @@ const props = defineProps<{
     <div
       class="left-col"
     >
+      <slot name="picture" />
       <Avatar
         v-if="avatar"
         :id="avatar.id"
@@ -126,7 +127,7 @@ const props = defineProps<{
     display: grid;
     align-items: center;
 
-    & > * {
+    & > :deep(*) {
       margin-right: 15px;
     }
   }

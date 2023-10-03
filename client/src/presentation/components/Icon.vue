@@ -15,6 +15,7 @@ const { source } = useIcon(props.name)
   <!-- eslint-disable vue/no-v-html -->
   <div
     class="icon"
+    :class="[`icon-${name}`]"
     v-html="source"
   />
 </template>
