@@ -10,8 +10,12 @@ import ListCards from '@/presentation/components/ListCards.vue'
 import ListCard from '@/presentation/components/ListCard.vue'
 import DatePicker from '@/presentation/components/DatePicker.vue'
 import DatePickerCompact from '@/presentation/components/DatePickerCompact.vue'
-import { onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
+import { useTripDetails } from '@/domain/services/useTripDetails'
+
 import WebApp from '@twa-dev/sdk'
+
+const { location, selectDefault: selectDefaultLocation } = useTripDetails()
 
 /**
  * Whether to show the start date picker
@@ -22,6 +26,10 @@ const startDatePickerShowed = ref(false)
  * Whether to show the end date picker
  */
 const endDatePickerShowed = ref(false)
+
+onMounted(() => {
+  selectDefaultLocation()
+})
 
 onUnmounted(() => {
   WebApp.BackButton.show()
@@ -69,9 +77,9 @@ onUnmounted(() => {
             <DatePicker />
           </ListItemExpandable>
           <ListItem
-            title="Destination"
+            title="Location"
             right-icon="chevron-right"
-            right-icon-label="London"
+            :right-icon-label="location?.title"
             to="/location"
           />
         </List>
@@ -219,3 +227,5 @@ onUnmounted(() => {
 <style scoped>
 
 </style>
+@/application/services/example/useTripDetails
+@/domain/services/useTripDetails

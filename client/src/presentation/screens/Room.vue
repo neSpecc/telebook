@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import WebApp from '@twa-dev/sdk'
 import { onBeforeUnmount, onMounted } from 'vue'
-import useInvoice from '@/application/services/useInvoice'
+import useInvoice from '@/domain/services/useInvoice'
 
 const { create: createInvoice } = useInvoice()
 
@@ -98,3 +98,4 @@ onBeforeUnmount(() => {
 <style scoped>
 
 </style>
+@/domain/services/useInvoice

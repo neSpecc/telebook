@@ -21,6 +21,9 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/location',
     component: Location,
+    meta: {
+      transition: 'slide-left',
+    },
   },
   {
     path: '/rooms/:hotelId',

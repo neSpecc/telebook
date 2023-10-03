@@ -3,6 +3,7 @@ import App from './App.vue'
 import WebApp from '@twa-dev/sdk'
 import Router from '@/application/router'
 import './presentation/styles/index.css'
+import { loadCities } from '@/infra/store/cities'
 
 /**
  * @todo Date Picker
@@ -30,9 +31,18 @@ if (platform !== 'unknown') {
   document.body.classList.add(`is-${platform}`)
 }
 
-WebApp.ready()
+/**
+ * Prepare app data
+ *
+ * @todo load icons
+ * @todo prepare image thumbs
+ */
+void loadCities()
+  .then(() => {
+    WebApp.ready()
+    const app = createApp(App)
 
-const app = createApp(App)
+    app.use(Router)
+    app.mount('#app')
+  })
 
-app.use(Router)
-app.mount('#app')

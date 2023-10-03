@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import type { ApiErrorResponse } from './types/response.ts'
-import type JSONValue from '../types/json.ts'
-import NotFoundError from '@/domain/entity/errors/NotFound.ts'
-import UnauthorizedError from '@/domain/entity/errors/Unauthorized.ts'
+import NotFoundError from '@/domain/entities/errors/NotFound.ts'
+import UnauthorizedError from '@/domain/entities/errors/Unauthorized.ts'
 import FetchTransport from '../fetch/index.ts'
 
 /**
@@ -61,7 +60,7 @@ export default class ApiTransport extends FetchTransport {
    * @param endpoint - API endpoint
    * @param data - data to be sent url encoded
    */
-  public async get<Payload>(endpoint: string, data?: JSONValue): Promise<Payload> {
+  public async get<Payload>(endpoint: string, data?: any): Promise<Payload> {
     const response = await super.get(endpoint, data)
 
     return response as Payload
@@ -73,7 +72,7 @@ export default class ApiTransport extends FetchTransport {
    * @param endpoint - API endpoint
    * @param data - data to be sent with request body
    */
-  public async post<Payload>(endpoint: string, data?: JSONValue): Promise<Payload> {
+  public async post<Payload>(endpoint: string, data?: any): Promise<Payload> {
     const response = await super.post(endpoint, data)
 
     return response as Payload

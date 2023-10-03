@@ -1,5 +1,5 @@
-import { type LabeledPrice } from '@/domain/entity/LabeledPrice'
-import { useApi } from './useApi'
+import { type LabeledPrice } from '@/domain/entities/LabeledPrice'
+import Transport from '@/infra/transport/api'
 
 interface useInvoiceComposableState {
   create: (params: CreateInvoiceParams) => Promise<string | null>;
@@ -103,7 +103,12 @@ interface CreateInvoiceParams {
  * Service to create a new invoice
  */
 export default function useInvoice(): useInvoiceComposableState {
-  const { post } = useApi()
+  const url = 'https://1fc4-51-158-186-93.ngrok-free.app'
+
+  /**
+   * @todo use IoC container
+   */
+  const transport = new Transport(url)
 
   /**
    * Create a new invoice
@@ -112,13 +117,11 @@ export default function useInvoice(): useInvoiceComposableState {
    */
   const create = async (params: CreateInvoiceParams): Promise<string | null> => {
     try {
-      const response = await post('/createInvoice', params)
+      const response = await transport.post('/createInvoice', params)
 
-      console.log(response)
-
-      return (response as {invoiceLink: string}).invoiceLink
+      return (response as { invoiceLink: string }).invoiceLink
     } catch (e) {
-      return null;
+      return null
     }
   }
 

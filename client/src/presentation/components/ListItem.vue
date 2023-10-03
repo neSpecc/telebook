@@ -89,7 +89,7 @@ const props = defineProps<{
           v-if="rightIconLabel !== undefined"
           class="right-icon-label"
         >
-          London
+          {{ rightIconLabel }}
         </span>
 
         <Icon
