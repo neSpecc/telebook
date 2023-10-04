@@ -7,17 +7,17 @@ export default interface TripDetails {
   /**
    * The date of the trip
    */
-  fromDate: string;
+  startDate: Date;
 
   /**
    * The end date of the trip
    */
-  toDate: string;
+  endDate: Date;
 
   /**
    * Idd of the location of the trip
    */
-  location: City['id'];
+  city: City['id'];
 
   /**
    * Selected hotel id

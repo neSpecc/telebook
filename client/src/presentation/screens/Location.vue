@@ -5,8 +5,12 @@ import Sections from '@/presentation/components/Sections.vue'
 import Section from '@/presentation/components/Section.vue'
 import Input from '@/presentation/components/Input/Input.vue'
 import Placeholder from '@/presentation/components/Placeholder.vue'
-import { computed, onMounted, ref } from 'vue'
+import Number from '@/presentation/components/Number.vue'
+import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useCities } from '@/domain/services/useCities'
+import { useTripDetails } from '@/domain/services/useTripDetails'
+import useTelegram from '@/application/services/useTelegram'
+import { useRouter } from 'vue-router'
 
 /**
  * Cities list
@@ -41,11 +45,28 @@ function selectCity(id: number): void {
   selectedId.value = id
 }
 
-onMounted(() => {
-  /**
-   * Scroll to top
-   */
+const { setCity, trip } = useTripDetails()
+const { showMainButton, hideMainButton } = useTelegram()
+const router = useRouter()
+
+onBeforeMount(() => {
   window.scrollTo(0, 0)
+})
+
+onMounted(() => {
+  if (trip.city !== 0) {
+    selectedId.value = trip.city
+  }
+
+  showMainButton('Select', () => {
+    setCity(selectedId.value)
+
+    void router.push('/')
+  })
+})
+
+onBeforeUnmount(() => {
+  hideMainButton()
 })
 </script>
 
@@ -81,6 +102,17 @@ onMounted(() => {
                 {{ city.emoji }}
               </div>
             </template>
+            <!-- <template #right>
+              <div class="room-cell-right">
+                <Number>
+                  130$
+
+                  <template #subline>
+                    per night
+                  </template>
+                </Number>
+              </div>
+            </template> -->
           </ListItem>
         </List>
       </Section>

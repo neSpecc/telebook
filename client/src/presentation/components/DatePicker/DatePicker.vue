@@ -182,6 +182,13 @@ function nextMonth(): void {
   }, 'right')
 }
 
+const emit = defineEmits<{
+  /**
+   * Fired when some date is selected
+   */
+  datePick: [date: Date];
+}>()
+
 /**
  * Day select handler
  *
@@ -193,6 +200,8 @@ function onDateSelected(day: number | string): void {
   }
 
   selectedDate.value = new Date(year.value, month.value, day)
+
+  emit('datePick', selectedDate.value)
 }
 
 /**
@@ -265,7 +274,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-@import '../styles/theme/typescale.css';
+@import '@/presentation/styles/theme/typescale.css';
 
 .date-picker {
   /* background-color: var(--color-bg); */

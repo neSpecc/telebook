@@ -8,14 +8,22 @@ import Section from '@/presentation/components/Section.vue'
 import SectionTitle from '@/presentation/components/SectionTitle.vue'
 import ListCards from '@/presentation/components/ListCards.vue'
 import ListCard from '@/presentation/components/ListCard.vue'
-import DatePicker from '@/presentation/components/DatePicker.vue'
-import DatePickerCompact from '@/presentation/components/DatePickerCompact.vue'
+import DatePicker from '@/presentation/components/DatePicker/DatePicker.vue'
+import DatePickerCompact from '@/presentation/components/DatePicker/DatePickerCompact.vue'
+import Number from '@/presentation/components/Number.vue'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useTripDetails } from '@/domain/services/useTripDetails'
+import { hotels } from '@/infra/store/hotels/mock/hotels'
 
 import WebApp from '@twa-dev/sdk'
 
-const { location, selectDefault: selectDefaultLocation } = useTripDetails()
+const {
+  trip,
+  location,
+  selectDefault: selectDefaultLocation,
+  setStartDate,
+  setEndDate,
+} = useTripDetails()
 
 /**
  * Whether to show the start date picker
@@ -28,7 +36,9 @@ const startDatePickerShowed = ref(false)
 const endDatePickerShowed = ref(false)
 
 onMounted(() => {
-  selectDefaultLocation()
+  if (trip.city === 0) {
+    selectDefaultLocation()
+  }
 })
 
 onUnmounted(() => {
@@ -59,22 +69,28 @@ onUnmounted(() => {
           <ListItem title="Travel date">
             <template #right>
               <DatePickerCompact
+                :value="trip.startDate"
                 @click="startDatePickerShowed = !startDatePickerShowed; endDatePickerShowed = false"
               />
             </template>
           </ListItem>
           <ListItemExpandable :opened="startDatePickerShowed">
-            <DatePicker />
+            <DatePicker
+              @date-pick="(date) => setStartDate(date)"
+            />
           </ListItemExpandable>
           <ListItem title="End date">
             <template #right>
               <DatePickerCompact
+                :value="trip.endDate"
                 @click="endDatePickerShowed = !endDatePickerShowed; startDatePickerShowed = false"
               />
             </template>
           </ListItem>
           <ListItemExpandable :opened="endDatePickerShowed">
-            <DatePicker />
+            <DatePicker
+              @date-pick="(date) => setEndDate(date)"
+            />
           </ListItemExpandable>
           <ListItem
             title="Location"
@@ -87,25 +103,35 @@ onUnmounted(() => {
       <!-- <Section padded>
         <DatePicker />
       </Section> -->
+
+
       <Section padded>
         <List gapped>
           <ListItem
-            :id="1"
-            transaction-icon="market-fill"
-            label="Select service"
-            subtitle="The service you want to use"
-            to="services"
-            right-icon="chevron-right"
+            v-for="hotel in hotels"
+            :id="hotel.id"
+            :key="hotel.id"
+            :avatar="{src: '/pics/hotel-1.jpg', placeholder: hotel.title}"
+            :label="hotel.title"
+            :subtitle="hotel.subtitle"
+            big-avatar
             standalone
-          />
-          <ListItem
-            :id="2"
-            transaction-icon="user-circle-fill"
-            label="Select provider"
-            subtitle="If you prefer a particular profi"
-            right-icon="chevron-right"
-            standalone
-          />
+          >
+            <template #right>
+              <div class="room-cell-right">
+                <Number>
+                  {{ hotel.price }}$
+
+                  <template #subline>
+                    from
+                  </template>
+                </Number>
+              </div>
+              <div class="viewed">
+                👀 2 viewed
+              </div>
+            </template>
+          </ListItem>
         </List>
       </Section>
 
@@ -220,12 +246,40 @@ onUnmounted(() => {
           subtitle="A simple issue tracker"
         />
       </Section>
+      <Section padded>
+        <List gapped>
+          <ListItem
+            :id="1"
+            transaction-icon="market-fill"
+            label="Select service"
+            subtitle="The service you want to use"
+            to="services"
+            right-icon="chevron-right"
+            standalone
+          />
+          <ListItem
+            :id="2"
+            transaction-icon="user-circle-fill"
+            label="Select provider"
+            subtitle="If you prefer a particular profi"
+            right-icon="chevron-right"
+            standalone
+          />
+        </List>
+      </Section>
     </Sections>
   </div>
 </template>
 
 <style scoped>
-
+.viewed {
+  background-color: #000;
+  font-size: 11px;
+  border-radius: 13px;
+  padding: 6px 7px;
+  position: absolute;
+  transform: translate(-24px, 72px);
+  z-index: 9;
+  white-space: nowrap;
+}
 </style>
-@/application/services/example/useTripDetails
-@/domain/services/useTripDetails

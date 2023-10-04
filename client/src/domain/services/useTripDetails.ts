@@ -1,6 +1,6 @@
 import type TripDetails from '@/domain/entities/TripDetails'
 import { createSharedComposable } from '@vueuse/core'
-import { computed, ref, type Ref, type ComputedRef } from 'vue'
+import { computed, type ComputedRef, reactive, type UnwrapNestedRefs } from 'vue'
 import { useCities } from './useCities'
 import type City from '../entities/City'
 
@@ -13,40 +13,40 @@ interface useTripDetailsComposableState {
    *
    * @param date - The date of the trip
    */
-  selectStartDate: (date: TripDetails['fromDate']) => void;
+  setStartDate: (date: TripDetails['startDate']) => void;
 
   /**
    * Selects the end date of the trip
    *
    * @param date - The end date of the trip
    */
-  selectEndDate: (date: TripDetails['toDate']) => void;
+  setEndDate: (date: TripDetails['endDate']) => void;
 
   /**
    * Selects the location of the trip
    *
-   * @param location - Id of the location of the trip
+   * @param id - Id of the location of the trip
    */
-  selectLocation: (location: TripDetails['location']) => void;
+  setCity: (id: TripDetails['city']) => void;
 
   /**
    * Selects the hotel of the trip
    *
    * @param hotel - Id of the hotel of the trip
    */
-  selectHotel: (hotel: TripDetails['hotel']) => void;
+  setHotel: (hotel: TripDetails['hotel']) => void;
 
   /**
    * Selects the room of the trip
    *
    * @param room - Id of the room of the trip
    */
-  selectRoom: (room: TripDetails['room']) => void;
+  setRoom: (room: TripDetails['room']) => void;
 
   /**
    * Information about current trip
    */
-  trip: Ref<TripDetails>;
+  trip: UnwrapNestedRefs<TripDetails>;
 
   /**
    * Location based on trip details
@@ -63,20 +63,20 @@ interface useTripDetailsComposableState {
 }
 
 /**
+ * Information about current trip
+ */
+const trip = reactive<TripDetails>({
+  startDate: new Date(),
+  endDate: new Date(),
+  city: 0,
+  hotel: 0,
+  room: 0,
+})
+
+/**
  * Composable to handle trip details
  */
 export const useTripDetails = createSharedComposable((): useTripDetailsComposableState => {
-  /**
-   * Information about current trip
-   */
-  const trip = ref<TripDetails>({
-    fromDate: '',
-    toDate: '',
-    location: 0,
-    hotel: 0,
-    room: 0,
-  })
-
   const { cities } = useCities()
 
   /**
@@ -84,8 +84,8 @@ export const useTripDetails = createSharedComposable((): useTripDetailsComposabl
    *
    * @param date - The date of the trip
    */
-  function selectStartDate(date: TripDetails['fromDate']): void {
-    trip.value.fromDate = date
+  function setStartDate(date: TripDetails['startDate']): void {
+    trip.startDate = date
   }
 
   /**
@@ -93,17 +93,17 @@ export const useTripDetails = createSharedComposable((): useTripDetailsComposabl
    *
    * @param date - The end date of the trip
    */
-  function selectEndDate(date: TripDetails['toDate']): void {
-    trip.value.toDate = date
+  function setEndDate(date: TripDetails['endDate']): void {
+    trip.endDate = date
   }
 
   /**
    * Selects the location of the trip
    *
-   * @param location - The location of the trip
+   * @param cityId - The location of the trip
    */
-  function selectLocation(location: TripDetails['location']): void {
-    trip.value.location = location
+  function setCity(cityId: TripDetails['city']): void {
+    trip.city = cityId
   }
 
   /**
@@ -111,8 +111,8 @@ export const useTripDetails = createSharedComposable((): useTripDetailsComposabl
    *
    * @param hotel - The hotel of the trip
    */
-  function selectHotel(hotel: TripDetails['hotel']): void {
-    trip.value.hotel = hotel
+  function setHotel(hotel: TripDetails['hotel']): void {
+    trip.hotel = hotel
   }
 
   /**
@@ -120,15 +120,15 @@ export const useTripDetails = createSharedComposable((): useTripDetailsComposabl
    *
    * @param room - The room of the trip
    */
-  function selectRoom(room: TripDetails['room']): void {
-    trip.value.room = room
+  function setRoom(room: TripDetails['room']): void {
+    trip.room = room
   }
 
   /**
    * Currently selected location based on trip details
    */
   const location = computed(() => {
-    return cities.value.find((city) => city.id === trip.value.location)
+    return cities.value.find((city) => city.id === trip.city)
   })
 
   /**
@@ -140,22 +140,23 @@ export const useTripDetails = createSharedComposable((): useTripDetailsComposabl
   function selectDefault(): void {
     const today = new Date()
     const tomorrow = new Date(today)
+
     tomorrow.setDate(tomorrow.getDate() + 1)
 
-    selectStartDate(today.toISOString().split('T')[0])
-    selectEndDate(tomorrow.toISOString().split('T')[0])
+    setStartDate(today)
+    setEndDate(tomorrow)
 
     if (cities.value.length > 0) {
-      selectLocation(cities.value[0].id)
+      setCity(cities.value[0].id)
     }
   }
 
   return {
-    selectStartDate,
-    selectEndDate,
-    selectLocation,
-    selectHotel,
-    selectRoom,
+    setStartDate,
+    setEndDate,
+    setCity,
+    setHotel,
+    setRoom,
     trip,
     location,
     selectDefault,

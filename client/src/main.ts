@@ -45,4 +45,3 @@ void loadCities()
     app.use(Router)
     app.mount('#app')
   })
-
