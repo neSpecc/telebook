@@ -25,7 +25,7 @@ const props = defineProps<{
 
 
 <style scoped>
-@import '../styles/theme/typescale.css';
+@import '@/presentation/styles/theme/typescale.css';
 .data-table-item {
   display: grid;
   grid-gap: 4px;

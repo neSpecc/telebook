@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import Icon from './Icon.vue'
+import { Icon } from '@/presentation/components'
 
 const props = defineProps<{
   /**
@@ -101,7 +101,7 @@ const backgroundColor = computed(() => {
 </template>
 
 <style scoped lang="postcss">
-@import '../styles/theme/typescale.css';
+@import '@/presentation/styles/theme/typescale.css';
 .avatar {
   --size: var(--size-avatar-medium);
   --radius: 50%;

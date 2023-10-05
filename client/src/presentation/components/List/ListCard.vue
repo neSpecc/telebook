@@ -202,7 +202,8 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-@import '../styles/theme/typescale.css';
+@import '@/presentation/styles/theme/typescale.css';
+@import '@/presentation/styles/hacks.css';
 
 .list-card-wrapper {
   height: v-bind(heightCollapsed);
@@ -210,7 +211,7 @@ onBeforeUnmount(() => {
 .list-card  {
   --height: v-bind(heightCollapsed);
   --speed: 800ms;
-  --timing: cubic-bezier(.58,-0.34,.4,1.17);
+  --timing: cubic-bezier(.58,-0.25,.4,1.17);
 
   background-color: var(--color-bg-secondary);
   border-radius: var(--size-border-radius-big);
@@ -228,6 +229,9 @@ onBeforeUnmount(() => {
   will-change: border-radius, left, top, height, width;
   /* box-shadow: 0 0 10px rgba(0,0,0,0.2), 0 3px 20px -5px rgba(0,0,0,0.14); */
   /* box-shadow: 0 0 24px -10px rgba(0,0,0,0.74); */
+
+  @apply --safari-overflow-hidden-fix;
+  transform: translateZ(0);
 
   .picture-container {
     position: relative;

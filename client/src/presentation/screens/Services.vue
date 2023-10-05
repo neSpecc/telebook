@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import List from '@/presentation/components/List.vue'
-import ListItem from '@/presentation/components/ListItem.vue'
-import Sections from '@/presentation/components/Sections.vue'
-import Section from '@/presentation/components/Section.vue'
+import { List, ListItem, Sections, Section } from '@/presentation/components'
 </script>
 <template>
   <div>

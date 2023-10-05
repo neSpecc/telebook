@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import WebApp from '@twa-dev/sdk'
+import { onErrorCaptured } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -10,6 +11,11 @@ function onBackButtonClicked(): void {
 }
 
 WebApp.BackButton.onClick(onBackButtonClicked)
+
+onErrorCaptured((error: Error) => {
+  console.error(error)
+  WebApp.showAlert(error.message)
+})
 </script>
 
 <template>
@@ -35,7 +41,7 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--color-bg-secondary);
+  background-color: var(--color-bg-secondary);;
 }
 
 #app {
@@ -45,6 +51,7 @@ body {
   min-height: 100%;
   width: 100%;
   font-family: system-ui, Inter, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: -apple-system, system-ui, Inter, Avenir, Helvetica, Arial, sans-serif; */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

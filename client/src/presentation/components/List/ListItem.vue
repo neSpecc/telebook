@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import Avatar from './Avatar.vue'
-import Icon from './Icon.vue'
+import { Avatar, Icon } from '@/presentation/components'
 
 const props = defineProps<{
   /**
@@ -61,16 +60,16 @@ const props = defineProps<{
     <div class="right-row">
       <div class="body">
         <div
-          v-if="title"
-          class="title"
-        >
-          {{ title }}
-        </div>
-        <div
           v-if="label"
           class="label"
         >
           {{ label }}
+        </div>
+        <div
+          v-if="title"
+          class="title"
+        >
+          {{ title }}
         </div>
         <div
           v-if="subtitle"
@@ -102,7 +101,7 @@ const props = defineProps<{
 </template>
 
 <style scoped lang="postcss">
-@import '../styles/theme/typescale.css';
+@import '@/presentation/styles/theme/typescale.css';
 .list-item {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -190,13 +189,11 @@ const props = defineProps<{
   }
 
   .label {
-    color: var(--color-text);
-
-    @apply --body-compact-medium;
+    @apply --headline;
   }
 
   .title {
-    @apply --headline;
+    @apply --body-compact-medium;
   }
 
   .subtitle {

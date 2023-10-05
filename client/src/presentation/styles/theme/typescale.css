@@ -150,8 +150,8 @@
 
   --footnote {
     font-size: 13px;
-    line-height: 18px;
-    letter-spacing: -0.08px;
+    line-height: 16px;
+    /* letter-spacing: -0.08px; */
   }
 
   --footnote-caps {

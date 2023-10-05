@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 const props = withDefaults(defineProps<{
   /**
@@ -46,7 +46,7 @@ watch(() => props.opened, (opened) => {
 </template>
 
 <style scoped lang="postcss">
-@import '../styles/theme/typescale.css';
+@import '@/presentation/styles/theme/typescale.css';
 .list-item-expandable {
   --animation-speed: 500ms;
 

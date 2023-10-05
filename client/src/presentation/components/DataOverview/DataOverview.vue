@@ -1,23 +1,13 @@
 <script setup lang="ts">
 import DataOverviewItem from './DataOverviewItem.vue'
-import Number from './Number.vue'
-import Icon from './Icon.vue'
+import { Number, Icon } from '@/presentation/components'
+import type { Rating, Award, Chart } from '@/domain/entities'
 
-const rating = {
-  votesCount: '9k',
-  rating: 4.5,
-  averageRating: '★★★★☆',
-}
-
-const award = {
-  name: 'Best of 2021',
-  section: 'Family',
-}
-
-const chart = {
-  place: 1,
-  category: 'Family Hotels',
-}
+defineProps<{
+  rating: Rating;
+  award: Award;
+  chart: Chart;
+}>()
 </script>
 
 <template>
@@ -32,7 +22,13 @@ const chart = {
       </template>
 
       <template #footer>
-        {{ rating.averageRating }}
+        <!-- eslint-disable vue/no-v-html -->
+        <template
+          v-for="index in 5"
+          :key="index"
+        >
+          {{ index <= rating.rating ? '★' : '☆' }}
+        </template>
       </template>
     </DataOverviewItem>
 

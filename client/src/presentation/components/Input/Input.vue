@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Icon from '../Icon.vue'
+import { Icon } from '@/presentation/components'
 import { defineProps, defineEmits } from 'vue'
 
 defineProps<{

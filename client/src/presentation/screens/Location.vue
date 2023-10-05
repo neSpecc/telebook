@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import List from '@/presentation/components/List.vue'
-import ListItem from '@/presentation/components/ListItem.vue'
-import Sections from '@/presentation/components/Sections.vue'
-import Section from '@/presentation/components/Section.vue'
-import Input from '@/presentation/components/Input/Input.vue'
-import Placeholder from '@/presentation/components/Placeholder.vue'
-import Number from '@/presentation/components/Number.vue'
-import { computed, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue'
+import { List, ListItem, Sections, Section, Input, Placeholder } from '@/presentation/components'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useCities } from '@/domain/services/useCities'
 import { useTripDetails } from '@/domain/services/useTripDetails'
 import useTelegram from '@/application/services/useTelegram'
@@ -49,10 +43,6 @@ const { setCity, trip } = useTripDetails()
 const { showMainButton, hideMainButton } = useTelegram()
 const router = useRouter()
 
-onBeforeMount(() => {
-  window.scrollTo(0, 0)
-})
-
 onMounted(() => {
   if (trip.city !== 0) {
     selectedId.value = trip.city
@@ -62,6 +52,10 @@ onMounted(() => {
     setCity(selectedId.value)
 
     void router.push('/')
+  })
+
+  window.requestAnimationFrame(() => {
+    window.scrollTo(0, 0)
   })
 })
 

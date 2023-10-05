@@ -1,0 +1,14 @@
+:root {
+  /**
+   * If an element has overflow: hidden and border-radius, overflow is ignored in Safari.
+   * This fix solves the issue
+   */
+   --safari-overflow-hidden-fix {
+    /**
+     * Hack to target only Safari and not all webkit browsers
+     */
+    @media not all and (min-resolution:.001dpcm) {
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
+    }
+  }
+}

@@ -9,7 +9,12 @@ defineProps<{
 
 <template>
   <div class="number">
-
+    <div
+      v-if="$slots.topline"
+      class="topline"
+    >
+      <slot name="topline" />
+    </div>
     <span
       v-if="label"
       class="label"
@@ -28,12 +33,13 @@ defineProps<{
 </template>
 
 <style scoped>
-@import '../styles/theme/typescale.css';
+@import '@/presentation/styles/theme/typescale.css';
 .number {
   @apply --title-3-rounded-semibold;
 }
 
-.subline {
+.subline,
+.topline {
   @apply --subheadline-2-rounded-semibold;
 
   color: var(--color-text-secondary);

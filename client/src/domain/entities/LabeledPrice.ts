@@ -3,7 +3,7 @@
  *
  * @see https://core.telegram.org/bots/api#labeledprice
  */
-export interface LabeledPrice {
+export default interface LabeledPrice {
   /**
    * Portion label
    */

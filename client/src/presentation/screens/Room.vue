@@ -1,7 +1,60 @@
 <script setup lang="ts">
 import WebApp from '@twa-dev/sdk'
-import { onBeforeUnmount, onMounted } from 'vue'
+import { computed, onBeforeUnmount, onMounted } from 'vue'
+import { useHotel } from '@/domain/services/useHotel'
 import useInvoice from '@/domain/services/useInvoice'
+import { PageWithHeader, Placeholder, Icon, Section, List, ListItem, Number } from '@/presentation/components'
+
+const props = defineProps({
+  hotelId: Number,
+  roomId: Number,
+}) as {
+  hotelId: number | undefined;
+  roomId: number | undefined;
+}
+
+const hotelId = computed(() => props.hotelId)
+const roomId = computed(() => props.roomId)
+
+const { hotel } = useHotel(hotelId)
+
+const room = computed(() => {
+  if (hotel.value === undefined) {
+    return undefined
+  }
+
+  return hotel.value.rooms.find(room => room.id === roomId.value)
+})
+
+/**
+ * Mocked room amenities
+ */
+const amenities = [
+  {
+    icon: 'square-filled-wifi',
+    name: 'Free Wi-Fi',
+  },
+  {
+    icon: 'square-filled-bed',
+    name: 'King size bed',
+  },
+  {
+    icon: 'square-filled-air',
+    name: 'Air Conditioner',
+  },
+  {
+    icon: 'square-filled-parking',
+    name: 'Free parking',
+  },
+  {
+    icon: 'square-filled-safe',
+    name: 'Safety deposit box',
+  },
+  {
+    icon: 'square-filled-sport',
+    name: 'Sport facilities',
+  },
+]
 
 const { create: createInvoice } = useInvoice()
 
@@ -90,12 +143,157 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div>
-    Room description
+  <PageWithHeader
+    v-if="room && hotel"
+    class="page"
+  >
+    <template #header>
+      <Section>
+        <ListItem
+          :avatar="{src: '/pics/hotel-3.jpg', placeholder: hotel.title}"
+          :title="hotel.title"
+          :subtitle="hotel.subtitle"
+          :to="`/hotel/${hotel.id}`"
+        />
+      </Section>
+    </template>
+    <template #content>
+      <Section standalone>
+        <Placeholder
+          :title="room.title"
+          :caption="room.subtitle"
+          standalone
+        >
+          <template #picture>
+            <Avatar
+              src="/pics/room-1-2.jpg"
+              big
+            />
+          </template>
+        </Placeholder>
+      </Section>
+
+      <Section
+        padded
+        title="Price"
+      >
+        <List
+          with-background
+          standalone
+        >
+          <ListItem
+            label="Breakfast"
+          >
+            <template #right>
+              <span>Included</span>
+            </template>
+          </ListItem>
+          <ListItem
+            label="Transfer"
+          >
+            <template #right>
+              <Number>100$</Number>
+            </template>
+          </ListItem>
+        </List>
+      </Section>
+      <Section
+        title="Amenities"
+        padded
+      >
+        <List
+          with-background
+          standalone
+        >
+          <ListItem
+            v-for="(amenity, index) in amenities"
+            :key="'amenity' + index"
+            :icon="amenity.icon"
+            :label="amenity.name"
+            right-icon="checkmark"
+          />
+        </List>
+      </Section>
+    </template>
+  </PageWithHeader>
+  <div
+    v-if="room"
+    class="total"
+  >
+    <div class="price">
+      <ListItem
+        label="Total Price"
+        subtitle="For 4 night stand"
+      >
+        <template #picture>
+          <Icon
+            name="card"
+          />
+        </template>
+        <template #right>
+          <Number>
+            {{ room.price }}$
+          </Number>
+        </template>
+      </ListItem>
+    </div>
   </div>
 </template>
 
 <style scoped>
+.total {
+  position: sticky;
+  bottom: 8px;
+  padding: 4px;
+  background-color: rgba(19, 19, 19, 0.84);
+  color: white;
+  backdrop-filter: blur(10px);
+  right: 0;
+  left: 0;
+  border-radius: 16px;
+  margin: 8px;
 
+  .price {
+    /* padding: 16px; */
+    border-radius: var(--size-border-radius-big);
+
+    &:deep(.number){
+      font-size: 22px;
+      gap: 4px;
+    }
+
+    &:deep(.topline){
+      margin-bottom: 4px;
+    }
+
+    &:deep(.icon){
+      width: 20px;
+      display: block;
+      animation: shake 500ms cubic-bezier(0.19, 1, 0.22, 1) ;
+      will-change: transform;
+    }
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: rotate(-10deg) scale(0.2);
+  }
+
+  30% {
+    transform: rotate(5deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(-5deg) scale(1.1);
+  }
+
+  75% {
+    transform: rotate(5deg) scale(1);
+  }
+
+  100% {
+    transform: none;
+  }
+}
 </style>
-@/domain/services/useInvoice

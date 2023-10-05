@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, nextTick, onBeforeUnmount } from 'vue'
-import Icon from '@/presentation/components/Icon.vue'
+import { Icon } from '@/presentation/components'
 
 /**
  * Now date

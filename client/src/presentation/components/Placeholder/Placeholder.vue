@@ -58,7 +58,7 @@ defineProps<{
 </template>
 
 <style scoped lang="postcss">
-@import '../styles/theme/typescale.css';
+@import '@/presentation/styles/theme/typescale.css';
 
 .placeholder {
   --padding: 40px 28px;
@@ -70,6 +70,7 @@ defineProps<{
   grid-template-rows: auto;
   justify-content: center;
   place-items: center;
+  text-align: center;
 
   @apply --body;
 
