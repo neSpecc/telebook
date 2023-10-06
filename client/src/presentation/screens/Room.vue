@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import WebApp from '@twa-dev/sdk'
 import { computed, onBeforeUnmount, onMounted } from 'vue'
-import { useHotel } from '@/domain/services/useHotel'
-import useInvoice from '@/domain/services/useInvoice'
-import { PageWithHeader, Placeholder, Icon, Section, List, ListItem, Number } from '@/presentation/components'
+import { useHotel, useTripDetails, useInvoice } from '@/domain/services'
+import { useScroll } from '@/application/services'
+import { PageWithHeader, Placeholder, Icon, Section, Sections, List, ListItem, Number, Avatar } from '@/presentation/components'
 
 const props = defineProps({
+  /**
+   * Selected hotel identifier
+   */
   hotelId: Number,
+
+  /**
+   * Identifier of the selected room in a hotel
+   */
   roomId: Number,
 }) as {
   hotelId: number | undefined;
@@ -18,6 +25,9 @@ const roomId = computed(() => props.roomId)
 
 const { hotel } = useHotel(hotelId)
 
+/**
+ * Selected room data
+ */
 const room = computed(() => {
   if (hotel.value === undefined) {
     return undefined
@@ -55,6 +65,8 @@ const amenities = [
     name: 'Sport facilities',
   },
 ]
+
+const { days } = useTripDetails()
 
 const { create: createInvoice } = useInvoice()
 
@@ -129,16 +141,22 @@ async function buttonClicked(): Promise<void> {
   // WebApp.switchInlineQuery('#133', ['users', 'groups'])
 }
 
+const { lock, unlock } = useScroll()
+
 onMounted(() => {
   WebApp.MainButton.text = 'Book now'
   WebApp.MainButton.isVisible = true
 
   WebApp.MainButton.onClick(buttonClicked)
+
+  lock()
 })
 
 onBeforeUnmount(() => {
   WebApp.MainButton.offClick(buttonClicked)
   WebApp.MainButton.isVisible = false
+
+  unlock()
 })
 </script>
 
@@ -158,62 +176,71 @@ onBeforeUnmount(() => {
       </Section>
     </template>
     <template #content>
-      <Section standalone>
-        <Placeholder
-          :title="room.title"
-          :caption="room.subtitle"
-          standalone
-        >
-          <template #picture>
-            <Avatar
-              src="/pics/room-1-2.jpg"
-              big
-            />
-          </template>
-        </Placeholder>
-      </Section>
+      <Sections class="form">
+        <Section standalone>
+          <Placeholder
+            :title="room.title"
+            :caption="room.subtitle"
+            standalone
+          >
+            <template #picture>
+              <Avatar
+                src="/pics/room-1-2.jpg"
+                big
+              />
+            </template>
+          </Placeholder>
+        </Section>
 
-      <Section
-        padded
-        title="Price"
-      >
-        <List
-          with-background
-          standalone
+        <Section
+          padded
+          title="Price"
         >
-          <ListItem
-            label="Breakfast"
+          <List
+            with-background
+            standalone
           >
-            <template #right>
-              <span>Included</span>
-            </template>
-          </ListItem>
-          <ListItem
-            label="Transfer"
-          >
-            <template #right>
-              <Number>100$</Number>
-            </template>
-          </ListItem>
-        </List>
-      </Section>
-      <Section
-        title="Amenities"
-        padded
-      >
-        <List
-          with-background
-          standalone
+            <ListItem
+              label="Room price"
+            >
+              <template #right>
+                <span>{{ Math.max(1, days) }} × {{ room.price }}$</span>
+              </template>
+            </ListItem>
+            <ListItem
+              label="Breakfast"
+            >
+              <template #right>
+                <span>Included</span>
+              </template>
+            </ListItem>
+            <ListItem
+              label="Transfer"
+            >
+              <template #right>
+                <Number>100$</Number>
+              </template>
+            </ListItem>
+          </List>
+        </Section>
+        <Section
+          title="Amenities"
+          padded
         >
-          <ListItem
-            v-for="(amenity, index) in amenities"
-            :key="'amenity' + index"
-            :icon="amenity.icon"
-            :label="amenity.name"
-            right-icon="checkmark"
-          />
-        </List>
-      </Section>
+          <List
+            with-background
+            standalone
+          >
+            <ListItem
+              v-for="(amenity, index) in amenities"
+              :key="'amenity' + index"
+              :icon="amenity.icon"
+              :label="amenity.name"
+              right-icon="checkmark"
+            />
+          </List>
+        </Section>
+      </Sections>
     </template>
   </PageWithHeader>
   <div
@@ -295,5 +322,9 @@ onBeforeUnmount(() => {
   100% {
     transform: none;
   }
+}
+
+.form {
+  padding-bottom: 90px;
 }
 </style>

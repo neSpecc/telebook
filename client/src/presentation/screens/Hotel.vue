@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { List, ListItem, Sections, Section, Number, Placeholder, DataOverview, Avatar } from '@/presentation/components'
+import { List, ListItem, Sections, Section, Number, Placeholder, DataOverview, Avatar, Text } from '@/presentation/components'
 import { useHotel } from '@/domain/services/useHotel'
-import { computed, type PropType } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
   id: Number,
@@ -50,35 +50,46 @@ const reviews = [
   <div v-if="hotel">
     <div
       class="cover"
-      style="background-image: url('/pics/hotel-1.jpg');"
-    />
-
-    <Placeholder
-      image="/pics/hotel-1.jpg"
-      :title="hotel.title"
-      :caption="hotel.subtitle"
-    >
-      <template #picture>
-        <Avatar
-          src="/pics/hotel-1.jpg"
-          big
-        />
-      </template>
-    </Placeholder>
-
-    <DataOverview
-      :rating="hotel.rating"
-      :award="hotel.award"
-      :chart="hotel.chart"
+      :style="{
+        backgroundImage: `url('${hotel.picture}')`
+      }"
     />
     <Sections>
-      <Section padded>
+      <Placeholder
+        :title="hotel.title"
+        :caption="hotel.subtitle"
+      >
+        <template #picture>
+          <Avatar
+            :src="hotel.picture"
+            big
+          />
+        </template>
+      </Placeholder>
+
+      <DataOverview
+        :rating="hotel.rating"
+        :award="hotel.award"
+        :chart="hotel.chart"
+      />
+      <Section
+        title="About"
+        padded
+      >
+        <Text>
+          {{ hotel.description }}
+        </Text>
+      </Section>
+      <Section
+        title="Rooms"
+        padded
+      >
         <List gapped>
           <ListItem
             v-for="room in hotel.rooms"
             :id="room.id"
             :key="hotel.id + '@' + room.id"
-            :label="room.title"
+            :title="room.title"
             :subtitle="room.subtitle"
             :avatar="{ src: room.picture, placeholder: room.title }"
             :to="`/room/${hotel.id}/${room.id}`"
@@ -103,34 +114,38 @@ const reviews = [
         </List>
       </Section>
       <Section
-        with-background
-        standalone
         title="Reviews"
+        padded
       >
-        <ListItem
-          v-for="(review, index) in reviews"
-          :id="`${index}-review`"
-          :key="`review-${index}`"
-          :avatar="{placeholder: review.name}"
-          :label="review.name"
-          :subtitle="review.text"
+        <List
+          with-background
+          standalone
         >
-          <template #right>
-            <div class="review-rating">
-              <Number>
-                {{ review.rating }}
-              </Number>
-              <div class="stars">
-                <template
-                  v-for="i in 5"
-                  :key="`star${i}`"
-                >
-                  {{ i <= review.rating ? '★' : '☆' }}
-                </template>
+          <ListItem
+            v-for="(review, index) in reviews"
+            :id="`${index}-review`"
+            :key="`review-${index}`"
+            :avatar="{placeholder: review.name}"
+            :title="review.name"
+            :subtitle="review.text"
+          >
+            <template #right>
+              <div class="review-rating">
+                <Number>
+                  {{ review.rating }}
+                </Number>
+                <div class="stars">
+                  <template
+                    v-for="i in 5"
+                    :key="`star${i}`"
+                  >
+                    {{ i <= review.rating ? '★' : '☆' }}
+                  </template>
+                </div>
               </div>
-            </div>
-          </template>
-        </ListItem>
+            </template>
+          </ListItem>
+        </List>
       </Section>
     </Sections>
   </div>

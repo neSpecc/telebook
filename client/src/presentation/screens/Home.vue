@@ -1,10 +1,21 @@
+<!-- eslint-disable clean-timer/assign-timer-id -->
 <script setup lang="ts">
 import { Placeholder, List, ListItem, ListItemExpandable, Sections, Section, ListCard, DatePicker, DatePickerCompact, Number } from '@/presentation/components'
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref, onBeforeUnmount } from 'vue'
 import { useTripDetails } from '@/domain/services/useTripDetails'
+import { useTelegram } from '@/application/services'
 import { hotels } from '@/infra/store/hotels/mock/hotels'
+import { Vue3Lottie } from 'vue3-lottie'
+import SearchAnimation from '@/presentation/assets/lottie/run.json'
+import EyesAnimation from '@/presentation/assets/lottie/eyes.json'
+import KrtekAnimation from '@/presentation/assets/lottie/krtek.json'
+import RushAnimation from '@/presentation/assets/lottie/rush.json'
+import SimpAnimation from '@/presentation/assets/lottie/simp.json'
+import TouristAnimation from '@/presentation/assets/lottie/tourist.json'
 
 import WebApp from '@twa-dev/sdk'
+
+import { type Hotel } from '@/domain/entities'
 
 const {
   trip,
@@ -24,10 +35,66 @@ const startDatePickerShowed = ref(false)
  */
 const endDatePickerShowed = ref(false)
 
+/**
+ * List loading state
+ * Undefined when no search performed yet
+ */
+const isLoading = ref<boolean | undefined>(undefined)
+
+const result = ref<Hotel[]>([])
+
+const { showMainButton, hideMainButton, setButtonLoader } = useTelegram()
+
+/**
+ * Hook called before search
+ */
+function onBeforeSearch(): void {
+  isLoading.value = true
+  startDatePickerShowed.value = false
+  endDatePickerShowed.value = false
+
+  setButtonLoader(true)
+}
+
+/**
+ * Hook called after search
+ */
+function onAfterSearch(): void {
+  isLoading.value = false
+  setButtonLoader(false)
+  hideMainButton()
+}
+
+
+/**
+ * Fake search method
+ */
+function search(): void {
+  onBeforeSearch()
+
+  setTimeout(() => {
+    onAfterSearch()
+
+    hotels.forEach((hotel, i) => {
+      setTimeout(() => {
+        result.value.push(hotel)
+      }, i * 150)
+    })
+  }, 2000)
+}
+
 onMounted(() => {
   if (trip.city === 0) {
     selectDefaultLocation()
   }
+
+  showMainButton('Search', () => {
+    search()
+  })
+})
+
+onBeforeUnmount(() => {
+  hideMainButton()
 })
 
 onUnmounted(() => {
@@ -35,7 +102,7 @@ onUnmounted(() => {
 })
 </script>
 <template>
-  <div>
+  <div class="home-page">
     <Placeholder
       title="Telebook"
       caption="Book a profi appointment"
@@ -48,13 +115,17 @@ onUnmounted(() => {
         >
       </template>
     </Placeholder>
-    <Sections>
+    <Sections
+      :class="{
+        'with-filler': isLoading === true,
+      }"
+    >
       <Section
         with-background
         standalone
       >
         <List>
-          <ListItem title="Travel date">
+          <ListItem label="Travel date">
             <template #right>
               <DatePickerCompact
                 :value="trip.startDate"
@@ -67,7 +138,7 @@ onUnmounted(() => {
               @date-pick="(date) => setStartDate(date)"
             />
           </ListItemExpandable>
-          <ListItem title="End date">
+          <ListItem label="End date">
             <template #right>
               <DatePickerCompact
                 :value="trip.endDate"
@@ -81,96 +152,88 @@ onUnmounted(() => {
             />
           </ListItemExpandable>
           <ListItem
-            title="Location"
+            label="Location"
             right-icon="chevron-right"
             :right-icon-label="location?.title"
             to="/location"
           />
         </List>
       </Section>
-      <Section padded>
-        <List gapped>
-          <ListItem
-            v-for="hotel in hotels"
-            :id="hotel.id"
-            :key="hotel.id"
-            :avatar="{src: '/pics/hotel-1.jpg', placeholder: hotel.title}"
-            :label="hotel.title"
-            :subtitle="hotel.subtitle"
-            :to="`/hotel/${hotel.id}`"
-            big-avatar
-            standalone
+      <Section
+        v-if="isLoading === true"
+        class="section-filler"
+      >
+        <Vue3Lottie
+          class="run"
+          :animation-data="SimpAnimation"
+          width="100px"
+          height="100px"
+        />
+      </Section>
+      <Section
+        v-else-if="isLoading === false"
+        padded
+      >
+        <List
+          gapped
+          class="results"
+        >
+          <template
+            v-for="(hotel, index) in result"
+            :key="'hotel:' + hotel.id"
           >
-            <template #right>
-              <div class="room-cell-right">
-                <Number>
-                  <template #topline>
-                    from
-                  </template>
-                  {{ hotel.price }}$
-                </Number>
-                <div class="small">
-                  for {{ 12 }} nights
+            <ListCard
+              v-if="index === 3 || index === 5"
+              :title="hotel.title"
+              :picture="hotel.picture"
+            >
+              <Sections>
+                {{ hotel.description }}
+                <List gapped>
+                  <ListItem
+                    :id="1"
+                    transaction-icon="clock-fill"
+                    label="Check rooms"
+                    subtitle="There are 14 rooms available"
+                    to="/hotel/1"
+                    right-icon="chevron-right"
+                    standalone
+                  />
+                </List>
+              </Sections>
+            </ListCard>
+            <ListItem
+              v-else
+              :id="hotel.id"
+              :avatar="{src: hotel.picture, placeholder: hotel.title}"
+              :label="hotel.title"
+              :subtitle="hotel.subtitle"
+              :to="`/hotel/${hotel.id}`"
+              big-avatar
+              standalone
+              :is-loading="isLoading"
+            >
+              <template #right>
+                <div class="room-cell-right">
+                  <Number>
+                    <template #topline>
+                      from
+                    </template>
+                    {{ hotel.price }}$
+                  </Number>
+                  <div class="small">
+                    for {{ 12 }} nights
+                  </div>
                 </div>
-              </div>
-              <!-- <div class="viewed">
-                <span class="viewed-eyes">
-                  👀
-                </span>
-                2 viewed
-              </div> -->
-            </template>
-          </ListItem>
-        </List>
-      </Section>
-
-      <Section padded>
-        <ListCard
-          title="Sunset Beach Hotel"
-          picture="/pics/hotel-1.jpg"
-        >
-          <Sections>
-            Compfortable hotel with a beautiful view to the sea. The hotel has a restaurant, a bar, a swimming pool, a gym and a spa.
-            <List gapped>
-              <ListItem
-                :id="1"
-                transaction-icon="clock-fill"
-                label="Check rooms"
-                subtitle="There are 14 rooms available"
-                to="/hotel/1"
-                right-icon="chevron-right"
-                standalone
-              />
-            </List>
-          </Sections>
-        </ListCard>
-        <ListCard
-          title="Swan Lake"
-          picture="/pics/hotel-2.jpg"
-        >
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea nobis exercitationem reprehenderit quam corrupti, ipsa sunt ex alias dolor nisi et animi quo recusandae, possimus rerum vel. Expedita, nulla architecto.
-        </ListCard>
-      </Section>
-
-      <Section padded>
-        <List gapped>
-          <ListItem
-            :id="1"
-            transaction-icon="market-fill"
-            label="Select service"
-            subtitle="The service you want to use"
-            to="services"
-            right-icon="chevron-right"
-            standalone
-          />
-          <ListItem
-            :id="2"
-            transaction-icon="user-circle-fill"
-            label="Select provider"
-            subtitle="If you prefer a particular profi"
-            right-icon="chevron-right"
-            standalone
-          />
+                <!-- <div class="viewed">
+                  <span class="viewed-eyes">
+                    👀
+                  </span>
+                  2 viewed
+                </div> -->
+              </template>
+            </ListItem>
+          </template>
         </List>
       </Section>
     </Sections>
@@ -179,6 +242,27 @@ onUnmounted(() => {
 
 <style scoped>
 @import '@/presentation/styles/theme/typescale.css';
+
+.home-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  .sections {
+    flex-grow: 1;
+    grid-auto-rows: min-content;
+  }
+
+  .sections.with-filler {
+    grid-template-rows: auto 1fr;
+  }
+
+  .section-filler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 
 .viewed {
   background-color: #000;
@@ -237,5 +321,36 @@ onUnmounted(() => {
   :deep(.number){
     text-align: center;
   }
+}
+
+.run {
+  /* animation: run 3.5s ease-in-out forwards; */
+  /* right: 0; */
+  /* position: absolute; */
+  /* will-change: transform; */
+}
+
+@keyframes run {
+  0% {
+    transform: translateX(0)
+  }
+
+  100% {
+    transform: translateX(-350px)
+  }
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 2.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.results {
+  min-height: 800px;
 }
 </style>

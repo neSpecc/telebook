@@ -299,6 +299,7 @@ onBeforeUnmount(() => {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
+  -webkit-tap-highlight-color: transparent;
 
   button {
     width: 24px;
@@ -371,6 +372,8 @@ onBeforeUnmount(() => {
   align-items: center;
   height: 44px;
   cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
 
   @apply --title-3;
 

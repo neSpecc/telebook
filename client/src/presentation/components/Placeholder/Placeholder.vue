@@ -35,9 +35,7 @@ defineProps<{
       'placeholder--bg': withBackground
     }"
   >
-    <div class="pic">
-      <slot name="picture" />
-    </div>
+    <slot name="picture" />
 
     <h1 class="title">
       {{ title }}
@@ -85,14 +83,6 @@ defineProps<{
     background-color: var(--color-bg);
   }
 
-  .pic {
-    width: var(--pic-size);
-    height: var(--pic-size);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .title {
     @apply --title-2-semibold;
 
@@ -105,7 +95,8 @@ defineProps<{
 
   .caption {
     margin-top: var(--spacing-8);
-    color: var(--color-hint)
+    color: var(--color-hint);
+    max-width: 300px;
   }
 
   &--compact .caption {

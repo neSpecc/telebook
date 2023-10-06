@@ -53,10 +53,6 @@ onMounted(() => {
 
     void router.push('/')
   })
-
-  window.requestAnimationFrame(() => {
-    window.scrollTo(0, 0)
-  })
 })
 
 onBeforeUnmount(() => {

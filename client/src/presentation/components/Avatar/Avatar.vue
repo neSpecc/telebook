@@ -20,19 +20,23 @@ const props = defineProps<{
    */
   placeholder?: string;
 
-  transactionIcon?: string;
-  icon?: string;
+  /**
+   * Whether the avatar should be big
+   */
   big?: boolean;
 }>()
 
+/**
+ * Colors for placeholder background gradient
+ */
 const bgColors = [
-  ['#e17076', '#ff885e', '#ff516a'], // red
-  ['#faa774', '#ffcd6a', '#ffa85c'], // orange
-  ['#a695e7', '#82b1ff', '#665fff'], // purple
-  ['#7bc862', '#a0de7e', '#54cb68'], // green
-  ['#6ec9cb', '#53edd6', '#28c9b7'], // cyan
-  ['#65aadd', '#72d5fd', '#2a9ef1'], // blue
-  ['#ee7aae', '#e0a2f3', '#d669ed'], // pink
+  ['#e17076', '#ff885e', '#ff516a'],
+  ['#faa774', '#ffcd6a', '#ffa85c'],
+  ['#a695e7', '#82b1ff', '#665fff'],
+  ['#7bc862', '#a0de7e', '#54cb68'],
+  ['#6ec9cb', '#53edd6', '#28c9b7'],
+  ['#65aadd', '#72d5fd', '#2a9ef1'],
+  ['#ee7aae', '#e0a2f3', '#d669ed'],
 ]
 
 /**
@@ -76,18 +80,12 @@ const backgroundColor = computed(() => {
   <div
     class="avatar"
     :class="{
-      'avatar--with-transaction-icon': transactionIcon,
-      'avatar--with-icon': icon,
-      'avatar--with-placeholder': !icon && !transactionIcon && !src,
+      'avatar--with-placeholder': !src,
       'avatar--big': big === true
     }"
   >
-    <Icon
-      v-if="icon || transactionIcon"
-      :name="icon || transactionIcon"
-    />
     <img
-      v-else-if="src"
+      v-if="src"
       :src="src"
       :alt="placeholder ?? ''"
     >
@@ -115,17 +113,9 @@ const backgroundColor = computed(() => {
   height: var(--size);
   border-radius: var(--radius);
 
-  &--with-placeholder {
-    background: v-bind(backgroundColor);
-  }
-
-  &--with-transaction-icon {
-    background: linear-gradient(156.88deg, #00E7FF 14.96%, #007AFF 85.04%);
-  }
-
   &--big {
     --size: var(--size-avatar-big);
-    --radius: var(--size-border-radius-big);
+    --radius: var(--size-border-radius-medium);
   }
 
   img {
@@ -142,26 +132,6 @@ const backgroundColor = computed(() => {
     font-feature-settings: 'tnum' on, 'lnum' on;
     transform: translateX(0.6px);
     color: #fff;
-  }
-
-  :deep(.icon) svg {
-    fill: #fff;
-
-    animation: jump-in 250ms ease;
-  }
-}
-
-@keyframes jump-in {
-  0% {
-    transform: scale(0.8);
-  }
-
-  80% {
-    transform: scale(1.05);
-  }
-
-  100% {
-    transform: scale(1);
   }
 }
 </style>

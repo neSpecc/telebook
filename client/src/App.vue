@@ -41,7 +41,7 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--color-bg-secondary);;
+  background-color: var(--color-bg-secondary);
 }
 
 #app {

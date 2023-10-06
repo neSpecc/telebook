@@ -30,6 +30,7 @@ defineProps<{
 .list {
   display: grid;
   grid-gap: var(--gap);
+  grid-auto-rows:min-content;
 
   &--bg {
     background-color: var(--color-bg);

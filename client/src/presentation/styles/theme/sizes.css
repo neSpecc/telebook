@@ -1,4 +1,5 @@
 :root {
+  --size-avatar-small: 28px;
   --size-avatar-medium: 40px;
   --size-avatar-big: 76px;
   --size-border-radius-medium: 10px;
@@ -6,6 +7,7 @@
   --size-border-radius-large: 16px;
 
   --size-cell-h-padding: 16px;
+  --size-cell-v-padding: 4px;
   --size-separator-height: 1px;
 }
 

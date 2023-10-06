@@ -3,6 +3,7 @@ import WebApp from '@twa-dev/sdk'
 interface useTelegramComposableState {
   showMainButton: (text: string, callback: () => void) => void;
   hideMainButton: () => void;
+  setButtonLoader: (state: boolean) => void;
 }
 
 /**
@@ -42,8 +43,20 @@ export default function useTelegram(): useTelegramComposableState {
     WebApp.MainButton.isVisible = false
   }
 
+  /**
+   * Show/hide the main button loader
+   */
+  function setButtonLoader(state: boolean): void {
+    if (state) {
+      WebApp.MainButton.showProgress()
+    } else {
+      WebApp.MainButton.hideProgress()
+    }
+  }
+
   return {
     showMainButton,
     hideMainButton,
+    setButtonLoader,
   }
 }

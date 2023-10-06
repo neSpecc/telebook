@@ -1,0 +1,20 @@
+:root {
+  --animation-skeleton {
+    animation: skeleton 1.2s ease-in-out infinite;
+    background-color: var(--skeleton-color);
+  }
+}
+
+@keyframes skeleton {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

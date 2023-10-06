@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Avatar, Icon } from '@/presentation/components'
+import { Avatar, Icon, ListItemIcon, SkeletonPicture } from '@/presentation/components'
+import { computed, useSlots } from 'vue'
 
 const props = defineProps<{
   /**
@@ -20,6 +21,7 @@ const props = defineProps<{
   standalone?: boolean;
   to?: string;
   bigAvatar?: boolean;
+  isLoading?: boolean;
 }>()
 
 // /**
@@ -28,6 +30,64 @@ const props = defineProps<{
 // const hasLeftCol = computed(() => {
 //   return props.avatar !== undefined || props.transactionIcon !== undefined || props.icon !== undefined
 // })
+
+const slots = useSlots()
+
+/**
+ * Determines whether the left column should be rendered
+ */
+const hasPicture = computed(() => {
+  return slots.picture !== undefined || props.avatar !== undefined || props.transactionIcon !== undefined || props.icon !== undefined
+})
+
+/**
+ * Determines what size of the picture should be used
+ * - small - 28px
+ * - medium - 40px
+ * - big - 76px
+ */
+const pictureSize = computed(() => {
+  if (props.bigAvatar) {
+    return 'big'
+  }
+
+  if (props.transactionIcon !== undefined) {
+    return 'medium'
+  }
+
+  if (props.icon !== undefined) {
+    return 'small'
+  }
+
+  if (slots.picture !== undefined) {
+    return 'medium'
+  }
+
+  return undefined
+})
+
+/**
+ * Rounding style of a picture: square or circle
+ */
+const pictureStyle = computed(() => {
+  if (!hasPicture.value) {
+    return undefined
+  }
+
+  if (props.avatar !== undefined) {
+    return 'square'
+  }
+
+  if (props.transactionIcon !== undefined) {
+    return 'circle'
+  }
+
+  if (props.icon !== undefined) {
+    return 'square'
+  }
+
+  return 'circle'
+})
 </script>
 
 <template>
@@ -43,19 +103,31 @@ const props = defineProps<{
     <div
       class="left-col"
     >
-      <slot name="picture" />
-      <Avatar
-        v-if="avatar"
-        :id="avatar.id"
-        :src="avatar.src"
-        :placeholder="avatar.placeholder"
-        :big="bigAvatar"
+      <SkeletonPicture
+        v-if="isLoading === true && pictureSize !== undefined"
+        :size="pictureSize"
+        :style="pictureStyle"
       />
-      <Avatar
-        v-else-if="transactionIcon || icon"
-        :transaction-icon="transactionIcon"
-        :icon="icon"
-      />
+      <template v-else>
+        <slot name="picture" />
+        <Avatar
+          v-if="avatar"
+          :id="avatar.id"
+          :src="avatar.src"
+          :placeholder="avatar.placeholder"
+          :big="bigAvatar"
+        />
+        <ListItemIcon
+          v-else-if="transactionIcon"
+          :icon="transactionIcon"
+          type="circle"
+        />
+        <ListItemIcon
+          v-else-if="icon"
+          :icon="icon"
+          type="square"
+        />
+      </template>
     </div>
     <div class="right-row">
       <div class="body">
@@ -109,11 +181,17 @@ const props = defineProps<{
   padding-left: var(--size-cell-h-padding);
   min-height: 44px;
 
+  /**
+   * Disable default link touch feedback
+   */
+  -webkit-tap-highlight-color: transparent;
+
   &:active {
     /**
      * Make background color darker when pressed using filter
      */
-    filter: brightness(0.9);
+    /* filter: brightness(0.99); */
+    background-color: red;
   }
 
   &--standalone {
@@ -136,7 +214,7 @@ const props = defineProps<{
   }
 
   &--big-avatar .left-col {
-    padding-block: 14px;
+    padding-block: 10px;
   }
 
   .right-row {
@@ -154,6 +232,7 @@ const props = defineProps<{
       background-color: var(--separator-color);
       display: block;
       grid-column: 1 / -1;
+      opacity: .4;
     }
 
     .right {

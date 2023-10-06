@@ -1,7 +1,8 @@
 :root {
   --color-bg: var(--tg-theme-bg-color, #1c1c1d);
   --color-bg-secondary: var(--tg-theme-secondary-bg-color, #000);
-  --color-bg-tertiary: rgba(118, 118, 128, 0.12);
+  --color-bg-tertiary: rgba(118, 118, 128, 0.1);
+  --color-bg-quarternary: rgba(118, 118, 128, 0.03);
   --color-bg-button: var(--tg-theme-button-color, #3e88f7);
   --color-bg-overlay: rgba(0, 0, 0, 0.3);
 
@@ -10,8 +11,10 @@
   --color-hint: var(--tg-theme-hint-color, #98989e);
   --color-link: var(--tg-theme-link-color, #3e88f7);
 
-  --separator-color: #3d3d3f;
+  --separator-color: var(--color-hint);
 
+  --skeleton-color: var(--color-bg-tertiary);
+  --skeleton-color-2: var(--color-bg-quarternary);
 
   /* @todo support tg variables */
   @media (prefers-color-scheme: light) {
@@ -25,6 +28,6 @@
     --color-hint: var(--tg-theme-hint-color, #8e8e93);
     --color-link: var(--tg-theme-link-color, #007aff);
 
-    --separator-color: #C8C7CB;
+    --separator-color: varr(--color-hint);
   }
 }

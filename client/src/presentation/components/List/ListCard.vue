@@ -210,8 +210,8 @@ onBeforeUnmount(() => {
 }
 .list-card  {
   --height: v-bind(heightCollapsed);
-  --speed: 800ms;
-  --timing: cubic-bezier(.58,-0.25,.4,1.17);
+  --speed: 680ms;
+  --timing: cubic-bezier(.58,-0.5,.4,1.17);
 
   background-color: var(--color-bg-secondary);
   border-radius: var(--size-border-radius-big);
@@ -222,7 +222,7 @@ onBeforeUnmount(() => {
     top var(--speed) var(--timing),
     height var(--speed) ease,
     width var(--speed) var(--timing),
-    box-shadow 200ms ease;
+    box-shadow 200ms ease-out;
 
   height: var(--height);
   z-index: 9;

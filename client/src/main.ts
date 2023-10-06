@@ -39,9 +39,12 @@ if (platform !== 'unknown') {
  */
 void loadCities()
   .then(() => {
-    WebApp.ready()
     const app = createApp(App)
 
     app.use(Router)
     app.mount('#app')
+
+    requestAnimationFrame(() => {
+      WebApp.ready()
+    })
   })

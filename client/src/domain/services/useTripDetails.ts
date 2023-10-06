@@ -54,6 +54,11 @@ interface useTripDetailsComposableState {
   location: ComputedRef<City | undefined>;
 
   /**
+   * Number of days of the trip
+   */
+  days: ComputedRef<number>;
+
+  /**
    * Selects default trip details:
    *  - current date as start date
    *  - current date + 1 day as end date
@@ -132,6 +137,14 @@ export const useTripDetails = createSharedComposable((): useTripDetailsComposabl
   })
 
   /**
+   * Number of days of the trip
+   */
+  const days = computed(() => {
+    const diffTime = Math.abs(trip.endDate.getTime() - trip.startDate.getTime())
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  })
+
+  /**
    * Selects default trip details:
    *  - current date as start date
    *  - current date + 1 day as end date
@@ -160,5 +173,6 @@ export const useTripDetails = createSharedComposable((): useTripDetailsComposabl
     trip,
     location,
     selectDefault,
+    days
   }
 })

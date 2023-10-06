@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import { useAppStyle } from '@/application/services'
+import { useScroll } from '@/application/services'
 // import { onBeforeMount } from 'vue';
 
 // const { setAppBackground } = useAppStyle()
@@ -25,27 +25,35 @@
   /* background-color: var(--color-bg); */
   /* padding-bottom: 16px; */
 
-  --content-radius: 16px
+  --content-radius: 16px;
+  height: 100vh;
+  /* overflow: hidden; */
+  /* scroll-behavior: smooth; */
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
-
 .page-header {
-  padding: 4px 0 calc(2px + var(--content-radius));
+  /* padding: 4px 0 calc(2px + var(--content-radius)); */
   background-color: var(--color-bg);
+  position: sticky;
+  top: 0;
+
+  &:deep(.subtitle) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .page-content {
+  height: 100%;
+  overflow: auto;
+  scroll-behavior: smooth;
+  padding-top: 60px;
   /* padding-bottom: 100px; */
-
   /* box-shadow: -3px 0 40px -10px rgba(0, 0, 0, 0.3); */
 
-  /* :deep(.placeholder), */
-  :deep(.section) {
-    /* background-color: var(--color-bg-secondary); */
-    border-radius: var(--size-border-radius-large);
-    margin-bottom: 30px;
-  }
-
-  &::before {
+  /* &::before {
     content: '';
     display: block;
     height: var(--content-radius);
@@ -53,6 +61,6 @@
     border-radius: var(--content-radius) var(--content-radius) 0 0;
     background-color: var(--color-bg-secondary);
     transform: translateY(-10px);
-  }
+  } */
 }
 </style>

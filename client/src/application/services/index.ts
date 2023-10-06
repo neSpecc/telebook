@@ -1,5 +1,7 @@
-import { useAppStyle } from './useAppStyle'
+import { useScroll } from './useScroll'
+import useTelegram from './useTelegram'
 
 export {
-  useAppStyle,
+  useScroll,
+  useTelegram,
 }
