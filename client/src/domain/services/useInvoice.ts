@@ -1,8 +1,9 @@
-import { type LabeledPrice } from '@/domain/entities/LabeledPrice'
+import type LabeledPrice from '@/domain/entities/LabeledPrice'
 import Transport from '@/infra/transport/api'
 
 interface useInvoiceComposableState {
   create: (params: CreateInvoiceParams) => Promise<string | null>;
+  toPrice: (usdAmount: number) => number;
 }
 
 /**
@@ -20,11 +21,6 @@ interface CreateInvoiceParams {
    * Product description, 1-255 characters
    */
   description: string;
-
-  /**
-   * Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-   */
-  payload: string;
 
   /**
    * Three-letter ISO 4217 currency code, see more on currencies
@@ -103,7 +99,7 @@ interface CreateInvoiceParams {
  * Service to create a new invoice
  */
 export default function useInvoice(): useInvoiceComposableState {
-  const url = 'https://1fc4-51-158-186-93.ngrok-free.app'
+  const url = import.meta.env.VITE_API_HOST
 
   /**
    * @todo use IoC container
@@ -125,7 +121,17 @@ export default function useInvoice(): useInvoiceComposableState {
     }
   }
 
+  /**
+   * Convert USD amount to price in cents
+   *
+   * @param usdAmount - USD amount
+   */
+  function toPrice(usdAmount: number): number {
+    return Math.round(usdAmount * 100)
+  }
+
   return {
     create,
+    toPrice,
   }
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { formatDate } from '@/infra/utils/date'
 
 const props = defineProps<{
   /**
@@ -16,14 +17,7 @@ const dateVisible = computed(() => {
     return 'Select date'
   }
 
-  /**
-   * Convert Date to "4 Cct 2023" format
-   */
-  const day = props.value.getDate()
-  const month = props.value.toLocaleString('default', { month: 'short' })
-  const year = props.value.getFullYear()
-
-  return `${day} ${month} ${year}`
+  return formatDate(props.value)
 })
 </script>
 

@@ -3,6 +3,7 @@ import Config from '../config.js'
 import Fastify from 'fastify'
 import cors from '@fastify/cors';
 import TelegramBot from 'node-telegram-bot-api'
+import { notify } from '../infra/utils/notify/index.js';
 
 
 
@@ -29,12 +30,12 @@ export default class HttpApi {
     })
 
     this.server.post('/createInvoice', async (request: FastifyRequest, reply: FastifyReply) => {
+
       console.log(`Got ${request.method} request to ${request.url} from ${request.ip}`)
 
       const {
         title,
         description,
-        payload,
         prices,
         need_name,
         photo_url,
@@ -44,6 +45,11 @@ export default class HttpApi {
       } = request.body as any;
 
       console.log('body', request.body);
+
+      const payload = 'Order #' + Math.random().toString(36).substring(7);
+
+      notify(`🛍️ /createInvoice \n\n` + '```\n' + JSON.stringify({title, description, payload}, undefined, '  ') +'\n```')
+
 
       try {
         // @ts-ignore — 'createInvoiceLink supported by the library, but does not defined in types
@@ -72,12 +78,16 @@ export default class HttpApi {
         //   await.this.bot.sendInvoice
         // }
 
+        notify(`🛍️ /createInvoice Success ${invoiceLink} `)
+
         return reply
           .send({
             invoiceLink
           });
       } catch (e) {
-        console.log('error', e);
+        console.log('error', (e as Error).message);
+
+        notify(`Failed to create invoice: ${(e as Error).message}`)
 
         reply
           .code(500)

@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import WebApp from '@twa-dev/sdk'
 import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { useHotel, useTripDetails, useInvoice } from '@/domain/services'
-import { useScroll } from '@/application/services'
+import { useScroll, useTelegram } from '@/application/services'
 import { PageWithHeader, Placeholder, Icon, Section, Sections, List, ListItem, Number, Avatar } from '@/presentation/components'
+import { amenities } from '@/infra/store/hotels/mock/amenities'
+import { formatDate } from '@/infra/utils/date'
+import { format } from 'path'
 
 const props = defineProps({
   /**
-   * Selected hotel identifier
+   * Selected hotel identifier (got from route params)
    */
   hotelId: Number,
 
   /**
-   * Identifier of the selected room in a hotel
+   * Identifier of the selected room in a hotel (got from route params)
    */
   roomId: Number,
 }) as {
@@ -20,10 +22,20 @@ const props = defineProps({
   roomId: number | undefined;
 }
 
+/**
+ * Selected hotel identifier
+ */
 const hotelId = computed(() => props.hotelId)
+
+/**
+ * Identifier of the selected room in a hotel
+ */
 const roomId = computed(() => props.roomId)
 
+const { days, trip } = useTripDetails()
 const { hotel } = useHotel(hotelId)
+const { setButtonLoader, showAlert, openInvoice, closeApp, showMainButton, hideMainButton } = useTelegram()
+const { create: createInvoice, toPrice } = useInvoice()
 
 /**
  * Selected room data
@@ -37,78 +49,64 @@ const room = computed(() => {
 })
 
 /**
- * Mocked room amenities
+ * Total price for the selected room for the selected days
+ * Does not include service fee
  */
-const amenities = [
-  {
-    icon: 'square-filled-wifi',
-    name: 'Free Wi-Fi',
-  },
-  {
-    icon: 'square-filled-bed',
-    name: 'King size bed',
-  },
-  {
-    icon: 'square-filled-air',
-    name: 'Air Conditioner',
-  },
-  {
-    icon: 'square-filled-parking',
-    name: 'Free parking',
-  },
-  {
-    icon: 'square-filled-safe',
-    name: 'Safety deposit box',
-  },
-  {
-    icon: 'square-filled-sport',
-    name: 'Sport facilities',
-  },
-]
+const roomAmount = computed(() => {
+  if (room.value === undefined) {
+    return 0
+  }
 
-const { days } = useTripDetails()
+  return room.value.price * days.value
+})
 
-const { create: createInvoice } = useInvoice()
-
+/**
+ * Main button click handler
+ */
 async function buttonClicked(): Promise<void> {
-  WebApp.MainButton.showProgress()
+  setButtonLoader(true)
 
-  const host = 'https://45e9-51-158-186-93.ngrok-free.app'
+  if (room.value === undefined) {
+    showAlert('Room not found')
 
-  // console.log('WebApp.initDataUnsafe', WebApp.initDataUnsafe)
+    return
+  }
+
+
 
   const invoiceLink = await createInvoice({
-    // @ts-expect-error
-    // chatId: WebApp.initDataUnsafe.chat_instance,
-    title: 'Room',
-    description: 'Room description',
-    payload: '12333',
+    title: room.value.title,
+    description: `${formatDate(trip.startDate, true)} — ${formatDate(trip.endDate, true)}`,
     currency: 'USD',
-    photo_url: `${host}/pics/room-1-1.jpg`,
+    photo_url: `${import.meta.env.VITE_WEB_HOST}/${room.value.picture}`,
     photo_size: 126989,
     photo_width: 1024,
     photo_height: 1024,
     need_name: true,
     prices: [
       {
-        label: 'Room price',
-        amount: 10000,
+        label: `Room ${days.value} × ${room.value.price}$`,
+        amount: toPrice(room.value.price * days.value),
       },
       {
-        label: 'City tax',
-        amount: 600,
+        label: 'Transfer',
+        amount: toPrice(100),
       },
       {
-        label: 'Service fee',
-        amount: 1000,
+        label: 'Service fee 5%',
+        amount: toPrice(roomAmount.value * 0.05),
+      },
+      {
+        label: 'Breakfast included',
+        amount: 0,
       },
     ],
   })
 
-  WebApp.MainButton.hideProgress()
+  setButtonLoader(false)
 
   if (invoiceLink === null) {
-    WebApp.showAlert('could not create invoice')
+    showAlert('could not create invoice')
 
     return
   }
@@ -119,10 +117,10 @@ async function buttonClicked(): Promise<void> {
    * @param invoiceLink - Invoice link
    * @param callback - on-close callback. Statuses:  "pending" | "failed" | "cancelled" | "paid"
    */
-  WebApp.openInvoice(invoiceLink, (closingStatus) => {
+  openInvoice(invoiceLink, (closingStatus) => {
     switch (closingStatus) {
       case 'paid':
-        WebApp.close()
+        closeApp()
         break
       case 'cancelled':
         // WebApp.showAlert('canceled')
@@ -137,24 +135,26 @@ async function buttonClicked(): Promise<void> {
         // WebApp.showAlert('unknown')
     }
   })
-  // WebApp.switchInlineQuery('#133')
-  // WebApp.switchInlineQuery('#133', ['users', 'groups'])
 }
 
 const { lock, unlock } = useScroll()
 
 onMounted(() => {
-  WebApp.MainButton.text = 'Book now'
-  WebApp.MainButton.isVisible = true
-
-  WebApp.MainButton.onClick(buttonClicked)
-
+  /**
+   * Block document scroll. We use internal scroll on this screen for better native-like UX
+   */
   lock()
+
+  /**
+   * Show main Telegram CTA
+   */
+  showMainButton('Book now', () => {
+    void buttonClicked()
+  })
 })
 
 onBeforeUnmount(() => {
-  WebApp.MainButton.offClick(buttonClicked)
-  WebApp.MainButton.isVisible = false
+  hideMainButton()
 
   unlock()
 })
@@ -259,7 +259,7 @@ onBeforeUnmount(() => {
         </template>
         <template #right>
           <Number>
-            {{ room.price }}$
+            {{ roomAmount }}$
           </Number>
         </template>
       </ListItem>

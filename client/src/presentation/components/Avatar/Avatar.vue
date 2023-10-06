@@ -83,6 +83,9 @@ const backgroundColor = computed(() => {
       'avatar--with-placeholder': !src,
       'avatar--big': big === true
     }"
+    :style="{
+      backgroundImage: backgroundColor
+    }"
   >
     <img
       v-if="src"

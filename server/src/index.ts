@@ -1,6 +1,7 @@
 import Config from './config.js'
 import HttpApi from './api/http.js'
 import Bot from './api/bot.js'
+import { notify } from './infra/utils/notify/index.js';
 
 
 const bot = new Bot(Config.botToken, Config.isTestEnvironment)
@@ -15,3 +16,5 @@ const api = new HttpApi(Config, botApi)
  * Listen for HTTP requests
  */
 api.run()
+
+notify('🤖 Bot started')

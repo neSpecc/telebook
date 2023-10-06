@@ -1,6 +1,21 @@
-# Issuegram
+# Telebook
 
 ...
+
+## Setup
+
+### Install dependencies
+
+```
+yarn install
+```
+
+### Copy .env.example to .env and fill the variables
+
+| Name | Description | Example |
+| -- | -- | -- |
+| VITE_WEB_HOST | Web client endpoint | `https://xxxx-xx-xxx-xxx-xx.ngrok-free.app` |
+| VITE_API_HOST | Backend endpoint | `https://xxxx-xx-xxx-xxx-xx.ngrok-free.app` |
 
 ## Tech stack
 

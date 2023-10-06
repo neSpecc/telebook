@@ -43,12 +43,14 @@ const isLoading = ref<boolean | undefined>(undefined)
 
 const result = ref<Hotel[]>([])
 
-const { showMainButton, hideMainButton, setButtonLoader } = useTelegram()
+const { showMainButton, hideMainButton, setButtonLoader, expand } = useTelegram()
 
 /**
  * Hook called before search
  */
 function onBeforeSearch(): void {
+  expand()
+
   isLoading.value = true
   startDatePickerShowed.value = false
   endDatePickerShowed.value = false

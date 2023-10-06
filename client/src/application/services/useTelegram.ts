@@ -4,6 +4,10 @@ interface useTelegramComposableState {
   showMainButton: (text: string, callback: () => void) => void;
   hideMainButton: () => void;
   setButtonLoader: (state: boolean) => void;
+  showAlert: (text: string) => void;
+  openInvoice: (url: string, callback: (status: 'pending' | 'failed' | 'cancelled' | 'paid') => void) => void;
+  closeApp: () => void;
+  expand: () => void;
 }
 
 /**
@@ -45,6 +49,8 @@ export default function useTelegram(): useTelegramComposableState {
 
   /**
    * Show/hide the main button loader
+   *
+   * @param state The state to set the loader to
    */
   function setButtonLoader(state: boolean): void {
     if (state) {
@@ -54,9 +60,46 @@ export default function useTelegram(): useTelegramComposableState {
     }
   }
 
+  /**
+   * Shows native Telegram alert message
+   *
+   * @param text The text to show in the alert
+   */
+  function showAlert(text: string): void {
+    WebApp.showAlert(text)
+  }
+
+  /**
+   * Opens Telegram invoice
+   *
+   * @param url The invoice URL
+   * @param callback The callback to call when the invoice is paid
+   */
+  function openInvoice(url: string, callback: (status: 'pending' | 'failed' | 'cancelled' | 'paid') => void): void {
+    WebApp.openInvoice(url, callback)
+  }
+
+  /**
+   * Closes the app
+   */
+  function closeApp(): void {
+    WebApp.close()
+  }
+
+  /**
+   * Expands Telegram app layout
+   */
+  function expand(): void {
+    WebApp.expand()
+  }
+
   return {
     showMainButton,
     hideMainButton,
     setButtonLoader,
+    showAlert,
+    openInvoice,
+    closeApp,
+    expand
   }
 }
