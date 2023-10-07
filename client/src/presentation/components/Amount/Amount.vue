@@ -32,7 +32,6 @@ defineProps<{
       </span>
     </span>
 
-
     <div
       v-if="$slots.subline"
       class="subline"
@@ -52,6 +51,7 @@ defineProps<{
 
 .digit {
   @apply --title-3-rounded-semibold;
+
   white-space: nowrap;
 }
 

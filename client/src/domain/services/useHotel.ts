@@ -6,9 +6,15 @@ interface useHotelComposableState {
   hotel: ComputedRef<Hotel | undefined>;
 }
 
-export function useHotel(id: MaybeRefOrGetter<number>): useHotelComposableState {
+export function useHotel(id: MaybeRefOrGetter<number | undefined>): useHotelComposableState {
+  const hotelId = unref(id)
+
+  if (hotelId === undefined) {
+    throw new Error('Hotel ID is not defined')
+  }
+
   const hotel = computed(() => {
-    return hotels.find((hotel) => hotel.id === unref(id))
+    return hotels.find((hotel) => hotel.id === hotelId)
   })
 
   return {

@@ -15,7 +15,6 @@ import DatePicker from './DatePicker/DatePicker.vue'
 import DatePickerCompact from './DatePicker/DatePickerCompact.vue'
 import Input from './Input/Input.vue'
 import Text from './Text/Text.vue'
-import SkeletonPicture from './Skeleton/Picture.vue'
 import Rating from './Rating/Rating.vue'
 import FixedFooter from './FixedFooter/FixedFooter.vue'
 
@@ -37,7 +36,6 @@ export {
   DatePickerCompact,
   Input,
   Text,
-  SkeletonPicture,
   Rating,
   FixedFooter,
 }

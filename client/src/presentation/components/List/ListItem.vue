@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Avatar, Icon, ListItemIcon, SkeletonPicture } from '@/presentation/components'
+import { Avatar, Icon, ListItemIcon } from '@/presentation/components'
 import { computed, useSlots } from 'vue'
 
 const props = defineProps<{
@@ -21,7 +21,6 @@ const props = defineProps<{
   standalone?: boolean;
   to?: string;
   bigAvatar?: boolean;
-  isLoading?: boolean;
   nowrap?: boolean;
 }>()
 
@@ -105,31 +104,24 @@ const pictureStyle = computed(() => {
     <div
       class="left-col"
     >
-      <SkeletonPicture
-        v-if="isLoading === true && pictureSize !== undefined"
-        :size="pictureSize"
-        :style="pictureStyle"
+      <slot name="picture" />
+      <Avatar
+        v-if="avatar"
+        :id="avatar.id"
+        :src="avatar.src"
+        :placeholder="avatar.placeholder"
+        :big="bigAvatar"
       />
-      <template v-else>
-        <slot name="picture" />
-        <Avatar
-          v-if="avatar"
-          :id="avatar.id"
-          :src="avatar.src"
-          :placeholder="avatar.placeholder"
-          :big="bigAvatar"
-        />
-        <ListItemIcon
-          v-else-if="transactionIcon"
-          :icon="transactionIcon"
-          type="circle"
-        />
-        <ListItemIcon
-          v-else-if="icon"
-          :icon="icon"
-          type="square"
-        />
-      </template>
+      <ListItemIcon
+        v-else-if="transactionIcon"
+        :icon="transactionIcon"
+        type="circle"
+      />
+      <ListItemIcon
+        v-else-if="icon"
+        :icon="icon"
+        type="square"
+      />
     </div>
     <div class="right-row">
       <div class="body">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   /**
    * Title of the item
    */
@@ -22,7 +22,6 @@ const props = defineProps<{
     </div>
   </div>
 </template>
-
 
 <style scoped>
 @import '@/presentation/styles/theme/typescale.css';

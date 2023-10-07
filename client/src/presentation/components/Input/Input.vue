@@ -6,7 +6,7 @@ defineProps<{
   /**
    * Model value. Will be changed on input
    */
-   modelValue: string;
+  modelValue: string;
 
   /**
    * Text that will be shown when input is empty
@@ -32,7 +32,7 @@ defineEmits(['update:modelValue'])
       type="text"
       :placeholder="placeholder"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     >
   </div>
 </template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { List, ListItem, Sections, Section, Amount, Placeholder, DataOverview, Avatar, Text, Rating } from '@/presentation/components'
 import { useHotel } from '@/domain/services/useHotel'
-import { computed, onBeforeUnmount, onMounted } from 'vue'
+import { type ComputedRef, computed, onBeforeUnmount, onMounted } from 'vue'
 import { reviews } from '@/infra/store/reviews/mock/reviews'
 import { useTelegram } from '@/application/services'
 import { useRouter } from 'vue-router'
@@ -16,7 +16,7 @@ const id = computed(() => {
   return props.id
 })
 
-const { hotel } = id.value !== undefined ? useHotel(id) : { hotel: undefined }
+const { hotel } = id.value !== undefined ? useHotel(id as ComputedRef<number>) : { hotel: undefined }
 const { showBackButton, hideBackButton } = useTelegram()
 const router = useRouter()
 

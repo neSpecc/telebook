@@ -39,9 +39,7 @@ export const useScroll = (): useScrollComposableState => {
    * @param el The element to scroll to
    * @param offset The offset to scroll to
    */
-  function scrollTo(el, offset = 0): void {
-    console.log('el.offsetTop', el);
-
+  function scrollTo(el: HTMLElement, offset = 0): void {
     window.scrollTo({
       top: el.offsetTop - offset,
       behavior: 'smooth',
