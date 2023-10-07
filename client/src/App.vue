@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import WebApp from '@twa-dev/sdk'
-import { onErrorCaptured } from 'vue'
-import { useRouter } from 'vue-router'
+import { onBeforeMount, onErrorCaptured } from 'vue'
+import { useTelegram } from '@/application/services'
 
-const router = useRouter()
-
-function onBackButtonClicked(): void {
-  router.back()
-  WebApp.BackButton.hide()
-}
-
-WebApp.BackButton.onClick(onBackButtonClicked)
+const { colorScheme } = useTelegram()
 
 onErrorCaptured((error: Error) => {
   console.error(error)
-  WebApp.showAlert(error.message)
+})
+
+onBeforeMount(() => {
+  if (colorScheme !== undefined) {
+    document.body.classList.add(colorScheme)
+  }
 })
 </script>
 

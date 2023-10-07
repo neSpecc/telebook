@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { List, ListItem, Sections, Section, Amount, Placeholder, DataOverview, Avatar, Text, Rating } from '@/presentation/components'
 import { useHotel } from '@/domain/services/useHotel'
-import { computed } from 'vue'
+import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { reviews } from '@/infra/store/reviews/mock/reviews'
+import { useTelegram } from '@/application/services'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   id: Number,
@@ -15,6 +17,18 @@ const id = computed(() => {
 })
 
 const { hotel } = id.value !== undefined ? useHotel(id) : { hotel: undefined }
+const { showBackButton, hideBackButton } = useTelegram()
+const router = useRouter()
+
+onMounted(() => {
+  showBackButton(() => {
+    void router.push('/')
+  })
+})
+
+onBeforeUnmount(() => {
+  hideBackButton()
+})
 </script>
 <template>
   <div v-if="hotel">
@@ -126,7 +140,7 @@ const { hotel } = id.value !== undefined ? useHotel(id) : { hotel: undefined }
   display: inline-flex;
   height: 26px;
   border-radius: 14px;
-  background-color: var(--color-text-button);
+  background-color: var(--color-bg-tertiary);
   color: var(--color-link);
   align-items: center;
   padding: 0 13px;

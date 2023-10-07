@@ -1,9 +1,9 @@
 <!-- eslint-disable clean-timer/assign-timer-id -->
 <script setup lang="ts">
 import { Placeholder, List, ListItem, ListItemExpandable, Sections, Section, ListCard, DatePicker, DatePickerCompact, Amount, Rating } from '@/presentation/components'
-import { onMounted, onUnmounted, ref, onBeforeUnmount } from 'vue'
+import { onMounted, ref, onBeforeUnmount, watchEffect, watch } from 'vue'
 import { useTripDetails } from '@/domain/services/useTripDetails'
-import { useTelegram } from '@/application/services'
+import { useTelegram, useScroll } from '@/application/services'
 import { hotels } from '@/infra/store/hotels/mock/hotels'
 import { shortNumber } from '@/infra/utils/number'
 import { Vue3Lottie } from 'vue3-lottie'
@@ -13,8 +13,6 @@ import KrtekAnimation from '@/presentation/assets/lottie/krtek.json'
 import RushAnimation from '@/presentation/assets/lottie/rush.json'
 import SimpAnimation from '@/presentation/assets/lottie/simp.json'
 import TouristAnimation from '@/presentation/assets/lottie/tourist.json'
-
-import WebApp from '@twa-dev/sdk'
 
 import { type Hotel } from '@/domain/entities'
 
@@ -43,30 +41,56 @@ const endDatePickerShowed = ref(false)
  */
 const isLoading = ref<boolean | undefined>(undefined)
 
+/**
+ * Whether search is finished and we have results
+ */
+const isSearchFinished = ref(false)
+
+/**
+ * Search results
+ */
 const result = ref<Hotel[]>([])
 
-const { showMainButton, hideMainButton, setButtonLoader, expand } = useTelegram()
+const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight } = useTelegram()
+const { scrollTo } = useScroll()
+
+const searchSettings = ref<InstanceType<typeof Section> | null>(null)
+const startDatePicker = ref<InstanceType<typeof DatePicker> | null>(null)
+const endDatePicker = ref<InstanceType<typeof DatePicker> | null>(null)
+const startDatePickerHeight = ref(0)
+const endDatePickerHeight = ref(0)
+const searchSettingsHeight = ref(130)
+const viewportHeight = ref(window.innerHeight)
 
 /**
  * Hook called before search
  */
 function onBeforeSearch(): void {
-  expand()
+  requestAnimationFrame(() => {
+    isLoading.value = true
+    isSearchFinished.value = false
+    startDatePickerShowed.value = false
+    endDatePickerShowed.value = false
 
-  isLoading.value = true
-  startDatePickerShowed.value = false
-  endDatePickerShowed.value = false
-
-  setButtonLoader(true)
+    setButtonLoader(true)
+  })
 }
 
 /**
  * Hook called after search
  */
 function onAfterSearch(): void {
+  expand()
   isLoading.value = false
+  isSearchFinished.value = true
   setButtonLoader(false)
   hideMainButton()
+
+  requestAnimationFrame(() => {
+    if (searchSettings.value !== null) {
+      scrollTo(searchSettings.value.$el, 16)
+    }
+  })
 }
 
 /**
@@ -83,47 +107,121 @@ function search(): void {
         result.value.push(hotel)
       }, i * 150)
     })
-  }, 100)
+  }, 3000)
 }
+
+/**
+ * Handle start date click
+ */
+function onStartDateClick(): void {
+  expand()
+  startDatePickerShowed.value = !startDatePickerShowed.value
+  endDatePickerShowed.value = false
+}
+
+/**
+ * Handle end date click
+ */
+function onEndDateClick(): void {
+  expand()
+  endDatePickerShowed.value = !endDatePickerShowed.value
+  startDatePickerShowed.value = false
+}
+
+/**
+ * We need to update stored date picker height because it is used to calculate "landing" height
+ */
+watchEffect(() => {
+  if (startDatePickerShowed.value) {
+    startDatePickerHeight.value = startDatePicker.value?.$el.offsetHeight ?? 0
+  } else {
+    startDatePickerHeight.value = 0
+  }
+
+  if (endDatePickerShowed.value) {
+    endDatePickerHeight.value = endDatePicker.value?.$el.offsetHeight ?? 0
+  } else {
+    endDatePickerHeight.value = 0
+  }
+})
+
+/**
+ * Clear result and reset state to the initial
+ */
+function resetSearch(): void {
+  result.value = []
+  isLoading.value = undefined
+  isSearchFinished.value = false
+  showMainButton('Search', () => {
+    search()
+  })
+}
+
+watch([
+  () => trip.startDate,
+  () => trip.endDate,
+], () => {
+  resetSearch()
+})
 
 onMounted(() => {
   if (trip.city === 0) {
     selectDefaultLocation()
   }
 
-  showMainButton('Search', () => {
-    search()
+  resetSearch()
+
+  requestAnimationFrame(() => {
+    if (searchSettings.value !== null) {
+      searchSettingsHeight.value = searchSettings.value.$el.offsetHeight
+    }
   })
+
+  viewportHeight.value = getViewportHeight()
 })
 
 onBeforeUnmount(() => {
   hideMainButton()
 })
 
-onUnmounted(() => {
-  WebApp.BackButton.show()
+onBeforeUnmount(() => {
+  setButtonLoader(false)
 })
 </script>
 <template>
   <div class="home-page">
     <Placeholder
+      class="landing"
       title="Telebook"
-      caption="Book a profi appointment"
-    >
-      <template #picture>
-        <img
-          src="/telebook.svg"
-          aria-hidden="true"
-          width="68"
-        >
-      </template>
-    </Placeholder>
-    <Sections
+      caption="As simple as messaging"
       :class="{
-        'with-filler': isLoading === true,
+        'landing--loading': isLoading,
+        'landing--loaded': isSearchFinished,
       }"
     >
+      <template #picture>
+        <div class="landing-picture">
+          <Transition name="switch">
+            <img
+              v-if="!isLoading"
+              src="/telebook.svg"
+              aria-hidden="true"
+              width="68"
+            >
+            <Vue3Lottie
+              v-else
+              class="run"
+              :animation-data="SimpAnimation"
+              width="110px"
+              height="110px"
+            />
+          </Transition>
+        </div>
+      </template>
+    </Placeholder>
+    <Sections>
       <Section
+        ref="searchSettings"
         with-background
         standalone
       >
@@ -132,12 +230,13 @@ onUnmounted(() => {
             <template #right>
               <DatePickerCompact
                 :value="trip.startDate"
-                @click="startDatePickerShowed = !startDatePickerShowed; endDatePickerShowed = false"
+                @click="onStartDateClick"
               />
             </template>
           </ListItem>
           <ListItemExpandable :opened="startDatePickerShowed">
             <DatePicker
+              ref="startDatePicker"
               @date-pick="(date) => setStartDate(date)"
             />
           </ListItemExpandable>
@@ -145,12 +244,13 @@ onUnmounted(() => {
             <template #right>
               <DatePickerCompact
                 :value="trip.endDate"
-                @click="endDatePickerShowed = !endDatePickerShowed; startDatePickerShowed = false"
+                @click="onEndDateClick"
               />
             </template>
           </ListItem>
           <ListItemExpandable :opened="endDatePickerShowed">
             <DatePicker
+              ref="endDatePicker"
               @date-pick="(date) => setEndDate(date)"
             />
           </ListItemExpandable>
@@ -163,18 +263,7 @@ onUnmounted(() => {
         </List>
       </Section>
       <Section
-        v-if="isLoading === true"
-        class="section-filler"
-      >
-        <Vue3Lottie
-          class="run"
-          :animation-data="TouristAnimation"
-          width="100px"
-          height="100px"
-        />
-      </Section>
-      <Section
-        v-else-if="isLoading === false"
+        v-if="isLoading === false"
         padded
       >
         <List
@@ -261,6 +350,32 @@ onUnmounted(() => {
 <style scoped>
 @import '@/presentation/styles/theme/typescale.css';
 
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  will-change: height;
+  transition: height 300ms ease;
+
+  &:not(&--loaded) {
+    height: calc(var(--tg-viewport-stable-height) - v-bind('searchSettingsHeight + "px"') - var(--size-cell-h-padding) - v-bind('startDatePickerHeight + "px"') - v-bind('endDatePickerHeight + "px"'));
+  }
+
+  &--loading,
+  &--loaded {
+    transition: none;
+  }
+
+  &-picture {
+    height: 110px;
+    width: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .home-page {
   display: flex;
   flex-direction: column;
@@ -269,16 +384,6 @@ onUnmounted(() => {
   .sections {
     flex-grow: 1;
     grid-auto-rows: min-content;
-  }
-
-  .sections.with-filler {
-    grid-template-rows: auto 1fr;
-  }
-
-  .section-filler {
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 }
 
@@ -371,4 +476,19 @@ onUnmounted(() => {
 .results {
   min-height: 800px;
 }
+
+
+.switch-enter-active,
+.switch-leave-active {
+  transition: transform 300ms cubic-bezier(.39,-0.26,.16,1.25), opacity 300ms ease;
+  position: absolute;
+}
+.switch-enter-from {
+  transform: scale(0.1);
+}
+.switch-leave-to {
+  transform: scale(0.6);
+  opacity: 0.5;
+}
+
 </style>

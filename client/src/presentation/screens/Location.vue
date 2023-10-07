@@ -40,7 +40,7 @@ function selectCity(id: number): void {
 }
 
 const { setCity, trip } = useTripDetails()
-const { showMainButton, hideMainButton } = useTelegram()
+const { showMainButton, hideMainButton, expand, showBackButton, hideBackButton } = useTelegram()
 const router = useRouter()
 
 onMounted(() => {
@@ -48,15 +48,22 @@ onMounted(() => {
     selectedId.value = trip.city
   }
 
+  expand()
+
   showMainButton('Select', () => {
     setCity(selectedId.value)
 
     void router.push('/')
   })
+
+  showBackButton(() => {
+    void router.back()
+  })
 })
 
 onBeforeUnmount(() => {
   hideMainButton()
+  hideBackButton()
 })
 </script>
 

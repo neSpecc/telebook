@@ -11,7 +11,8 @@ interface useTelegramComposableState {
   openInvoice: (url: string, callback: (status: 'pending' | 'failed' | 'cancelled' | 'paid') => void) => void;
   closeApp: () => void;
   expand: () => void;
-  getViewportHeight: () => number | undefined;
+  getViewportHeight: () => number;
+  colorScheme: 'light' | 'dark' | undefined;
 }
 
 /**
@@ -23,12 +24,12 @@ export default function useTelegram(): useTelegramComposableState {
   /**
    * We store current MainButton callback to be able to remove it later
    */
-  let mainButtonCallback: (() => void) | null = null
+  const mainButtonCallback = ref<(() => void) | null>(null)
 
   /**
    * We store current BackButton callback to be able to remove it later
    */
-  let backButtonCallback: (() => void) | null = null
+  const backButtonCallback = ref<(() => void) | null>(null)
 
   const debugMainButton = ref<HTMLButtonElement | undefined>()
   const debugBackButton = ref<HTMLButtonElement | undefined>()
@@ -64,15 +65,15 @@ export default function useTelegram(): useTelegramComposableState {
   function showMainButton(text: string, callback: () => void): void {
     prepareDebugButton(debugMainButton, 'fake-main-button')
 
-    mainButtonCallback = callback
+    mainButtonCallback.value = callback
 
     WebApp.MainButton.text = text ?? 'Submit'
-    WebApp.MainButton.onClick(callback)
+    WebApp.MainButton.onClick(mainButtonCallback.value)
     WebApp.MainButton.isVisible = true
 
     if (debugMainButton.value !== undefined) {
       debugMainButton.value.innerText = text ?? 'Submit'
-      debugMainButton.value.addEventListener('click', mainButtonCallback)
+      debugMainButton.value.addEventListener('click', mainButtonCallback.value)
       debugMainButton.value.classList.add('visible')
     }
   }
@@ -81,14 +82,14 @@ export default function useTelegram(): useTelegramComposableState {
    * Hide the main button
    */
   function hideMainButton(): void {
-    if (mainButtonCallback === null) {
+    if (mainButtonCallback.value === null) {
       console.warn('Trying to hide main button but no callback was set')
       return
     }
 
-    WebApp.MainButton.offClick(mainButtonCallback)
-    debugMainButton.value?.removeEventListener('click', mainButtonCallback)
-    mainButtonCallback = null
+    WebApp.MainButton.offClick(mainButtonCallback.value)
+    debugMainButton.value?.removeEventListener('click', mainButtonCallback.value)
+    mainButtonCallback.value = null
 
     WebApp.MainButton.isVisible = false
     debugMainButton.value?.classList.remove('visible')
@@ -100,14 +101,14 @@ export default function useTelegram(): useTelegramComposableState {
   function showBackButton(callback: () => void): void {
     prepareDebugButton(debugBackButton, 'fake-back-button')
 
-    backButtonCallback = callback
+    backButtonCallback.value = callback
 
-    WebApp.BackButton.onClick(callback)
+    WebApp.BackButton.onClick(backButtonCallback.value)
     WebApp.BackButton.show()
 
     if (debugBackButton.value !== undefined) {
       debugBackButton.value.innerText = '‹ Back'
-      debugBackButton.value.addEventListener('click', backButtonCallback)
+      debugBackButton.value.addEventListener('click', backButtonCallback.value)
       debugBackButton.value.classList.add('visible')
     }
   }
@@ -116,14 +117,14 @@ export default function useTelegram(): useTelegramComposableState {
    * Hide the back button
    */
   function hideBackButton(): void {
-    if (backButtonCallback === null) {
+    if (backButtonCallback.value === null) {
       console.warn('Trying to hide back button but no callback was set')
       return
     }
 
-    WebApp.BackButton.offClick(backButtonCallback)
-    debugBackButton.value?.removeEventListener('click', backButtonCallback)
-    backButtonCallback = null
+    WebApp.BackButton.offClick(backButtonCallback.value)
+    debugBackButton.value?.removeEventListener('click', backButtonCallback.value)
+    backButtonCallback.value = null
 
     WebApp.BackButton.hide()
     debugBackButton.value?.classList.remove('visible')
@@ -185,9 +186,15 @@ export default function useTelegram(): useTelegramComposableState {
    * It should not be used to pin interface elements to the bottom of the visible area.
    * It's more appropriate to use the value of the viewportStableHeight field for this purpose.
    */
-  function getViewportHeight(): number | undefined {
-    return WebApp.viewportHeight
+  function getViewportHeight(): number {
+    return WebApp.viewportStableHeight
   }
+
+  /**
+   * The current color scheme of the device. Can be light or dark.
+   * If app is launched in a browser, the value will be undefined.
+   */
+  const colorScheme = WebApp.platform !== 'unknown' ? WebApp.colorScheme : undefined
 
   return {
     showMainButton,
@@ -200,5 +207,6 @@ export default function useTelegram(): useTelegramComposableState {
     getViewportHeight,
     showBackButton,
     hideBackButton,
+    colorScheme,
   }
 }

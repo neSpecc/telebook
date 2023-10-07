@@ -8,6 +8,11 @@ interface useScrollComposableState {
    * Unlock the scroll
    */
   unlock: () => void;
+
+  /**
+   * Scroll to element
+   */
+  scrollTo: (el: HTMLElement, offset?: number) => void;
 }
 
 /**
@@ -28,8 +33,24 @@ export const useScroll = (): useScrollComposableState => {
     document.body.style.overflow = 'unset'
   }
 
+  /**
+   * Scroll to element
+   *
+   * @param el The element to scroll to
+   * @param offset The offset to scroll to
+   */
+  function scrollTo(el, offset = 0): void {
+    console.log('el.offsetTop', el);
+
+    window.scrollTo({
+      top: el.offsetTop - offset,
+      behavior: 'smooth',
+    })
+  }
+
   return {
     lock,
     unlock,
+    scrollTo,
   }
 }

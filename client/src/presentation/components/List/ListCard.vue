@@ -345,7 +345,7 @@ onBeforeUnmount(() => {
       -webkit-transform: translate3d(0,0,0);
 
       &:deep(.list-item) {
-        backdrop-filter: blur(16px);
+        backdrop-filter: blur(20px);
         padding: 8px 0 8px var(--size-cell-h-padding);
       }
 

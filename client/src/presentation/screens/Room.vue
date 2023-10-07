@@ -2,10 +2,11 @@
 import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { useHotel, useTripDetails, useInvoice } from '@/domain/services'
 import { useScroll, useTelegram } from '@/application/services'
-import { PageWithHeader, Placeholder, Icon, Section, Sections, List, ListItem, Amount, Avatar } from '@/presentation/components'
+import { PageWithHeader, Placeholder, Icon, Section, Sections, List, ListItem, Amount, Avatar, FixedFooter } from '@/presentation/components'
 import { amenities } from '@/infra/store/hotels/mock/amenities'
 import { formatDate } from '@/infra/utils/date'
 import { spaced } from '@/infra/utils/number'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   /**
@@ -34,8 +35,9 @@ const roomId = computed(() => props.roomId)
 
 const { days, trip } = useTripDetails()
 const { hotel } = useHotel(hotelId)
-const { setButtonLoader, showAlert, openInvoice, closeApp, showMainButton, hideMainButton } = useTelegram()
+const { setButtonLoader, showAlert, openInvoice, closeApp, showMainButton, hideMainButton, showBackButton, hideBackButton } = useTelegram()
 const { create: createInvoice, toPrice } = useInvoice()
+const router = useRouter()
 
 /**
  * Selected room data
@@ -71,8 +73,6 @@ async function buttonClicked(): Promise<void> {
 
     return
   }
-
-
 
   const invoiceLink = await createInvoice({
     title: room.value.title,
@@ -151,10 +151,15 @@ onMounted(() => {
   showMainButton('Book now', () => {
     void buttonClicked()
   })
+
+  showBackButton(() => {
+    void router.push(`/hotel/${hotelId.value}`)
+  })
 })
 
 onBeforeUnmount(() => {
   hideMainButton()
+  hideBackButton()
 
   unlock()
 })
@@ -162,128 +167,122 @@ onBeforeUnmount(() => {
 
 <template>
   <div>
-  <PageWithHeader
-    v-if="room && hotel"
-    class="page"
-  >
-    <template #header>
-      <Section>
-        <ListItem
-          :avatar="{src: '/pics/hotel-3.jpg', placeholder: hotel.title}"
-          :title="hotel.title"
-          :subtitle="hotel.subtitle"
-          :to="`/hotel/${hotel.id}`"
-        />
-      </Section>
-    </template>
-    <template #content>
-      <Sections class="form">
-        <Section standalone>
-          <Placeholder
-            :title="room.title"
-            :caption="room.subtitle"
-            standalone
-          >
-            <template #picture>
-              <Avatar
-                :src="room.picture"
-                big
-              />
-            </template>
-          </Placeholder>
-        </Section>
-
-        <Section
-          padded
-          title="Price"
-        >
-          <List
-            with-background
-            standalone
-          >
-            <ListItem
-              label="Room price"
-            >
-              <template #right>
-                <span>{{ Math.max(1, days) }} × {{ room.price }}$</span>
-              </template>
-            </ListItem>
-            <ListItem
-              label="Breakfast"
-            >
-              <template #right>
-                <span>Included</span>
-              </template>
-            </ListItem>
-            <ListItem
-              label="Transfer"
-            >
-              <template #right>
-                <Amount>100$</Amount>
-              </template>
-            </ListItem>
-          </List>
-        </Section>
-        <Section
-          title="Amenities"
-          padded
-        >
-          <List
-            with-background
-            standalone
-          >
-            <ListItem
-              v-for="(amenity, index) in amenities"
-              :key="'amenity' + index"
-              :icon="amenity.icon"
-              :label="amenity.name"
-              right-icon="checkmark"
-            />
-          </List>
-        </Section>
-      </Sections>
-    </template>
-  </PageWithHeader>
-  <div
-    v-if="room"
-    class="total"
-  >
-    <div class="price">
-      <ListItem
-        label="Total Price"
-        :subtitle="`For ${days} night stand`"
-      >
-        <template #picture>
-          <Icon
-            name="card"
+    <PageWithHeader
+      v-if="room && hotel"
+      class="page"
+    >
+      <template #header>
+        <Section>
+          <ListItem
+            :avatar="{src: '/pics/hotel-3.jpg', placeholder: hotel.title}"
+            :title="hotel.title"
+            :subtitle="hotel.subtitle"
+            :to="`/hotel/${hotel.id}`"
           />
-        </template>
-        <template #right>
-          <Amount>
-            {{ spaced(roomAmount) }}$
-          </Amount>
-        </template>
-      </ListItem>
-    </div>
+        </Section>
+      </template>
+      <template #content>
+        <Sections class="form">
+          <Section standalone>
+            <Placeholder
+              :title="room.title"
+              :caption="room.subtitle"
+              standalone
+            >
+              <template #picture>
+                <Avatar
+                  :src="room.picture"
+                  big
+                />
+              </template>
+            </Placeholder>
+          </Section>
+
+          <Section
+            padded
+            title="Price"
+          >
+            <List
+              with-background
+              standalone
+            >
+              <ListItem
+                label="Room price"
+              >
+                <template #right>
+                  <span>{{ Math.max(1, days) }} × {{ room.price }}$</span>
+                </template>
+              </ListItem>
+              <ListItem
+                label="Breakfast"
+              >
+                <template #right>
+                  <span>Included</span>
+                </template>
+              </ListItem>
+              <ListItem
+                label="Transfer"
+              >
+                <template #right>
+                  <Amount>100$</Amount>
+                </template>
+              </ListItem>
+            </List>
+          </Section>
+          <Section
+            title="Amenities"
+            padded
+          >
+            <List
+              with-background
+              standalone
+            >
+              <ListItem
+                v-for="(amenity, index) in amenities"
+                :key="'amenity' + index"
+                :icon="amenity.icon"
+                :label="amenity.name"
+                right-icon="checkmark"
+              />
+            </List>
+          </Section>
+        </Sections>
+      </template>
+    </PageWithHeader>
+    <FixedFooter
+      v-if="room"
+      class="total"
+      :bottom="8"
+    >
+      <div class="price">
+        <ListItem
+          label="Total Price"
+          :subtitle="`For ${days} night${days > 1 ? 's' : ''} stand`"
+        >
+          <template #picture>
+            <Icon
+              name="card"
+            />
+          </template>
+          <template #right>
+            <Amount>
+              {{ spaced(roomAmount) }}$
+            </Amount>
+          </template>
+        </ListItem>
+      </div>
+    </FixedFooter>
   </div>
-</div>
 </template>
 
 <style scoped>
 .total {
-  position: sticky;
-  bottom: 8px;
-  padding: 4px;
-  background-color: rgba(19, 19, 19, 0.84);
-  color: white;
-  backdrop-filter: blur(10px);
-  right: 0;
-  left: 0;
-  border-radius: 16px;
-  margin: 8px;
-
   .price {
-    /* padding: 16px; */
+    margin: 8px;
+    padding: 4px;
+    background-color: rgba(19, 19, 19, 0.82);
+    color: white;
+    backdrop-filter: blur(14px);
     border-radius: var(--size-border-radius-big);
 
     &:deep(.number){

@@ -49,7 +49,6 @@ import { useScroll } from '@/application/services'
   height: 100%;
   overflow: auto;
   scroll-behavior: smooth;
-  padding-top: 60px;
   /* padding-bottom: 100px; */
   /* box-shadow: -3px 0 40px -10px rgba(0, 0, 0, 0.3); */
 

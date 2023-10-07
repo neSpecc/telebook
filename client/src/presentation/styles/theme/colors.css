@@ -1,22 +1,23 @@
 :root {
-  --color-bg: var(--tg-theme-bg-color, #1c1c1d);
-  --color-bg-secondary: var(--tg-theme-secondary-bg-color, #000);
-  --color-bg-tertiary: rgba(118, 118, 128, 0.1);
-  --color-bg-quarternary: rgba(255,255,255,0.16);
-  --color-bg-button: var(--tg-theme-button-color, #3e88f7);
-  --color-bg-overlay: rgba(0, 0, 0, 0.3);
+  --dark-theme {
+    --color-bg: var(--tg-theme-bg-color, #1c1c1d);
+    --color-bg-secondary: var(--tg-theme-secondary-bg-color, #000);
+    --color-bg-tertiary: rgba(118, 118, 128, 0.1);
+    --color-bg-quarternary: rgba(255,255,255,0.16);
+    --color-bg-button: var(--tg-theme-button-color, #3e88f7);
+    --color-bg-overlay: rgba(0, 0, 0, 0.3);
 
-  --color-text: var(--tg-theme-text-color, #fff);
-  --color-text-button: var(--tg-theme-button-text-color, #fff);
-  --color-hint: var(--tg-theme-hint-color, #98989e);
-  --color-link: var(--tg-theme-link-color, #3e88f7);
+    --color-text: var(--tg-theme-text-color, #fff);
+    --color-text-button: var(--tg-theme-button-text-color, #fff);
+    --color-hint: var(--tg-theme-hint-color, #98989e);
+    --color-link: var(--tg-theme-link-color, #3e88f7);
 
-  --separator-color: #3d3d3f;
+    --separator-color: #3d3d3f;
 
-  --skeleton-color: var(--color-bg-tertiary);
+    --skeleton-color: var(--color-bg-tertiary);
+  }
 
-  /* @todo support tg variables */
-  @media (prefers-color-scheme: light) {
+  --light-theme {
     --color-bg: var(--tg-theme-bg-color, #fff);
     --color-bg-secondary: var(--tg-theme-secondary-bg-color, #efeff4);
     --color-bg-tertiary: rgba(235, 235, 235, 0.75);
@@ -27,6 +28,26 @@
     --color-hint: var(--tg-theme-hint-color, #8e8e93);
     --color-link: var(--tg-theme-link-color, #007aff);
 
-    --separator-color: #c8c7cb;
+    --separator-color: rgba(204, 204, 204, 0.27);
+  }
+}
+
+:root {
+  @apply --dark-theme;
+
+  .dark {
+    @apply --dark-theme;
+  }
+
+  .light {
+    @apply --light-theme;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    @apply --dark-theme;
+  }
+
+  @media (prefers-color-scheme: light) {
+    @apply --light-theme;
   }
 }

@@ -13,6 +13,6 @@
 .sections {
   display: grid;
   gap: 24px;
-  padding: 16px 0;
+  /* padding: 16px 0; */
 }
 </style>
