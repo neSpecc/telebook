@@ -186,14 +186,6 @@ const pictureStyle = computed(() => {
    */
   -webkit-tap-highlight-color: transparent;
 
-  &:active {
-    /**
-     * Make background color darker when pressed using filter
-     */
-    /* filter: brightness(0.99); */
-    background-color: red;
-  }
-
   &--standalone {
     background-color: var(--color-bg);
     border-radius: var(--size-border-radius-big);
@@ -232,7 +224,6 @@ const pictureStyle = computed(() => {
       background-color: var(--separator-color);
       display: block;
       grid-column: 1 / -1;
-      opacity: .4;
     }
 
     .right {

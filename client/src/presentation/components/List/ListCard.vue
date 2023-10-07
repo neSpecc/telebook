@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { nextTick, onBeforeUnmount, ref, watch } from 'vue'
-import { useLayout } from '@/application/services/useLayout'
-import { useScroll } from '@/application/services/useScroll'
+import { nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { useLayout, useScroll, useTelegram } from '@/application/services'
 
 defineProps<{
   /**
@@ -17,25 +16,12 @@ defineProps<{
 
 const { appWidth } = useLayout()
 const { lock: lockScroll, unlock: unlockScroll } = useScroll()
+const { getViewportHeight, showBackButton, hideBackButton } = useTelegram()
 
 /**
  * Whether the card is expanded
  */
 const expanded = ref(false)
-
-/**
- * Click listener: expands a card
- */
-function cardClicked(): void {
-  if (!expanded.value) {
-    reserveSpace()
-    expanded.value = true
-  } else {
-    freeSpace()
-    expanded.value = false
-  }
-}
-
 /**
  * The card element
  */
@@ -49,8 +35,72 @@ const content = ref<HTMLDivElement | null>(null)
 /**
  * Card height when collapsed
  */
-const heightCollapsed = '460px'
+const heightCollapsed = ref('460px')
 
+/**
+ * Whether the card is currently animating
+ */
+const isAnimating = ref(false)
+
+/**
+ * Begin expand animation
+ */
+function expand(): void {
+  reserveSpace()
+  expanded.value = true
+}
+
+/**
+ * Begin collapse animation
+ */
+function collapse(): void {
+  freeSpace()
+  expanded.value = false
+}
+
+/**
+ * Click listener: expands a card
+ */
+function cardClicked(): void {
+  /**
+   * Prevent double click when animation is not finished yet
+   */
+  if (isAnimating.value) {
+    return
+  }
+
+  onBeforeAnimation()
+
+  if (!expanded.value) {
+    expand()
+  } else {
+    collapse()
+  }
+}
+
+/**
+ * Hook called before animation starts
+ */
+function onBeforeAnimation(): void {
+  isAnimating.value = true
+  document.body.style.userSelect = 'none'
+  document.body.style.webkitUserSelect = 'none'
+  document.body.style.pointerEvents = 'none'
+}
+
+/**
+ * Hook called when animation is finished
+ */
+function onAnimationEnd(): void {
+  isAnimating.value = false
+  document.body.style.userSelect = 'unset'
+  document.body.style.webkitUserSelect = 'unset'
+  document.body.style.pointerEvents = 'unset'
+}
+
+/**
+ * Saves the space of card then it gets expanded
+ */
 const beforeTransition = ref({
   top: '0',
   left: '0',
@@ -99,7 +149,7 @@ function reserveSpace(): void {
         top: `${window.scrollY}px`,
         left: '0',
         width: '100%',
-        height: '100%',
+        height: '100vh',
       })
     }, 10)
   })
@@ -137,6 +187,19 @@ function fixCard({ top, left, height, width }: { top: string; left: string; heig
   card.value.style.width = width
 }
 
+function onCollapsed() {
+  setContentWidth('unset')
+
+  if (card.value === null) {
+    return
+  }
+  card.value.style.position = 'unset'
+  card.value.style.top = 'unset'
+  card.value.style.left = 'unset'
+  card.value.style.height = heightCollapsed.value
+  card.value.style.width = 'unset'
+}
+
 /**
  * Free the space of card then it gets collapsed
  */
@@ -148,12 +211,7 @@ function freeSpace(): void {
   fixCard(beforeTransition.value)
 
   card.value.addEventListener('transitionend', () => {
-    setContentWidth('unset')
-    card.value!.style.position = 'unset'
-    card.value!.style.top = 'unset'
-    card.value!.style.left = 'unset'
-    card.value!.style.height = heightCollapsed
-    card.value!.style.width = 'unset'
+    onCollapsed()
   }, { once: true })
 }
 
@@ -163,18 +221,39 @@ function freeSpace(): void {
 watch(expanded, (expanded) => {
   if (expanded) {
     lockScroll()
+    showBackButton(() => {
+      collapse()
+    })
   } else {
     unlockScroll()
+    hideBackButton()
+  }
+})
+
+onMounted(() => {
+  card.value?.addEventListener('transitionend', onAnimationEnd)
+})
+
+onBeforeMount(() => {
+  const viewportHeight = getViewportHeight()
+
+  if (viewportHeight !== undefined && viewportHeight < 600) {
+    heightCollapsed.value = '300px'
   }
 })
 
 onBeforeUnmount(() => {
-  unlockScroll()
+  card.value?.removeEventListener('transitionend', onAnimationEnd)
+  expanded.value = false
+  onAnimationEnd()
 })
 </script>
 <template>
   <div
     class="list-card-wrapper"
+    :style="{
+      pointerEvents: isAnimating ? 'none' : 'auto',
+    }"
   >
     <div
       ref="card"
@@ -182,11 +261,12 @@ onBeforeUnmount(() => {
       :class="{ expanded }"
       @click="cardClicked"
     >
-      <div class="picture-container">
-        <img
-          class="picture"
-          :src="picture"
-        >
+      <div
+        class="picture-container"
+        :style="{
+          backgroundImage: `url(${picture})`,
+        }"
+      >
         <div class="title">
           {{ title }}
         </div>
@@ -226,7 +306,8 @@ onBeforeUnmount(() => {
 
   height: var(--height);
   z-index: 9;
-  will-change: border-radius, left, top, height, width;
+  will-change: border-radius, left, top, height, width, box-shadow;
+  user-select: none;
   /* box-shadow: 0 0 10px rgba(0,0,0,0.2), 0 3px 20px -5px rgba(0,0,0,0.14); */
   /* box-shadow: 0 0 24px -10px rgba(0,0,0,0.74); */
 
@@ -239,15 +320,9 @@ onBeforeUnmount(() => {
     height: var(--height);
     max-width: 100%;
     width: 100%;
-  }
-
-  .picture {
-    height: 100%;
-    transform: scale(1.1);
-    vertical-align: bottom;
-    will-change: transform;
-    transition: transform var(--speed) ease;
-    position: absolute;
+    background-color: red;
+    background-size: cover;
+    background-position: center center;
   }
 
   .title {
@@ -280,10 +355,7 @@ onBeforeUnmount(() => {
 
   &.expanded {
     border-radius: 0;
-
-    .picture {
-      transform: scale(1);
-    }
+    overflow: auto;
   }
 
   &.expanded .content {

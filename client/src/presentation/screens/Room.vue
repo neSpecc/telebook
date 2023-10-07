@@ -185,7 +185,7 @@ onBeforeUnmount(() => {
           >
             <template #picture>
               <Avatar
-                src="/pics/room-1-2.jpg"
+                :src="room.picture"
                 big
               />
             </template>

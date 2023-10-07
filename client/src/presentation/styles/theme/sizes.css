@@ -1,7 +1,7 @@
 :root {
   --size-avatar-small: 28px;
   --size-avatar-medium: 40px;
-  --size-avatar-big: 76px;
+  --size-avatar-big: 84px;
   --size-border-radius-medium: 10px;
   --size-border-radius-big: 13px;
   --size-border-radius-large: 16px;
@@ -9,6 +9,10 @@
   --size-cell-h-padding: 16px;
   --size-cell-v-padding: 4px;
   --size-separator-height: 1px;
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+    --size-separator-height: 0.5px;
+  }
 }
 
 .is-ios {

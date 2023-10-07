@@ -48,7 +48,7 @@ export default class HttpApi {
 
       const payload = 'Order #' + Math.random().toString(36).substring(7);
 
-      notify(`🛍️ /createInvoice \n\n` + '```\n' + JSON.stringify({title, description, payload}, undefined, '  ') +'\n```')
+      notify(`🛍️ Create Invoice:  \n\n **${payload}: ${title} ${description}`);
 
 
       try {
@@ -78,7 +78,7 @@ export default class HttpApi {
         //   await.this.bot.sendInvoice
         // }
 
-        notify(`🛍️ /createInvoice Success ${invoiceLink} `)
+        notify(`🛍️ Create Invoice: Success ${invoiceLink} `)
 
         return reply
           .send({

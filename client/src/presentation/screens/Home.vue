@@ -43,7 +43,7 @@ const isLoading = ref<boolean | undefined>(undefined)
 
 const result = ref<Hotel[]>([])
 
-const { showMainButton, hideMainButton, setButtonLoader, expand } = useTelegram()
+const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight, showAlert } = useTelegram()
 
 /**
  * Hook called before search
@@ -82,7 +82,7 @@ function search(): void {
         result.value.push(hotel)
       }, i * 150)
     })
-  }, 2000)
+  }, 100)
 }
 
 onMounted(() => {
@@ -167,7 +167,7 @@ onUnmounted(() => {
       >
         <Vue3Lottie
           class="run"
-          :animation-data="SimpAnimation"
+          :animation-data="TouristAnimation"
           width="100px"
           height="100px"
         />

@@ -64,7 +64,7 @@ watch(() => props.opened, (opened) => {
     /**
      * Vertical gradient
      */
-    background-image: linear-gradient(to bottom, var(--color-bg-overlay) 0%,transparent 100%);
+    background-image: linear-gradient(to bottom, var(--color-bg-tertiary) 0%,transparent 100%);
     display: block;
     z-index: 0;
     opacity: 1;

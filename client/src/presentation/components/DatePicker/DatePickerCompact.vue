@@ -32,8 +32,8 @@ const dateVisible = computed(() => {
 .picker-compact {
   @apply --headline;
 
-  padding: 6px 10px;
-  border-radius: 7px;
+  padding: 6px 14px;
+  border-radius: 8px;
   background-color: var(--color-bg-tertiary);
   user-select: none;
 }

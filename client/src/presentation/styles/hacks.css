@@ -12,3 +12,45 @@
     }
   }
 }
+
+
+.fake-main-button {
+  padding: 20px;
+  border-radius: 10px 10px 0 0;
+  color: #fff;
+  background-color: var(--color-bg-button);
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  font-size: 17px;
+  font-family: system-ui, Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  display: none;
+  cursor: pointer;
+
+  &.visible {
+    display: block;
+  }
+}
+
+.fake-back-button {
+  padding: 12px 18px;
+  border-radius: 7px;
+  color: var(--color-link);
+  background-color: var(--color-bg-tertiary);
+  position: fixed;
+  top: 10px;
+  left: 10px;
+
+  font-size: 17px;
+  font-family: system-ui, Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  display: none;
+  cursor: pointer;
+
+  &.visible {
+    display: block;
+  }
+}
