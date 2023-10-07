@@ -7,7 +7,7 @@ import ListItem from './List/ListItem.vue'
 import ListCard from './List/ListCard.vue'
 import ListItemExpandable from './List/ListItemExpandable.vue'
 import ListItemIcon from './List/ListItemIcon.vue'
-import Number from './Number/Number.vue'
+import Amount from './Amount/Amount.vue'
 import Placeholder from './Placeholder/Placeholder.vue'
 import Sections from './Section/Sections.vue'
 import Section from './Section/Section.vue'
@@ -16,6 +16,7 @@ import DatePickerCompact from './DatePicker/DatePickerCompact.vue'
 import Input from './Input/Input.vue'
 import Text from './Text/Text.vue'
 import SkeletonPicture from './Skeleton/Picture.vue'
+import Rating from './Rating/Rating.vue'
 
 export {
   PageWithHeader,
@@ -27,7 +28,7 @@ export {
   ListItemExpandable,
   ListItemIcon,
   ListCard,
-  Number,
+  Amount,
   Placeholder,
   Sections,
   Section,
@@ -36,4 +37,5 @@ export {
   Input,
   Text,
   SkeletonPicture,
+  Rating,
 }

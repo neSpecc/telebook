@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import DataOverviewItem from './DataOverviewItem.vue'
-import { Number, Icon } from '@/presentation/components'
+import { Amount, Icon } from '@/presentation/components'
 import type { Rating, Award, Chart } from '@/domain/entities'
 
 defineProps<{
@@ -16,9 +16,9 @@ defineProps<{
       :title="`${rating.votesCount} ratings`"
     >
       <template #content>
-        <Number>
+        <Amount>
           {{ rating.rating }}
-        </Number>
+        </Amount>
       </template>
 
       <template #footer>
@@ -58,9 +58,9 @@ defineProps<{
       title="Charts"
     >
       <template #content>
-        <Number label="No.">
+        <Amount label="No.">
           {{ chart.place }}
-        </Number>
+        </Amount>
       </template>
 
       <template #footer>

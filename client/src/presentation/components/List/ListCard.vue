@@ -218,8 +218,8 @@ function freeSpace(): void {
 /**
  * Block base layer scroll when card is expanded
  */
-watch(expanded, (expanded) => {
-  if (expanded) {
+watch(expanded, (isExpanded) => {
+  if (isExpanded) {
     lockScroll()
     showBackButton(() => {
       collapse()
@@ -267,15 +267,18 @@ onBeforeUnmount(() => {
           backgroundImage: `url(${picture})`,
         }"
       >
-        <div class="title">
-          {{ title }}
+        <div class="picture-container__footer">
+          <div class="title">
+            {{ title }}
+          </div>
+          <slot name="visible" />
         </div>
       </div>
       <div
         ref="content"
         class="content"
       >
-        <slot />
+        <slot name="collapsed" />
       </div>
     </div>
   </div>
@@ -320,15 +323,32 @@ onBeforeUnmount(() => {
     height: var(--height);
     max-width: 100%;
     width: 100%;
-    background-color: red;
+    background-color: var(--color-bg-secondary);
     background-size: cover;
     background-position: center center;
+
+    &__footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+
+      /**
+      * Fix for Safari z-index problem
+      */
+      -webkit-transform: translate3d(0,0,0);
+
+      &:deep(.list-item) {
+        backdrop-filter: blur(16px);
+        padding: 6px 0 6px var(--size-cell-h-padding);
+      }
+
+      &:deep(.list-item .subtitle) {
+        color: var(--color-text)
+      }
+    }
   }
 
   .title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
     padding: 24px;
     font-size: var(--text-lg);
     font-weight: var(--weight-bold);
@@ -336,13 +356,8 @@ onBeforeUnmount(() => {
     font-weight: 800;
     font-size: 46px;
     max-width: 30%;
-    line-height: 0.86em;
+    line-height: 0.9em;
     color: #fff;
-
-    /**
-     * Fix for Safari z-index problem
-     */
-    -webkit-transform: translate3d(0,0,0);
   }
 
   .content {

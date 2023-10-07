@@ -1,6 +1,6 @@
 <!-- eslint-disable clean-timer/assign-timer-id -->
 <script setup lang="ts">
-import { Placeholder, List, ListItem, ListItemExpandable, Sections, Section, ListCard, DatePicker, DatePickerCompact, Number } from '@/presentation/components'
+import { Placeholder, List, ListItem, ListItemExpandable, Sections, Section, ListCard, DatePicker, DatePickerCompact, Amount, Rating } from '@/presentation/components'
 import { onMounted, onUnmounted, ref, onBeforeUnmount } from 'vue'
 import { useTripDetails } from '@/domain/services/useTripDetails'
 import { useTelegram } from '@/application/services'
@@ -43,7 +43,7 @@ const isLoading = ref<boolean | undefined>(undefined)
 
 const result = ref<Hotel[]>([])
 
-const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight, showAlert } = useTelegram()
+const { showMainButton, hideMainButton, setButtonLoader, expand } = useTelegram()
 
 /**
  * Hook called before search
@@ -66,7 +66,6 @@ function onAfterSearch(): void {
   setButtonLoader(false)
   hideMainButton()
 }
-
 
 /**
  * Fake search method
@@ -186,29 +185,44 @@ onUnmounted(() => {
           >
             <ListCard
               v-if="index === 3 || index === 5"
-              :title="hotel.title"
+              :title="index === 3 ? 'Users choice' : 'Hotel of the year'"
               :picture="hotel.picture"
             >
-              <Sections>
-                {{ hotel.description }}
-                <List gapped>
-                  <ListItem
-                    :id="1"
-                    transaction-icon="clock-fill"
-                    label="Check rooms"
-                    subtitle="There are 14 rooms available"
-                    to="/hotel/1"
-                    right-icon="chevron-right"
-                    standalone
-                  />
-                </List>
-              </Sections>
+              <template #visible>
+                <ListItem
+                  :id="1"
+                  :avatar="{src: hotel.picture, placeholder: hotel.title}"
+                  :title="hotel.title"
+                  :subtitle="hotel.subtitle"
+                  nowrap
+                >
+                  <template #right>
+                    <Rating :value="hotel.rating.rating" />
+                  </template>
+                </ListItem>
+              </template>
+              <template #collapsed>
+                <Sections>
+                  {{ hotel.description }}
+                  <List gapped>
+                    <ListItem
+                      :id="hotel.id"
+                      transaction-icon="clock-fill"
+                      title="Check rooms"
+                      subtitle="There are 14 rooms available"
+                      :to="`/hotel/${hotel.id}`"
+                      right-icon="chevron-right"
+                      standalone
+                    />
+                  </List>
+                </Sections>
+              </template>
             </ListCard>
             <ListItem
               v-else
               :id="hotel.id"
               :avatar="{src: hotel.picture, placeholder: hotel.title}"
-              :label="hotel.title"
+              :title="hotel.title"
               :subtitle="hotel.subtitle"
               :to="`/hotel/${hotel.id}`"
               big-avatar
@@ -217,12 +231,12 @@ onUnmounted(() => {
             >
               <template #right>
                 <div class="room-cell-right">
-                  <Number>
+                  <Amount>
                     <template #topline>
                       from
                     </template>
                     {{ hotel.price }}$
-                  </Number>
+                  </Amount>
                   <div class="small">
                     for {{ 12 }} nights
                   </div>

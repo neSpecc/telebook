@@ -2,10 +2,9 @@
 import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { useHotel, useTripDetails, useInvoice } from '@/domain/services'
 import { useScroll, useTelegram } from '@/application/services'
-import { PageWithHeader, Placeholder, Icon, Section, Sections, List, ListItem, Number, Avatar } from '@/presentation/components'
+import { PageWithHeader, Placeholder, Icon, Section, Sections, List, ListItem, Amount, Avatar } from '@/presentation/components'
 import { amenities } from '@/infra/store/hotels/mock/amenities'
 import { formatDate } from '@/infra/utils/date'
-import { format } from 'path'
 
 const props = defineProps({
   /**
@@ -218,7 +217,7 @@ onBeforeUnmount(() => {
               label="Transfer"
             >
               <template #right>
-                <Number>100$</Number>
+                <Amount>100$</Amount>
               </template>
             </ListItem>
           </List>
@@ -258,9 +257,9 @@ onBeforeUnmount(() => {
           />
         </template>
         <template #right>
-          <Number>
+          <Amount>
             {{ roomAmount }}$
-          </Number>
+          </Amount>
         </template>
       </ListItem>
     </div>

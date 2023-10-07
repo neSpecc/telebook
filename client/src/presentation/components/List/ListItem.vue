@@ -22,6 +22,7 @@ const props = defineProps<{
   to?: string;
   bigAvatar?: boolean;
   isLoading?: boolean;
+  nowrap?: boolean;
 }>()
 
 // /**
@@ -96,7 +97,8 @@ const pictureStyle = computed(() => {
     class="list-item"
     :class="{
       'list-item--standalone': standalone,
-      'list-item--big-avatar': bigAvatar
+      'list-item--big-avatar': bigAvatar,
+      'list-item--nowrap': nowrap,
     }"
     :to="to"
   >
@@ -250,6 +252,7 @@ const pictureStyle = computed(() => {
     display: none;
   }
 
+
   .body {
     padding: 10px 0;
     padding-inline-end: 16px;
@@ -276,6 +279,10 @@ const pictureStyle = computed(() => {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  &--nowrap .subtitle {
+    -webkit-line-clamp: 1;
   }
 }
 

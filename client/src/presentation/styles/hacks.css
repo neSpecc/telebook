@@ -39,10 +39,11 @@
   padding: 12px 18px;
   border-radius: 7px;
   color: var(--color-link);
-  background-color: var(--color-bg-tertiary);
+  background-color: var(--color-bg);
   position: fixed;
   top: 10px;
   left: 10px;
+  z-index: 9;
 
   font-size: 17px;
   font-family: system-ui, Inter, Avenir, Helvetica, Arial, sans-serif;

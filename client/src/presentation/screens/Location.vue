@@ -92,17 +92,6 @@ onBeforeUnmount(() => {
                 {{ city.emoji }}
               </div>
             </template>
-            <!-- <template #right>
-              <div class="room-cell-right">
-                <Number>
-                  130$
-
-                  <template #subline>
-                    per night
-                  </template>
-                </Number>
-              </div>
-            </template> -->
           </ListItem>
         </List>
       </Section>

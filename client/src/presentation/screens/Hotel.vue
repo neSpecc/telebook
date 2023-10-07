@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { List, ListItem, Sections, Section, Number, Placeholder, DataOverview, Avatar, Text } from '@/presentation/components'
+import { List, ListItem, Sections, Section, Amount, Placeholder, DataOverview, Avatar, Text } from '@/presentation/components'
 import { useHotel } from '@/domain/services/useHotel'
 import { computed } from 'vue'
 
@@ -98,13 +98,13 @@ const reviews = [
           >
             <template #right>
               <div class="room-cell-right">
-                <Number>
+                <Amount>
                   {{ room.price }}$
 
                   <template #subline>
                     per night
                   </template>
-                </Number>
+                </Amount>
                 <div class="book">
                   Book
                 </div>
@@ -131,9 +131,9 @@ const reviews = [
           >
             <template #right>
               <div class="review-rating">
-                <Number>
+                <Amount>
                   {{ review.rating }}
-                </Number>
+                </Amount>
                 <div class="stars">
                   <template
                     v-for="i in 5"
@@ -189,13 +189,5 @@ const reviews = [
   background-color: var(--color-bg);
   background-size: cover;
   background-position: 50% 50%;
-}
-
-.review-rating {
-  text-align: center;
-  .stars {
-    font-size: 8px;
-    margin-top: 4px;
-  }
 }
 </style>
