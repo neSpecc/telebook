@@ -82,6 +82,7 @@ function cardClicked(): void {
  * Hook called before animation starts
  */
 function onBeforeAnimation(): void {
+  console.trace('onBeforeAnimation')
   isAnimating.value = true
   document.body.style.userSelect = 'none'
   document.body.style.webkitUserSelect = 'none'
@@ -246,6 +247,12 @@ onBeforeUnmount(() => {
   card.value?.removeEventListener('transitionend', onAnimationEnd)
   expanded.value = false
   onAnimationEnd()
+  unlockScroll()
+  hideBackButton()
+
+  /**
+   * #todo handle card clicked here
+   */
 })
 </script>
 <template>
@@ -259,13 +266,13 @@ onBeforeUnmount(() => {
       ref="card"
       class="list-card"
       :class="{ expanded }"
-      @click="cardClicked"
     >
       <div
         class="picture-container"
         :style="{
           backgroundImage: `url(${picture})`,
         }"
+        @click="cardClicked"
       >
         <div class="picture-container__footer">
           <div class="title">
@@ -339,7 +346,7 @@ onBeforeUnmount(() => {
 
       &:deep(.list-item) {
         backdrop-filter: blur(16px);
-        padding: 6px 0 6px var(--size-cell-h-padding);
+        padding: 8px 0 8px var(--size-cell-h-padding);
       }
 
       &:deep(.list-item .subtitle) {
@@ -354,7 +361,7 @@ onBeforeUnmount(() => {
     font-weight: var(--weight-bold);
     text-transform: uppercase;
     font-weight: 800;
-    font-size: 46px;
+    font-size: 42px;
     max-width: 30%;
     line-height: 0.9em;
     color: #fff;

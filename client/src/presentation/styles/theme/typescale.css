@@ -154,6 +154,12 @@
     /* letter-spacing: -0.08px; */
   }
 
+  --footnote-semibold {
+    @apply --footnote;
+
+    font-weight: 600;
+  }
+
   --footnote-caps {
     @apply --footnote;
 

@@ -5,6 +5,7 @@ import { useScroll, useTelegram } from '@/application/services'
 import { PageWithHeader, Placeholder, Icon, Section, Sections, List, ListItem, Amount, Avatar } from '@/presentation/components'
 import { amenities } from '@/infra/store/hotels/mock/amenities'
 import { formatDate } from '@/infra/utils/date'
+import { spaced } from '@/infra/utils/number'
 
 const props = defineProps({
   /**
@@ -160,6 +161,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
+  <div>
   <PageWithHeader
     v-if="room && hotel"
     class="page"
@@ -249,7 +251,7 @@ onBeforeUnmount(() => {
     <div class="price">
       <ListItem
         label="Total Price"
-        subtitle="For 4 night stand"
+        :subtitle="`For ${days} night stand`"
       >
         <template #picture>
           <Icon
@@ -258,12 +260,13 @@ onBeforeUnmount(() => {
         </template>
         <template #right>
           <Amount>
-            {{ roomAmount }}$
+            {{ spaced(roomAmount) }}$
           </Amount>
         </template>
       </ListItem>
     </div>
   </div>
+</div>
 </template>
 
 <style scoped>

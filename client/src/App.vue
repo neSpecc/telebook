@@ -99,6 +99,7 @@ body {
 
 .slide-left-enter-active {
   animation: slide-left 200ms;
+  will-change: transform, opacity;
 }
 
 @keyframes slide-left {

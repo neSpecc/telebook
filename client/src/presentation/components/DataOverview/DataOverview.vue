@@ -58,7 +58,7 @@ defineProps<{
       title="Charts"
     >
       <template #content>
-        <Amount label="No.">
+        <Amount prefix="No.">
           {{ chart.place }}
         </Amount>
       </template>

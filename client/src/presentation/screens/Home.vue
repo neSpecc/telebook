@@ -5,6 +5,7 @@ import { onMounted, onUnmounted, ref, onBeforeUnmount } from 'vue'
 import { useTripDetails } from '@/domain/services/useTripDetails'
 import { useTelegram } from '@/application/services'
 import { hotels } from '@/infra/store/hotels/mock/hotels'
+import { shortNumber } from '@/infra/utils/number'
 import { Vue3Lottie } from 'vue3-lottie'
 import SearchAnimation from '@/presentation/assets/lottie/run.json'
 import EyesAnimation from '@/presentation/assets/lottie/eyes.json'
@@ -23,6 +24,7 @@ const {
   selectDefault: selectDefaultLocation,
   setStartDate,
   setEndDate,
+  days,
 } = useTripDetails()
 
 /**
@@ -235,11 +237,11 @@ onUnmounted(() => {
                     <template #topline>
                       from
                     </template>
-                    {{ hotel.price }}$
+                    {{ shortNumber(hotel.price * days) }}$
+                    <template #subline>
+                      for {{ days }} night{{ days > 1 ? 's' : '' }}
+                    </template>
                   </Amount>
-                  <div class="small">
-                    for {{ 12 }} nights
-                  </div>
                 </div>
                 <!-- <div class="viewed">
                   <span class="viewed-eyes">
@@ -334,7 +336,7 @@ onUnmounted(() => {
   gap: 5px;
   align-items: center;
 
-  :deep(.number){
+  :deep(.amount){
     text-align: center;
   }
 }
