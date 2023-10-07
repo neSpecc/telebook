@@ -65,6 +65,10 @@ export default function useTelegram(): useTelegramComposableState {
   function showMainButton(text: string, callback: () => void): void {
     prepareDebugButton(debugMainButton, 'fake-main-button')
 
+    if (mainButtonCallback.value !== null) {
+      WebApp.MainButton.offClick(mainButtonCallback.value)
+    }
+
     mainButtonCallback.value = callback
 
     WebApp.MainButton.text = text ?? 'Submit'
@@ -100,6 +104,10 @@ export default function useTelegram(): useTelegramComposableState {
    */
   function showBackButton(callback: () => void): void {
     prepareDebugButton(debugBackButton, 'fake-back-button')
+
+    if (backButtonCallback.value !== null) {
+      WebApp.BackButton.offClick(backButtonCallback.value)
+    }
 
     backButtonCallback.value = callback
 
