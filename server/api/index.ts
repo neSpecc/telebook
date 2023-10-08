@@ -3,6 +3,10 @@ import Config from '../src/config.js';
 import Router from '../src/api/router/index.js'
 import Fastify from 'fastify';
 
+// Read the .env file.
+import * as dotenv from "dotenv";
+dotenv.config();
+
 const app = Fastify({
   logger: true,
 });
