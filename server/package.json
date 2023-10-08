@@ -16,7 +16,7 @@
     "lint:fix": "eslint . --ext .ts --fix"
   },
   "engines": {
-    "node": ">=19.0.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@fastify/cors": "^8.4.0",
