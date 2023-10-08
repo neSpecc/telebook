@@ -34,15 +34,15 @@ export default class HttpApi {
     })
 
 
-    this.server.listen({
-      port: parseInt(this.config.port),
-    }, (err: Error | null, address: string) => {
-      if (err) {
-        console.error(err)
-        process.exit(1)
-      }
-      console.log(`🫡  ${this.config.appName || 'Server'} API listening at ${address}`)
-    })
+    // this.server.listen({
+    //   port: parseInt(this.config.port),
+    // }, (err: Error | null, address: string) => {
+    //   if (err) {
+    //     console.error(err)
+    //     process.exit(1)
+    //   }
+    //   console.log(`🫡  ${this.config.appName || 'Server'} API listening at ${address}`)
+    // })
 
     /**
      * Allow cors for allowed origins from config
