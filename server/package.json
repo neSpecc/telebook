@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/node": "^20.8.0",
     "@types/node-telegram-bot-api": "^0.61.8",
+    "@vercel/node": "^3.0.7",
     "eslint": "^8.50.0",
     "eslint-config-codex": "^1.8.3",
     "typescript": "^5.2.2"
