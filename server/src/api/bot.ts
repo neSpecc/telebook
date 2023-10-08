@@ -21,9 +21,16 @@ export default class Bot {
       testEnvironment: this.config.isTestEnvironment,
     })
 
-    const setHookResponse = await bot.setWebHook(`${this.config.publicHost}/bot`);
+    try {
+      console.log('Try to set Telegram Webhook', `${this.config.publicHost}/bot`);
 
-    console.log('setHookResponse', setHookResponse);
+      const setHookResponse = await bot.setWebHook(`${this.config.publicHost}/bot`);
+
+      console.log('setHookResponse', setHookResponse);
+    } catch (e) {
+      console.warn('Can not set Telegram Webhook', e)
+    }
+
 
 
     bot.getMe()
