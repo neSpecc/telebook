@@ -103,11 +103,11 @@ function search(): void {
   setTimeout(() => {
     onAfterSearch()
 
-    hotels.forEach((hotel, i) => {
-      setTimeout(() => {
+    setTimeout(() => {
+      hotels.forEach((hotel, i) => {
         result.value.push(hotel)
-      }, i * 150)
-    })
+      })
+    }, 150)
   }, 3000)
 }
 

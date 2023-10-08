@@ -189,7 +189,7 @@ function fixCard({ top, left, height, width }: { top: string; left: string; heig
   card.value.style.width = width
 }
 
-function onCollapsed() {
+function onCollapsed(): void {
   setContentWidth('unset')
 
   if (card.value === null) {
