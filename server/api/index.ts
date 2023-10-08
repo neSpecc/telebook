@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import Config from '../src/config';
+import Config from '../src/config.js';
 // import HttpApi from './api/http.js';
 // import Bot from './api/bot.js';
 // import { notify } from './infra/utils/notify/index.js';
