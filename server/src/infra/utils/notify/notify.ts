@@ -27,10 +27,6 @@ function _notify(text: string): void {
     return
   }
 
-  const payload = {
-    message: text
-  }
-
   const options = {
     method: 'POST',
     headers: {
