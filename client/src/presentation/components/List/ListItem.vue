@@ -169,11 +169,13 @@ const pictureStyle = computed(() => {
 <style scoped lang="postcss">
 @import '@/presentation/styles/theme/typescale.css';
 .list-item {
+  --color-arrow: var(--color-hint);
+
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: stretch;
   padding-left: var(--size-cell-h-padding);
-  min-height: 44px;
+  min-height: var(--size-cell-min-height);
 
   /**
    * Disable default link touch feedback
@@ -229,7 +231,7 @@ const pictureStyle = computed(() => {
       gap: 4px;
 
       .icon {
-        stroke: var(--color-hint);
+        stroke: var(--color-arrow);
         display: inline-flex;
         justify-content: center;
       }
@@ -243,7 +245,6 @@ const pictureStyle = computed(() => {
   &:last-of-type .right-row::after {
     display: none;
   }
-
 
   .body {
     padding: 10px 0;
@@ -275,6 +276,18 @@ const pictureStyle = computed(() => {
 
   &--nowrap .subtitle {
     -webkit-line-clamp: 1;
+  }
+}
+
+.is-material .list-item {
+  --color-arrow: var(--separator-color);
+
+  &--standalone {
+    box-shadow: 0 0 0 1px var(--color-island-shadow);
+  }
+
+  .body {
+    grid-gap: 2px;
   }
 }
 

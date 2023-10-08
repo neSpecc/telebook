@@ -1,18 +1,27 @@
 <script setup lang="ts">
-import { useScroll } from '@/application/services'
-// import { onBeforeMount } from 'vue';
+import { onMounted, ref } from 'vue'
 
 // const { setAppBackground } = useAppStyle()
 
-// onBeforeMount(() => {
-//   setAppBackground('var(--color-bg-secondary)')
-// })
+const header = ref<HTMLDivElement | null>(null)
+const headerHeight = ref(59)
+
+onMounted(() => {
+  if (header.value === null) {
+    return
+  }
+
+  headerHeight.value = header.value.clientHeight
+})
 </script>
 <template>
+  <div
+    ref="header"
+    class="page-header"
+  >
+    <slot name="header" />
+  </div>
   <div class="page">
-    <div class="page-header">
-      <slot name="header" />
-    </div>
     <div class="page-content">
       <slot name="content" />
     </div>
@@ -26,29 +35,26 @@ import { useScroll } from '@/application/services'
   /* padding-bottom: 16px; */
 
   --content-radius: 16px;
-  height: 100vh;
+  /* height: 100vh; */
   /* overflow: hidden; */
   /* scroll-behavior: smooth; */
-  display: grid;
-  grid-template-rows: auto 1fr;
+  /* display: grid; */
+  /* grid-template-rows: auto 1fr; */
 }
 .page-header {
   /* padding: 4px 0 calc(2px + var(--content-radius)); */
   background-color: var(--color-bg);
-  position: sticky;
+  position: fixed;
   top: 0;
-
-  &:deep(.subtitle) {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  transform: translateZ(0);
+  z-index: 2;
 }
 
 .page-content {
-  height: 100%;
-  overflow: auto;
-  scroll-behavior: smooth;
+  padding-top: v-bind('headerHeight + "px"');
+  /* height: 100%; */
+  /* overflow: auto; */
+  /* scroll-behavior: smooth; */
   /* padding-bottom: 100px; */
   /* box-shadow: -3px 0 40px -10px rgba(0, 0, 0, 0.3); */
 

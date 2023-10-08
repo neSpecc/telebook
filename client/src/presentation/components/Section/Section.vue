@@ -49,19 +49,37 @@ defineProps<{
   }
 
   &--padded {
-    padding-inline: 16px;
+    padding-inline: var(--size-cell-h-margin);
   }
 
   &--standalone {
     border-radius: var(--size-border-radius-big);
-    margin: 0 16px;
+    margin: 0 var(--size-cell-h-margin);
   }
 
   &__title {
     @apply --footnote-caps;
 
     color: var(--color-hint);
-    padding: 5px 16px 6px;
+    padding: 5px var(--size-cell-h-padding) 6px;
+  }
+}
+.is-material .section {
+  &--bg {
+    box-shadow: 0 0 0 1px var(--color-island-shadow);
+  }
+
+  &__title {
+    background-color: var(--color-bg);
+    transform: translateY(1px);
+    padding-top: 16px;
+    box-shadow: 0 -1px 0 0 var(--color-island-shadow);
+    color: var(--color-link);
+
+    @apply --subheadline-1;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: unset;
   }
 }
 </style>

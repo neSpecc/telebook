@@ -1,5 +1,68 @@
 :root {
+  --family: system-ui, Inter, Avenir, Helvetica, Arial, sans-serif;
   --rounded-family: SF Pro Rounded, "ui-rounded", system-ui;
+
+  --font-size-title-2: 22px;
+  --line-height-title-2: 28px;
+
+  --font-size-headline: 17px;
+  --line-height-headline: 22px;
+
+  --font-size-subheadline-2: 14px;
+  --line-height-subheadline-2: 18px;
+  --ls-subheadline-2: -0.15px;
+
+  --font-size-body: 17px;
+  --line-height-body: 22px;
+
+
+  .is-material {
+    /**
+     * Some android devices uses custom fonts, but Telegram uses Roboto, so we need to load it manually
+     */
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 400;
+      src: url('../../assets/fonts/Roboto-Regular.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 500;
+      src: url('../../assets/fonts/Roboto-Medium.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 700;
+      src: url('../../assets/fonts/Roboto-Bold.ttf') format('truetype');
+    }
+
+    @font-face {
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 900;
+      src: url('../../assets/fonts/Roboto-Black.ttf') format('truetype');
+    }
+
+    --family: "Roboto", system-ui, Inter, Avenir, Helvetica, Arial, sans-serif;
+
+    --font-size-title-2: 20px;
+    --line-height-title-2: 24px;
+
+    --font-size-headline: 16px;
+    --line-height-headline: 20px;
+
+    --font-size-subheadline-2: 15px;
+    --line-height-subheadline-2: 17px;
+    --ls-subheadline-2: 0;
+
+    --font-size-body: 16px;
+    --line-height-body: 20px;
+  }
 
   --title-1 {
     font-size: 28px;
@@ -8,8 +71,8 @@
   }
 
   --title-2 {
-    font-size: 22px;
-    line-height: 28px;
+    font-size: var(--font-size-title-2);
+    line-height: var(--line-height-title-2);
     /* letter-spacing: -0.26px; */
   }
 
@@ -39,8 +102,8 @@
   }
 
   --headline {
-    font-size: 17px;
-    line-height: 22px;
+    font-size: var(--font-size-headline);
+    line-height: var(--line-height-headline);
   }
 
   --headline--semibold {
@@ -50,8 +113,8 @@
   }
 
   --body {
-    font-size: 17px;
-    line-height: 22px;
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
     letter-spacing: -0.43px;
   }
 
@@ -130,9 +193,9 @@
   }
 
   --subheadline-2 {
-    font-size: 14px;
-    line-height: 18px;
-    letter-spacing: -0.15px;
+    font-size: var(--font-size-subheadline-2:);
+    line-height: var(--line-height-subheadline-2);
+    letter-spacing: var(--ls-subheadline-2);
   }
 
   --subheadline-2-semibold {

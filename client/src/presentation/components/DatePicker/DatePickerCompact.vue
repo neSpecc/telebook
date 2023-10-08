@@ -33,7 +33,7 @@ const dateVisible = computed(() => {
   @apply --headline;
 
   padding: 6px 14px;
-  border-radius: 8px;
+  border-radius: var(--size-border-radius-small);
   background-color: var(--color-bg-tertiary);
   user-select: none;
 }

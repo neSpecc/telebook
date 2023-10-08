@@ -13,6 +13,7 @@ interface useTelegramComposableState {
   expand: () => void;
   getViewportHeight: () => number;
   colorScheme: 'light' | 'dark' | undefined;
+  platform: 'android' | 'android_x' | 'ios' | 'macos' | 'tdesktop' | 'weba' | 'webk' | 'unigram' | 'unknown';
 }
 
 /**
@@ -204,6 +205,11 @@ export default function useTelegram(): useTelegramComposableState {
    */
   const colorScheme = WebApp.platform !== 'unknown' ? WebApp.colorScheme : undefined
 
+  /**
+   * The current platform of the device.
+   */
+  const platform = WebApp.platform
+
   return {
     showMainButton,
     hideMainButton,
@@ -216,5 +222,6 @@ export default function useTelegram(): useTelegramComposableState {
     showBackButton,
     hideBackButton,
     colorScheme,
+    platform,
   }
 }

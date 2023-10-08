@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useLayout, useScroll, useTelegram } from '@/application/services'
+import { getCSSVariable } from '@/infra/utils/dom'
 
 defineProps<{
   /**
@@ -134,7 +135,7 @@ function reserveSpace(): void {
       /**
        * Horizontal margins around
        */
-      left: `${16}px`,
+      left: getCSSVariable('--size-cell-h-margin', document.body) ?? 16 + 'px',
       width: `${cardRect.width}px`,
       height: `${cardRect.height}px`,
     }
@@ -349,8 +350,10 @@ onBeforeUnmount(() => {
         padding: 8px 0 8px var(--size-cell-h-padding);
       }
 
-      &:deep(.list-item .subtitle) {
-        color: var(--color-text)
+      &:deep(.list-item .title),
+      &:deep(.list-item .subtitle),
+      &:deep(.list-item .right) {
+        color: var(--color-text-button);
       }
     }
   }
@@ -370,7 +373,6 @@ onBeforeUnmount(() => {
   .content {
     opacity: 0;
     transition: opacity var(--speed) 300ms ease;
-    padding: 16px;
 
     @apply --body;
   }

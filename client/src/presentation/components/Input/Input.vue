@@ -46,6 +46,7 @@ defineEmits(['update:modelValue'])
   gap: 4px;
   background: var(--color-bg);
   border-radius: var(--size-border-radius-big);
+  align-items: center;
 
   :deep(.icon){
     display: flex;
@@ -73,7 +74,7 @@ defineEmits(['update:modelValue'])
 
     @apply --body;
 
-    &:placeholder {
+    &::placeholder {
       color: var(--color-hint);
     }
   }

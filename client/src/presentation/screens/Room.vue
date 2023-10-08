@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useHotel, useTripDetails, useInvoice } from '@/domain/services'
 import { useScroll, useTelegram } from '@/application/services'
 import { PageWithHeader, Placeholder, Icon, Section, Sections, List, ListItem, Amount, Avatar, FixedFooter } from '@/presentation/components'
@@ -93,8 +93,8 @@ async function buttonClicked(): Promise<void> {
         amount: toPrice(100),
       },
       {
-        label: 'Service fee 5%',
-        amount: toPrice(roomAmount.value * 0.05),
+        label: 'Service fee',
+        amount: 0,
       },
       {
         label: 'Breakfast included',
@@ -137,14 +137,15 @@ async function buttonClicked(): Promise<void> {
   })
 }
 
-const { lock, unlock } = useScroll()
+
+
+/**
+ * We show footer after some delay, so this variable contains the state of footer visibility
+ */
+const isPriceFooterShowed = ref(false)
+const footerShowingDelay = ref<ReturnType<typeof setTimeout>>()
 
 onMounted(() => {
-  /**
-   * Block document scroll. We use internal scroll on this screen for better native-like UX
-   */
-  lock()
-
   /**
    * Show main Telegram CTA
    */
@@ -155,13 +156,17 @@ onMounted(() => {
   showBackButton(() => {
     void router.push(`/hotel/${hotelId.value}`)
   })
+
+  footerShowingDelay.value = setTimeout(() => {
+    isPriceFooterShowed.value = true
+  }, 300)
 })
 
 onBeforeUnmount(() => {
   hideMainButton()
   hideBackButton()
 
-  unlock()
+  clearTimeout(footerShowingDelay.value)
 })
 </script>
 
@@ -172,14 +177,13 @@ onBeforeUnmount(() => {
       class="page"
     >
       <template #header>
-        <Section>
-          <ListItem
-            :avatar="{src: '/pics/hotel-3.jpg', placeholder: hotel.title}"
-            :title="hotel.title"
-            :subtitle="hotel.subtitle"
-            :to="`/hotel/${hotel.id}`"
-          />
-        </Section>
+        <ListItem
+          :avatar="{src: '/pics/hotel-3.jpg', placeholder: hotel.title}"
+          :title="hotel.title"
+          :subtitle="hotel.subtitle"
+          :to="`/hotel/${hotel.id}`"
+          nowrap
+        />
       </template>
       <template #content>
         <Sections class="form">
@@ -249,14 +253,13 @@ onBeforeUnmount(() => {
         </Sections>
       </template>
     </PageWithHeader>
-    <FixedFooter
-      v-if="room"
-      class="total"
-      :bottom="8"
-    >
-      <div class="price">
+    <FixedFooter>
+      <div
+        v-if="room && isPriceFooterShowed"
+        class="price"
+      >
         <ListItem
-          label="Total Price"
+          title="Total Price"
           :subtitle="`For ${days} night${days > 1 ? 's' : ''} stand`"
         >
           <template #picture>
@@ -276,32 +279,39 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.total {
-  .price {
-    margin: 8px;
-    padding: 4px;
-    background-color: rgba(19, 19, 19, 0.82);
-    color: white;
-    backdrop-filter: blur(14px);
-    border-radius: var(--size-border-radius-big);
+.price {
+  margin: calc(var(--size-cell-h-margin) / 2);
+  padding: 4px;
+  background-color: rgba(19, 19, 19, 0.82);
+  color: white;
+  backdrop-filter: blur(14px);
+  border-radius: var(--size-border-radius-big);
+  animation: fade-in 200ms ease;
+  will-change: opacity;
 
-    &:deep(.number){
-      font-size: 22px;
-      gap: 4px;
-    }
+  &:deep(.number){
+    font-size: 22px;
+    gap: 4px;
+  }
 
-    &:deep(.topline){
-      margin-bottom: 4px;
-    }
+  &:deep(.topline){
+    margin-bottom: 4px;
+  }
 
-    &:deep(.icon){
-      width: 20px;
-      display: block;
-      animation: shake 500ms cubic-bezier(0.19, 1, 0.22, 1) ;
-      will-change: transform;
-    }
+  &:deep(.icon){
+    width: 20px;
+    display: block;
+    animation: shake 500ms cubic-bezier(0.19, 1, 0.22, 1) 100ms;
+    will-change: transform;
   }
 }
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
 
 @keyframes shake {
   0% {
@@ -326,6 +336,6 @@ onBeforeUnmount(() => {
 }
 
 .form {
-  padding-bottom: 90px;
+  padding-bottom: 84px;
 }
 </style>

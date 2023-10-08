@@ -21,7 +21,6 @@ onBeforeMount(() => {
       <transition :name="route.meta.transition ?? ''">
         <component
           :is="Component"
-          class="will-be-animated"
         />
       </transition>
     </RouterView>
@@ -29,6 +28,8 @@ onBeforeMount(() => {
 </template>
 
 <style>
+@import '@/presentation/styles/theme/typescale.css';
+
 :root {
   color-scheme: light dark;
 }
@@ -47,8 +48,8 @@ body {
   grid-template-rows: 1fr;
   min-height: 100%;
   width: 100%;
-  font-family: system-ui, Inter, Avenir, Helvetica, Arial, sans-serif;
-  /* font-family: -apple-system, system-ui, Inter, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: var(--family);
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -64,10 +65,6 @@ body {
 .app {
   color: var(--color-text);
   position: relative;
-}
-
-.will-be-animated {
-  will-change: opacity, transform;
 }
 
 .fade-enter-active,

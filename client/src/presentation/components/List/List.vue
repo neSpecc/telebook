@@ -15,10 +15,8 @@ defineProps<{
     class="list"
     :class="{
       'list--bg': withBackground,
-      'list--standalone': standalone
-    }"
-    :style="{
-      '--gap': gapped ? '6px' : '0',
+      'list--standalone': standalone,
+      'list--gapped': gapped,
     }"
   >
     <slot />
@@ -29,8 +27,11 @@ defineProps<{
 @import '@/presentation/styles/theme/typescale.css';
 .list {
   display: grid;
-  grid-gap: var(--gap);
-  grid-auto-rows:min-content;
+  grid-auto-rows: min-content;
+
+  &--gapped {
+    grid-gap: 6px;
+  }
 
   &--bg {
     background-color: var(--color-bg);
@@ -38,6 +39,16 @@ defineProps<{
 
   &--standalone {
     border-radius: var(--size-border-radius-big);
+  }
+}
+
+.is-material .list {
+  &--gapped {
+    grid-gap: 4px;
+  }
+
+  &--bg {
+    box-shadow: 0 0 0 1px var(--color-island-shadow);
   }
 }
 </style>

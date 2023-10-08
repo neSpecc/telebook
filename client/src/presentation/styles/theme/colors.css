@@ -12,7 +12,7 @@
     --color-hint: var(--tg-theme-hint-color, #98989e);
     --color-link: var(--tg-theme-link-color, #3e88f7);
 
-    --separator-color: #3d3d3f;
+    --separator-color: rgba(255, 255, 255, 0.1);
 
     --skeleton-color: var(--color-bg-tertiary);
   }
@@ -28,7 +28,11 @@
     --color-hint: var(--tg-theme-hint-color, #8e8e93);
     --color-link: var(--tg-theme-link-color, #007aff);
 
-    --separator-color: rgba(204, 204, 204, 0.27);
+    --separator-color: rgba(204, 204, 204, 0.5);
+  }
+
+  .is-material {
+    --color-island-shadow: rgba(0,0,0,0.02)
   }
 }
 

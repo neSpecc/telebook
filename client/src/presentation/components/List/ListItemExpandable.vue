@@ -26,7 +26,7 @@ watch(() => props.opened, (opened) => {
       return
     }
 
-    maxHeight.value = expandableEl.value?.scrollHeight * 1.05
+    maxHeight.value = expandableEl.value?.scrollHeight
   } else {
     maxHeight.value = 0
   }

@@ -1,6 +1,6 @@
 <!-- eslint-disable clean-timer/assign-timer-id -->
 <script setup lang="ts">
-import { Placeholder, List, ListItem, ListItemExpandable, Sections, Section, ListCard, DatePicker, DatePickerCompact, Amount, Rating } from '@/presentation/components'
+import { Placeholder, List, ListItem, ListItemExpandable, Sections, Section, ListCard, DatePicker, DatePickerCompact, Amount, Rating, Text } from '@/presentation/components'
 import { onMounted, ref, onBeforeUnmount, watchEffect, watch } from 'vue'
 import { useTripDetails } from '@/domain/services/useTripDetails'
 import { useTelegram, useScroll } from '@/application/services'
@@ -51,12 +51,13 @@ const isSearchFinished = ref(false)
  */
 const result = ref<Hotel[]>([])
 
-const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight } = useTelegram()
+const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight, showAlert, platform } = useTelegram()
 const { scrollTo } = useScroll()
 
 const searchSettings = ref<InstanceType<typeof Section> | null>(null)
 const startDatePicker = ref<InstanceType<typeof DatePicker> | null>(null)
 const endDatePicker = ref<InstanceType<typeof DatePicker> | null>(null)
+const landing = ref<InstanceType<typeof Placeholder> | null>(null)
 const startDatePickerHeight = ref(0)
 const endDatePickerHeight = ref(0)
 const searchSettingsHeight = ref(130)
@@ -86,11 +87,11 @@ function onAfterSearch(): void {
   setButtonLoader(false)
   hideMainButton()
 
-  requestAnimationFrame(() => {
+  setTimeout(() => {
     if (searchSettings.value !== null) {
       scrollTo(searchSettings.value.$el, 16)
     }
-  })
+  }, 200)
 }
 
 /**
@@ -191,6 +192,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="home-page">
     <Placeholder
+      ref="landing"
       class="landing"
       title="Telebook"
       caption="As simple as messaging"
@@ -220,12 +222,8 @@ onBeforeUnmount(() => {
       </template>
     </Placeholder>
     <Sections>
-      <Section
-        ref="searchSettings"
-        with-background
-        standalone
-      >
-        <List>
+      <Section ref="searchSettings" padded>
+        <List with-background standalone>
           <ListItem label="Travel date">
             <template #right>
               <DatePickerCompact
@@ -234,7 +232,9 @@ onBeforeUnmount(() => {
               />
             </template>
           </ListItem>
-          <ListItemExpandable :opened="startDatePickerShowed">
+          <ListItemExpandable
+            :opened="startDatePickerShowed"
+          >
             <DatePicker
               ref="startDatePicker"
               @date-pick="(date) => setStartDate(date)"
@@ -248,7 +248,9 @@ onBeforeUnmount(() => {
               />
             </template>
           </ListItem>
-          <ListItemExpandable :opened="endDatePickerShowed">
+          <ListItemExpandable
+            :opened="endDatePickerShowed"
+          >
             <DatePicker
               ref="endDatePicker"
               @date-pick="(date) => setEndDate(date)"
@@ -294,18 +296,27 @@ onBeforeUnmount(() => {
               </template>
               <template #collapsed>
                 <Sections>
-                  {{ hotel.description }}
-                  <List gapped>
-                    <ListItem
-                      :id="hotel.id"
-                      transaction-icon="clock-fill"
-                      title="Check rooms"
-                      subtitle="There are 14 rooms available"
-                      :to="`/hotel/${hotel.id}`"
-                      right-icon="chevron-right"
-                      standalone
-                    />
-                  </List>
+                  <Section
+                    title="About"
+                    padded
+                  >
+                    <Text>
+                      {{ hotel.description }}
+                    </Text>
+                  </Section>
+                  <Section padded>
+                    <List>
+                      <ListItem
+                        :id="hotel.id"
+                        transaction-icon="clock-fill"
+                        title="Check rooms"
+                        :subtitle="`There are ${hotel.rooms.length} rooms available`"
+                        :to="`/hotel/${hotel.id}`"
+                        right-icon="chevron-right"
+                        standalone
+                      />
+                    </List>
+                  </Section>
                 </Sections>
               </template>
             </ListCard>
@@ -357,9 +368,10 @@ onBeforeUnmount(() => {
   justify-content: center;
   will-change: height;
   transition: height 300ms ease;
+  padding-block: 20px;
 
   &:not(&--loaded) {
-    height: calc(var(--tg-viewport-stable-height) - v-bind('searchSettingsHeight + "px"') - var(--size-cell-h-padding) - v-bind('startDatePickerHeight + "px"') - v-bind('endDatePickerHeight + "px"'));
+    height: calc(var(--tg-viewport-stable-height) - v-bind('searchSettingsHeight + "px"') - var(--size-cell-h-margin) - var(--size-cell-v-margin) - v-bind('startDatePickerHeight + "px"') - v-bind('endDatePickerHeight + "px"'));
   }
 
   &--loading,
@@ -380,6 +392,7 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  transform: translateZ(0);
 
   .sections {
     flex-grow: 1;
@@ -477,7 +490,6 @@ onBeforeUnmount(() => {
   min-height: 800px;
 }
 
-
 .switch-enter-active,
 .switch-leave-active {
   transition: transform 300ms cubic-bezier(.39,-0.26,.16,1.25), opacity 300ms ease;
@@ -490,5 +502,4 @@ onBeforeUnmount(() => {
   transform: scale(0.6);
   opacity: 0.5;
 }
-
 </style>

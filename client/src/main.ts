@@ -4,31 +4,36 @@ import WebApp from '@twa-dev/sdk'
 import Router from '@/application/router'
 import './presentation/styles/index.css'
 import { loadCities } from '@/infra/store/cities'
+import { useTelegram } from '@/application/services'
+
 
 /**
- * @todo Date Picker
- * @todo Home Screen design
- * @todo Settings Page
  * @todo "Back" segue transition
  * @todo Close confirmation
- * @todo Feedback on the hotel page
  * @todo cancel payment toast
  * @todo picture slider on Rooms page
- * @todo room page
- * @todo fill with more mock data
- * @todo refactor data access
  * @todo documentation
  * @todo share order
  * @todo test in all clients
- * @todo android design
  * @todo add "4 viewing right now" with 👀 animation
- * @todo check all border-radius consistency
  */
 
-const platform = WebApp.platform
+const { platform } = useTelegram()
 
 if (platform !== 'unknown') {
-  document.body.classList.add(`is-${platform}`)
+  switch (platform) {
+    case 'android':
+    case 'android_x':
+      document.body.classList.add('is-material')
+      break
+    case 'ios':
+    case 'macos':
+      document.body.classList.add('is-apple')
+      break
+    default:
+      document.body.classList.add(`is-${platform}`)
+      break
+  }
 }
 
 /**

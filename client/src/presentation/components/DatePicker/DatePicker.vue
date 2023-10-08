@@ -277,10 +277,7 @@ onBeforeUnmount(() => {
 @import '@/presentation/styles/theme/typescale.css';
 
 .date-picker {
-  /* background-color: var(--color-bg); */
-  /* border-radius: var(--size-border-radius-big); */
   padding-top: 6px;
-  overflow: hidden;
   user-select: none
 }
 
@@ -336,6 +333,7 @@ onBeforeUnmount(() => {
   will-change: opacity, transform;
   min-height: 313px;
   transition: opacity 200ms ease, transform 200ms ease 40ms;
+  overflow: hidden;
 
   &--month-changed-left,
   &--month-changed-right,
