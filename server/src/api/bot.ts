@@ -15,8 +15,6 @@ export default class Bot {
    * Listen for messages from Telegram
    */
   public run(): TelegramBot {
-    console.log('this.token', this.token);
-
     const bot = new TelegramBot(this.token, {
       // @ts-ignore — undocumented option
       testEnvironment: this.isTestEnvironment,
@@ -53,7 +51,7 @@ export default class Bot {
 
 
       // send a message to the chat acknowledging receipt of their message
-      // bot.sendMessage(chatId, 'Received your message')
+      bot.sendMessage(chatId, 'Received your message')
       // bot.sendMessage(chatId, '🎉')
     })
 

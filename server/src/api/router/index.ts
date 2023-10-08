@@ -21,12 +21,9 @@ interface RouterOptions extends FastifyServerOptions {
  * @param opts - Server options
  */
 export default async function router(fastify: FastifyInstance, opts: RouterOptions) {
-  // fastify.get('*', async (request: FastifyRequest, reply: FastifyReply) => {
-  //   console.log(`Got ${request.method} request to ${request.url} from ${request.ip}`)
-
-  //   return { hello: 'world' }
-  // })
-
+  /**
+   * Home route for the API: GET /
+   */
   fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
     return reply
       .send({
@@ -34,6 +31,9 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
       });
   })
 
+  /**
+   * Create invoice route: POST /createInvoice
+   */
   fastify.post('/createInvoice', async (request: FastifyRequest, reply: FastifyReply) => {
 
     console.log(`Got ${request.method} request to ${request.url} from ${request.ip}`)
