@@ -1,30 +1,28 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import Config from '../src/config.js';
-import Router from '../src/api/router/index.js'
-import Fastify from 'fastify';
-
-// Read the .env file.
-import * as dotenv from "dotenv";
-dotenv.config();
-
-const app = Fastify({
-  logger: true,
-});
-
-// Register your application as a normal plugin.
-app.register(Router, {
-  config: Config,
-});
+import Config from '../src/config.js'
+import HttpApi from '../src/api/http.js'
+import Bot from '../src/api/bot.js'
+import { notify } from '../src/infra/utils/notify/index.js';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
 
-// import HttpApi from './api/http.js';
-// import Bot from './api/bot.js';
-// import { notify } from './infra/utils/notify/index.js';
-// const bot = new Bot(Config.botToken, Config.isTestEnvironment);
+const bot = new Bot(Config.botToken, Config.isTestEnvironment)
+/**
+ * Listen for messages from Telegram
+*/
+const botApi = bot.run();
+
+const api = new HttpApi(Config, botApi)
+
+/**
+ * Listen for HTTP requests
+ */
+api.run()
+
+notify('🤖 Bot started')
 
 
 export default async function handler(request: VercelRequest, response: VercelResponse): Promise<any> {
-  await app.ready();
+  await api.ready();
 
-  app.server.emit('request', request, response);
+  api.emit(request, response);
 }
