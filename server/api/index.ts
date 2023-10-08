@@ -20,6 +20,8 @@ api.run()
 
 notify('🤖 Bot started')
 
+console.log('Test log')
+
 
 export default async function handler(request: VercelRequest, response: VercelResponse): Promise<any> {
   await api.ready();

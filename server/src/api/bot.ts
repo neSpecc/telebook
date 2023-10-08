@@ -21,7 +21,10 @@ export default class Bot {
       testEnvironment: this.config.isTestEnvironment,
     })
 
-    bot.setWebHook(`${this.config.publicHost}/bot`);
+    const setHookResponse = bot.setWebHook(`${this.config.publicHost}/bot`);
+
+    console.log('setHookResponse', setHookResponse);
+
 
     bot.getMe()
       .then((info) => {
