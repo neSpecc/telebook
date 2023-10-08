@@ -1,4 +1,7 @@
+
+
 export default function handler(request, response) {
-  const { name = 'World' } = request.query;
-  return response.send(`Hello ${name}!`);
+  import('../dist/index.js')
+
+  return response.send(`Hello test!`);
 }
