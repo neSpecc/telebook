@@ -19,6 +19,13 @@ export default class HttpApi {
   constructor(private readonly config: typeof Config, private readonly bot: TelegramBot) {}
 
   /**
+   * Method used to know when the fastify instance is ready
+   */
+  public async ready(): Promise<void> {
+    return this.server.ready()
+  }
+
+  /**
    * Run HTTP server
    */
   public async run(): Promise<void> {
@@ -46,7 +53,7 @@ export default class HttpApi {
   }
 
   emit(request: any, response: any): void {
-    // this.server.emit('request', request, response)
+    this.server.server.emit('request', request, response)
   }
 }
 

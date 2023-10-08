@@ -2,6 +2,7 @@ import Config from './config.js'
 import HttpApi from './api/http.js'
 import Bot from './api/bot.js'
 import { notify } from './infra/utils/notify/index.js';
+import { VercelRequest, VercelResponse } from '@vercel/node';
 
 
 const bot = new Bot(Config.botToken, Config.isTestEnvironment)
@@ -18,3 +19,10 @@ const api = new HttpApi(Config, botApi)
 api.run()
 
 notify('🤖 Bot started')
+
+
+export default async function handler(request: VercelRequest, response: VercelResponse): Promise<any> {
+  await api.ready();
+
+  api.emit(request, response);
+}
