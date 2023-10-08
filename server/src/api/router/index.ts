@@ -21,11 +21,11 @@ interface RouterOptions extends FastifyServerOptions {
  * @param opts - Server options
  */
 export default async function router(fastify: FastifyInstance, opts: RouterOptions) {
-  fastify.get('*', async (request: FastifyRequest, reply: FastifyReply) => {
-    console.log(`Got ${request.method} request to ${request.url} from ${request.ip}`)
+  // fastify.get('*', async (request: FastifyRequest, reply: FastifyReply) => {
+  //   console.log(`Got ${request.method} request to ${request.url} from ${request.ip}`)
 
-    return { hello: 'world' }
-  })
+  //   return { hello: 'world' }
+  // })
 
   fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
     return reply
