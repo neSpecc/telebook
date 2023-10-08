@@ -14,7 +14,7 @@ export function notify(text: string): void {
   /**
    * Call internal notify in child process
    */
-  const child = fork(resolve(__dirname, 'notify.js'))
+  // const child = fork(resolve(__dirname, 'notify.js'))
 
-  child.send(text)
+  // child.send(text)
 }
