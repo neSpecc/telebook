@@ -5,7 +5,7 @@ import { notify } from '../src/infra/utils/notify/index.js';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 
 
-const bot = new Bot(Config.botToken, Config.isTestEnvironment)
+const bot = new Bot(Config)
 /**
  * Listen for messages from Telegram
 */
