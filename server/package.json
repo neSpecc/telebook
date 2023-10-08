@@ -1,7 +1,7 @@
 {
   "name": "telebook-bot",
   "version": "0.0.0",
-  "main": "src/index.ts",
+  "main": "dist/index.ts",
   "repository": "https://github.com/neSpecc/telebook",
   "author": "Specc",
   "license": "MIT",
@@ -9,11 +9,14 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node ./src/index.js",
+    "start": "node ./dist/index.js",
     "start:dev": "npm run build && node dist/index.js",
     "dev": "nodemon --watch './src/**/*.ts' --ext ts --exec 'npm run start:dev'",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix"
+  },
+  "engines": {
+    "node": ">=19.0.0"
   },
   "dependencies": {
     "@fastify/cors": "^8.4.0",
