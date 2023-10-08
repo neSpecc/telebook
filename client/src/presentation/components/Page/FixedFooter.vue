@@ -5,7 +5,7 @@ withDefaults(defineProps<{
   /**
    * Bottom offset
    */
-  bottom: number;
+  bottom?: number;
 }>(), {
   bottom: 0,
 })

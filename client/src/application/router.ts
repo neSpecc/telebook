@@ -1,6 +1,5 @@
 import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import Home from '@/presentation/screens/Home.vue'
-import Services from '@/presentation/screens/Services.vue'
 import Hotel from '@/presentation/screens/Hotel.vue'
 import Room from '@/presentation/screens/Room.vue'
 import Location from '@/presentation/screens/Location.vue'
@@ -11,19 +10,8 @@ const routes: RouteRecordRaw[] = [
     component: Home,
   },
   {
-    name: 'services',
-    path: '/services',
-    component: Services,
-    meta: {
-      transition: 'slide-left',
-    },
-  },
-  {
     path: '/location',
     component: Location,
-    meta: {
-      transition: 'slide-left',
-    },
   },
   {
     path: '/hotel/:id',
@@ -31,9 +19,6 @@ const routes: RouteRecordRaw[] = [
     props: route => ({
       id: parseInt(route.params.id as string, 10),
     }),
-    meta: {
-      transition: 'slide-left',
-    },
   },
   {
     path: '/room/:hotelId/:roomId',
@@ -42,25 +27,12 @@ const routes: RouteRecordRaw[] = [
       hotelId: parseInt(route.params.hotelId as string, 10),
       roomId: parseInt(route.params.roomId as string, 10),
     }),
-    meta: {
-      transition: 'slide-left',
-    },
   },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition !== null) {
-      return savedPosition
-    }
-
-    return {
-      top: 0,
-    }
-  },
-
 })
 
 export default router

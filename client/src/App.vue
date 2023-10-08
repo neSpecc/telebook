@@ -4,6 +4,16 @@ import { useTelegram } from '@/application/services'
 
 const { colorScheme } = useTelegram()
 
+/**
+ * Hook will be called when next screen just added to the DOM
+ * We use it to scroll to the top of the page
+ */
+function onBeforeSegue(): void {
+  requestAnimationFrame(() => {
+    window.scrollTo(0, 0)
+  })
+}
+
 onErrorCaptured((error: Error) => {
   console.error(error)
 })
@@ -17,8 +27,11 @@ onBeforeMount(() => {
 
 <template>
   <div class="app">
-    <RouterView v-slot="{ Component, route }">
-      <transition :name="route.meta.transition ?? ''">
+    <RouterView v-slot="{ Component }">
+      <transition
+        name="default-segue"
+        @before-enter="onBeforeSegue"
+      >
         <component
           :is="Component"
         />
@@ -67,43 +80,19 @@ body {
   position: relative;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 200ms ease;
+.default-segue-leave-active {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
 }
 
-.fade-enter-from,
-.fade-leave-to {
+.default-segue-enter-active {
+  transition: opacity 500ms ease;
+  will-change: opacity;
+}
+
+.default-segue-enter-from,
+.default-segue-leave-to {
   opacity: 0;
-}
-
-/* .slide-left-enter-active,
-.slide-left-leave-active {
-  transition: transform 30s ease, opacity 30s ease;
-}
-
-.slide-left-enter-from {
-  transform: translateX(40px);
-  opacity: 0;
-}
-
-.slide-left-leave-to {
-  opacity: 0;
-} */
-
-.slide-left-enter-active {
-  animation: slide-left 200ms;
-  will-change: transform, opacity;
-}
-
-@keyframes slide-left {
-  from {
-    transform: translateX(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
 }
 </style>

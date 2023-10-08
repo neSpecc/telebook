@@ -15,6 +15,8 @@
     --separator-color: rgba(255, 255, 255, 0.1);
 
     --skeleton-color: var(--color-bg-tertiary);
+
+    --color-overlay-floating: rgba(19, 19, 19, 0.82);
   }
 
   --light-theme {
@@ -29,10 +31,11 @@
     --color-link: var(--tg-theme-link-color, #007aff);
 
     --separator-color: rgba(204, 204, 204, 0.5);
+    --color-overlay-floating: rgba(19, 19, 19, 0.79);
   }
 
   .is-material {
-    --color-island-shadow: rgba(0,0,0,0.02)
+    --color-island-shadow: rgba(0,0,0,0.02);
   }
 }
 

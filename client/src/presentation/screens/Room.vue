@@ -160,6 +160,12 @@ onMounted(() => {
   footerShowingDelay.value = setTimeout(() => {
     isPriceFooterShowed.value = true
   }, 300)
+
+  // setTimeout(() => {
+    // requestAnimationFrame(() => {
+      // window.scrollTo(0, 0)
+    // })
+  // }, 200)
 })
 
 onBeforeUnmount(() => {
@@ -282,8 +288,8 @@ onBeforeUnmount(() => {
 .price {
   margin: calc(var(--size-cell-h-margin) / 2);
   padding: 4px;
-  background-color: rgba(19, 19, 19, 0.82);
-  color: white;
+  background-color: var(--color-overlay-floating);
+  color: var(--color-text-button);
   backdrop-filter: blur(14px);
   border-radius: var(--size-border-radius-big);
   animation: fade-in 200ms ease;
@@ -303,6 +309,10 @@ onBeforeUnmount(() => {
     display: block;
     animation: shake 500ms cubic-bezier(0.19, 1, 0.22, 1) 100ms;
     will-change: transform;
+  }
+
+  &:deep(svg){
+    fill: currentColor;
   }
 }
 
