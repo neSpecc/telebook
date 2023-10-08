@@ -3,8 +3,7 @@ import Config from '../config.js'
 import Fastify from 'fastify'
 import cors from '@fastify/cors';
 import TelegramBot from 'node-telegram-bot-api'
-import { notify } from '../infra/utils/notify/index.js';
-
+import Router from './router/index.js'
 
 
 /**
@@ -23,86 +22,10 @@ export default class HttpApi {
    * Run HTTP server
    */
   public async run(): Promise<void> {
-    this.server = Fastify()
-
-    this.server.get('*', async (request: FastifyRequest, reply: FastifyReply) => {
-      console.log(`Got ${request.method} request to ${request.url} from ${request.ip}`)
+    this.server.register(Router, {
+      config: this.config,
     })
 
-    this.server.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
-      return reply
-        .send({
-          message: 'Telebook API is ready',
-        });
-    })
-
-    this.server.post('/createInvoice', async (request: FastifyRequest, reply: FastifyReply) => {
-
-      console.log(`Got ${request.method} request to ${request.url} from ${request.ip}`)
-
-      const {
-        title,
-        description,
-        prices,
-        need_name,
-        photo_url,
-        photo_size,
-        photo_width,
-        photo_height,
-      } = request.body as any;
-
-      console.log('body', request.body);
-
-      const payload = 'Order #' + Math.random().toString(36).substring(7);
-
-      notify(`🛍️ Create Invoice:  \n\n **${payload}: ${title} ${description}`);
-
-
-      try {
-        // @ts-ignore — 'createInvoiceLink supported by the library, but does not defined in types
-        const invoiceLink = await this.bot.createInvoiceLink(title, description, payload, this.config.providerToken, 'USD', prices, {
-          need_name,
-          photo_url,
-          photo_size,
-          photo_width,
-          photo_height,
-        })
-
-        // const message = await this.bot.sendInvoice(chatId, title, description, payload, this.config.providerToken, 'USD', prices, {
-        //   need_name,
-        //   photo_url,
-        //   photo_size,
-        //   photo_width,
-        //   photo_height,
-        // })
-
-        // console.log('message', message);
-
-
-        // console.log('invoiceLink', invoiceLink);
-
-        // if (message.invoice) {
-        //   await.this.bot.sendInvoice
-        // }
-
-        notify(`🛍️ Create Invoice: Success ${invoiceLink} `)
-
-        return reply
-          .send({
-            invoiceLink
-          });
-      } catch (e) {
-        console.log('error', (e as Error).message);
-
-        notify(`Failed to create invoice: ${(e as Error).message}`)
-
-        reply
-          .code(500)
-          .send({
-            message: (e as Error).message,
-          });
-      }
-    })
 
     this.server.listen({
       port: parseInt(this.config.port),
@@ -120,6 +43,10 @@ export default class HttpApi {
     await this.server.register(cors, {
       origin: this.config.allowedOrigins,
     });
+  }
+
+  emit(request: any, response: any): void {
+    // this.server.emit('request', request, response)
   }
 }
 
