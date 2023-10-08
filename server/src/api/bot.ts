@@ -15,13 +15,13 @@ export default class Bot {
   /**
    * Listen for messages from Telegram
    */
-  public run(): TelegramBot {
+  public async run(): Promise<TelegramBot> {
     const bot = new TelegramBot(this.config.botToken, {
       // @ts-ignore — undocumented option
       testEnvironment: this.config.isTestEnvironment,
     })
 
-    const setHookResponse = bot.setWebHook(`${this.config.publicHost}/bot`);
+    const setHookResponse = await bot.setWebHook(`${this.config.publicHost}/bot`);
 
     console.log('setHookResponse', setHookResponse);
 

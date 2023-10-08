@@ -9,7 +9,7 @@ const bot = new Bot(Config)
 /**
  * Listen for messages from Telegram
 */
-const botApi = bot.run();
+const botApi = await bot.run();
 
 const api = new HttpApi(Config, botApi)
 
