@@ -29,6 +29,13 @@ export default class HttpApi {
       console.log(`Got ${request.method} request to ${request.url} from ${request.ip}`)
     })
 
+    this.server.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
+      return reply
+        .send({
+          message: 'Telebook API is ready',
+        });
+    })
+
     this.server.post('/createInvoice', async (request: FastifyRequest, reply: FastifyReply) => {
 
       console.log(`Got ${request.method} request to ${request.url} from ${request.ip}`)
