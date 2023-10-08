@@ -1,13 +1,14 @@
 import TelegramBot from 'node-telegram-bot-api'
+import Config from '../config.js'
 
 /**
  * Class for working with Telegram Bot aAPI
  */
 export default class Bot {
   /**
-   * @param token - Telegram Bot API token got from @BotFather
+   * @param config - Config instance
    */
-  constructor(private readonly token: string, private readonly isTestEnvironment: boolean) {
+  constructor(private readonly config: typeof Config) {
 
   }
 
@@ -15,15 +16,16 @@ export default class Bot {
    * Listen for messages from Telegram
    */
   public run(): TelegramBot {
-    const bot = new TelegramBot(this.token, {
+    const bot = new TelegramBot(this.config.botToken, {
       // @ts-ignore — undocumented option
-      testEnvironment: this.isTestEnvironment,
+      testEnvironment: this.config.isTestEnvironment,
     })
+
+    bot.setWebHook(`${this.config.publicHost}/bot`);
 
     bot.getMe()
       .then((info) => {
-        console.log(info);
-        bot.startPolling();
+        console.log('Me got:', info);
       })
       .catch((e) => {
           console.log('error', e);

@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest, FastifyServerOptions } from 'fastify'
 import { notify } from '../../infra/utils/notify/index.js';
 import Config from '../../config.js';
+import type TelegramBot from 'node-telegram-bot-api';
 
 /**
  * Router options. Our custom plus Fastify's.
@@ -9,7 +10,12 @@ interface RouterOptions extends FastifyServerOptions {
   /**
    * Application config instance
    */
-  config: typeof Config
+  config: typeof Config;
+
+  /**
+   * Telegram bot instance
+   */
+  bot: TelegramBot;
 }
 
 /**
@@ -30,6 +36,16 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
         message: 'Telebook API is ready',
       });
   })
+
+  /**
+   * Route for receiving Telegram bot updates (set via setWebHook, @see bot.ts)
+   */
+  fastify.post(`/bot`, (req, res) => {
+    console.log('got bot update: ', req.body);
+
+    opts.bot.processUpdate(req.body as TelegramBot.Update);
+    res.code(200);
+  });
 
   /**
    * Create invoice route: POST /createInvoice

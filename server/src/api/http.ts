@@ -31,6 +31,7 @@ export default class HttpApi {
   public async run(): Promise<void> {
     this.server.register(Router, {
       config: this.config,
+      bot: this.bot,
     })
 
 

@@ -14,6 +14,7 @@ if (!process.env.PROVIDER_TOKEN) {
 export default {
   appName: process.env.APP_NAME || 'Server',
   port: process.env.PORT || '3000',
+  publicHost: process.env.PUBLIC_HOST || 'http://localhost:3000',
   botToken: process.env.BOT_TOKEN,
   providerToken: process.env.PROVIDER_TOKEN,
   isTestEnvironment: process.env.IS_TEST_ENVIRONMENT === 'true',
