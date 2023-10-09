@@ -2,7 +2,7 @@ import Config from './config.js'
 import HttpApi from './api/http.js'
 import Bot from './api/bot.js'
 import { notify } from './infra/utils/notify/index.js';
-import { VercelRequest, VercelResponse } from '@vercel/node';
+// import { VercelRequest, VercelResponse } from '@vercel/node';
 
 
 const bot = new Bot(Config)
