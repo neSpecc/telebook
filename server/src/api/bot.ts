@@ -191,7 +191,7 @@ export default class Bot {
   private async sendMessageQueue(chatId: TelegramBot.ChatId, messages: {text: string, options?: TelegramBot.SendMessageOptions}[]): Promise<void> {
     for (const message of messages) {
       await this.bot!.sendMessage(chatId, message.text, message.options)
-      await new Promise((resolve) => setTimeout(resolve, 500))
+      await new Promise((resolve) => setTimeout(resolve, 1500))
     }
   }
 }
