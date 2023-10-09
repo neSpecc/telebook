@@ -59,7 +59,9 @@ const roomAmount = computed(() => {
     return 0
   }
 
-  return room.value.price * days.value
+  const transfer = 100
+
+  return room.value.price * days.value + transfer
 })
 
 /**

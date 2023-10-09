@@ -67,7 +67,7 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
   fastify.post('/createInvoice', async (request: FastifyRequest, reply: FastifyReply) => {
     const logPrefix = '🛍️ POST /createInvoice: ';
 
-    console.log(`${logPrefix} ${request.body}`)
+    console.log(`${logPrefix}`, request.body)
 
     const {
       title,

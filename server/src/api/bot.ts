@@ -24,26 +24,36 @@ export default class Bot {
       testEnvironment: this.config.isTestEnvironment,
     })
 
-    await this.setWebhook();
+    console.log(`🤖 Bot is running...`);
 
     /**
-     * We use the getMe() method to check if bot is working properly
+     * Check if webhook is set
+     * If not — set it
      */
-    this.bot.getMe()
-      .then((info) => {
-        console.log(`🤖 @${info.username} is running...`);
-      })
-      .catch((e) => {
-          console.log('🤖❌', e);
-      });
+    try {
+      const whInfo = await this.bot.getWebHookInfo()
 
+      if ('url' in whInfo && whInfo.url !== '') {
+        console.log('🤖 WebHook info: ', whInfo);
+      } else {
+        await this.setWebhook();
+      }
+    } catch (e) {
+      console.log('getWebHookInfo error', e);
+    }
 
-    this.bot.on('pre_checkout_query', (update) => {
-      this.preCheckoutQuery(update);
-    })
-
+    /**
+     * Listen for messages from Telegram
+    */
     this.bot.on('message', (msg) => {
       this.onMessage(msg);
+    })
+
+    /**
+     * Listen for pre_checkout_query event
+     */
+    this.bot.on('pre_checkout_query', (update) => {
+      this.preCheckoutQuery(update);
     })
 
     return this.bot;
@@ -59,14 +69,74 @@ export default class Bot {
 
     console.log('📥', msg);
 
-    if (msg.successful_payment) {
-      console.log('💰 successful_payment', msg.successful_payment);
-      this.bot!.sendMessage(chatId, '🎉')
+
+    switch (msg.text) {
+      case '/start':
+        this.replyStartMessage(chatId)
+        return;
+      case '/help':
+        this.replyHelpMessage(chatId)
+        return
     }
 
-    // send a message to the chat acknowledging receipt of their message
-    // this.bot!.sendMessage(chatId, 'Received your message: ' + msg.text)
+
+    if (msg.successful_payment) {
+      console.log('💰 successful_payment', msg.successful_payment);
+
+
+      this.bot!.sendMessage(chatId, '🎉')
+      this.bot!.sendMessage(chatId, 'Your order was accepted! Have a nice trip!')
+      this.bot!.sendMessage(chatId, 'It is not a real payment, so you\'re not charged. The hotel exists only in our imagination. Thanks for testing!')
+
+      return;
+    }
+
+    /**
+     * Send message with inline query containing a link to the mini-app
+     */
+    this.sendAppButton(chatId)
   }
+
+  /**
+   * Reply to the /start command
+   *
+   * @param chatId - chat id to send message to
+   */
+  private async replyStartMessage(chatId: number): Promise<void> {
+    await this.bot!.sendMessage(chatId, 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨')
+    await this.sendAppButton(chatId)
+  }
+
+  /**
+   * Reply to the /help command
+   *
+   * @param chatId - chat id to send message to
+   */
+  private async replyHelpMessage(chatId: number): Promise<void> {
+    await this.bot!.sendMessage(chatId, 'Actually I\'m just an example bot, so all I can do is to send you a link to the mini-app 🤖')
+    await this.sendAppButton(chatId)
+  }
+
+  /**
+   * Send message with inline query containing a link to the mini-app
+   *
+   * @param chatId - chat id to send message to
+   */
+  private async sendAppButton(chatId: number): Promise<void> {
+    await this.bot!.sendMessage(chatId, 'Click the button below to launch an app', {
+      reply_markup: {
+        inline_keyboard: [
+          [{
+            text: `🦄 Open ${this.config.appName}`,
+            web_app: {
+              url: this.config.webAppUrl,
+            },
+          }],
+        ],
+      },
+    })
+  }
+
 
   /**
    * Handler for pre_checkout_query event
@@ -90,8 +160,6 @@ export default class Bot {
 
   /**
    * Set webhook for Telegram bot
-   *
-   * @todo For now we're setting webhook every time the server starts. Use some kind of storage to avoid this.
    */
   private async setWebhook(): Promise<void> {
     try {
