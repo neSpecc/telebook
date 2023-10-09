@@ -35,7 +35,7 @@ Built with respect to:
 
 Amount component is used to display a number with optional prefix and postfix.
 
-![Amount](../../../../docs/assets/ui/amount.png)
+![Amount](../../../../../docs/assets/ui/amount.png)
 
 ### Props
 

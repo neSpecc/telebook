@@ -52,6 +52,7 @@ Use following instructions
 
 - [Frontend tech guide](./client/README.md)
 - [Backend tech guide](./server/README.md)
+- [Telegram Vue UI Kit](./client/src/presentation/components/README.md)
 - [How to setup Payments](./docs/Payments.md)
 
 ## 😎 Awesome list

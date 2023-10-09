@@ -46,7 +46,7 @@ It contains ready-to-use collection of components that could be used to create n
 - [Sections](./src/presentation/components/README.md#sections)
 - [Text](./src/presentation/components/README.md#text)
 
-Read more in [Telegram Vue UI Kit](./src/presentation/components/) documentation
+Read more in [Telegram Vue UI Kit](./src/presentation/components/README.md) documentation
 
 ## Get started
 
