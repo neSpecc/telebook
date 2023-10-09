@@ -27,6 +27,7 @@ defineProps<{
 <style module>
 .rating {
   text-align: center;
+  color: var(--color-hint);
 }
 
 .stars {
