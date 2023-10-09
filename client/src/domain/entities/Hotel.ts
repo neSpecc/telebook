@@ -8,6 +8,7 @@ export default interface Hotel {
   address: string;
   price: number;
   picture: string;
+  pictureThumb?: string;
   ratingsCount: number;
   rating: Rating;
   award: Award;

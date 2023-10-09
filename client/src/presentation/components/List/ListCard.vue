@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { nextTick, onBeforeMount, onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { useLayout, useScroll, useTelegram } from '@/application/services'
+import { useLayout, useScroll, useTelegram, useThumbnail } from '@/application/services'
 import { getCSSVariable } from '@/infra/utils/dom'
 
-defineProps<{
+const props = defineProps<{
   /**
    * Name of the card
    */
@@ -13,6 +13,11 @@ defineProps<{
    * Picture src
    */
   picture: string;
+
+  /**
+   * Small thumb of the picture in base64
+   */
+  pictureThumb: string;
 }>()
 
 const { appWidth } = useLayout()
@@ -42,6 +47,11 @@ const heightCollapsed = ref('460px')
  * Whether the card is currently animating
  */
 const isAnimating = ref(false)
+
+/**
+ * We store thumbnail here first, then when picture is loaded, we put its data here
+ */
+const { pictureUrl, isPictureLoaded } = useThumbnail(props.picture, props.pictureThumb)
 
 /**
  * Begin expand animation
@@ -271,10 +281,14 @@ onBeforeUnmount(() => {
       <div
         class="picture-container"
         :style="{
-          backgroundImage: `url(${picture})`,
+          backgroundImage: `url(${pictureUrl})`
         }"
         @click="cardClicked"
       >
+        <div
+          v-show="!isPictureLoaded"
+          class="picture-container__loader"
+        />
         <div class="picture-container__footer">
           <div class="title">
             {{ title }}
@@ -332,6 +346,15 @@ onBeforeUnmount(() => {
     background-color: var(--color-bg-secondary);
     background-size: cover;
     background-position: center center;
+
+    &__loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      backdrop-filter: blur(20px);
+    }
 
     &__footer {
       position: absolute;

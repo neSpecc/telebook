@@ -1,6 +1,7 @@
 import type Hotel from '@/domain/entities/Hotel'
+import Thumbnails from '@/infra/store/thumbs/thumbs.json'
 
-export const hotels: Hotel[] = [
+const hotelsMock = [
   {
     id: 1,
     title: 'Sunset Beach Hotel',
@@ -303,3 +304,33 @@ export const hotels: Hotel[] = [
     ],
   },
 ]
+
+/**
+ * Add picture thumb to an entity based on the picture name
+ *
+ * @param entity - something with "picture" property
+ */
+function addThumb<T extends { picture: string }>(entity: T): T & { pictureThumb: string } {
+  const pictureName = entity.picture.split('/').pop() as keyof typeof Thumbnails.thumbs
+
+  return {
+    ...entity,
+    pictureThumb: Thumbnails.thumbs[pictureName],
+  }
+}
+
+/**
+ * Add picture thumbs to hotels based on the picture name
+ */
+function addThumbs(hotels: Hotel[]): Hotel[] {
+  return hotels.map((hotel) => {
+    /**
+     * Add picture thumb to rooms as well
+     */
+    hotel.rooms = hotel.rooms.map(addThumb)
+
+    return addThumb(hotel)
+  })
+}
+
+export const hotels = addThumbs(hotelsMock)

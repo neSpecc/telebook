@@ -102,14 +102,16 @@ function search(): void {
 
     vibrate()
 
-    /**
-     * Shuffle mocks to make it look more real
-     */
-    const hotelsShuffled = hotels.sort(() => Math.random() - 0.5)
+    setTimeout(() => {
+      /**
+       * Shuffle mocks to make it look more real
+       */
+      const hotelsShuffled = hotels.sort(() => Math.random() - 0.5)
 
-    hotelsShuffled.forEach((hotel, i) => {
-      result.value.push(hotel)
-    })
+      hotelsShuffled.forEach((hotel, i) => {
+        result.value.push(hotel)
+      })
+    }, 200) // wait until Telegram expand is finished to prevent Cards going to minimized state
   }, 3000)
 }
 
@@ -296,6 +298,7 @@ onBeforeUnmount(() => {
               v-if="index === 3 || index === 5"
               :title="index === 3 ? 'Users choice' : 'Hotel of the year'"
               :picture="hotel.picture"
+              :picture-thumb="hotel.pictureThumb"
             >
               <template #visible>
                 <ListItem
