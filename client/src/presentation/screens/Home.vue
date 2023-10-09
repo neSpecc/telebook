@@ -46,7 +46,7 @@ const isSearchFinished = ref(false)
  */
 const result = ref<Hotel[]>([])
 
-const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight } = useTelegram()
+const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight, vibrate } = useTelegram()
 const { scrollTo } = useScroll()
 
 const searchSettings = ref<InstanceType<typeof Section> | null>(null)
@@ -99,6 +99,8 @@ function search(): void {
 
   setTimeout(() => {
     onAfterSearch()
+
+    vibrate()
 
     /**
      * Shuffle mocks to make it look more real

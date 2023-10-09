@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { List, ListItem, Sections, Section, Input, Placeholder } from '@/presentation/components'
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useCities } from '@/domain/services/useCities'
 import { useTripDetails } from '@/domain/services/useTripDetails'
 import useTelegram from '@/application/services/useTelegram'
@@ -42,8 +42,17 @@ function selectCity(id: number): void {
 }
 
 const { setCity, trip } = useTripDetails()
-const { showMainButton, hideMainButton, expand, showBackButton, hideBackButton } = useTelegram()
+const { showMainButton, hideMainButton, expand, showBackButton, hideBackButton, vibrate } = useTelegram()
 const router = useRouter()
+
+/**
+ * Vibrate when no cities found
+ */
+watch(citiesFiltered, () => {
+  if (citiesFiltered.value.length === 0) {
+    vibrate('light')
+  }
+})
 
 onMounted(() => {
   if (trip.city !== 0) {
@@ -108,7 +117,6 @@ onBeforeUnmount(() => {
         v-else
         title="No results"
         caption="Try searching for something else"
-        :compact="true"
       >
         <template #picture>
           <Vue3Lottie

@@ -422,6 +422,7 @@ onBeforeUnmount(() => {
   &--selected {
     color: var(--color-link);
     font-weight: 510;
+    font-size: 1.44em;
 
     &::before {
       content: '';

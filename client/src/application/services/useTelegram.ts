@@ -12,6 +12,7 @@ interface useTelegramComposableState {
   closeApp: () => void;
   expand: () => void;
   getViewportHeight: () => number;
+  vibrate: (style?: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft' | 'error' | 'warning' | 'success') => void;
   colorScheme: 'light' | 'dark' | undefined;
   platform: 'android' | 'android_x' | 'ios' | 'macos' | 'tdesktop' | 'web' | 'weba' | 'webk' | 'unigram' | 'unknown';
 }
@@ -200,6 +201,28 @@ export default function useTelegram(): useTelegramComposableState {
   }
 
   /**
+   * Vibrate the device
+   *
+   * @param style The style of the vibration
+   */
+  function vibrate(style: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft' | 'error' | 'warning' | 'success' = 'heavy'): void {
+    switch (style) {
+      case 'light':
+      case 'medium':
+      case 'heavy':
+      case 'rigid':
+      case 'soft':
+        WebApp.HapticFeedback.impactOccurred(style)
+        break
+      case 'error':
+      case 'warning':
+      case 'success':
+        WebApp.HapticFeedback.notificationOccurred(style)
+        break
+    }
+  }
+
+  /**
    * The current color scheme of the device. Can be light or dark.
    * If app is launched in a browser, the value will be undefined.
    */
@@ -223,5 +246,6 @@ export default function useTelegram(): useTelegramComposableState {
     hideBackButton,
     colorScheme,
     platform,
+    vibrate,
   }
 }
