@@ -1,4 +1,3 @@
-import type { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
 import Config from '../config.js'
 import Fastify from 'fastify'
 import cors from '@fastify/cors';
@@ -42,17 +41,13 @@ export default class HttpApi {
       })
     })
 
-
-    // this.server.listen({
-    //   port: parseInt(this.config.port),
-    // }, (err: Error | null, address: string) => {
-    //   if (err) {
-    //     console.error(err)
-    //     process.exit(1)
-    //   }
-    //   console.log(`🫡  ${this.config.appName || 'Server'} API listening at ${address}`)
-    // })
-
+    /**
+     * In test environment we listen for requests as usual
+     * In production we don't listen for requests, because we use serverless deployment
+     */
+    if (this.config.isTestEnvironment) {
+      this.listen()
+    }
 
     /**
      * Allow cors for allowed origins from config
@@ -62,6 +57,30 @@ export default class HttpApi {
     });
   }
 
+  /**
+   * Listen for requests
+   *
+   * Used only in test environment
+   */
+  private listen(): void {
+    this.server.listen({
+      port: parseInt(this.config.port),
+    }, (err: Error | null, address: string) => {
+      if (err) {
+        console.error(err)
+        process.exit(1)
+      }
+      console.log(`🫡  ${this.config.appName || 'Server'} API listening at ${address}`)
+    })
+  }
+
+  /**
+   * Emit request to the server
+   * Used only in serverless environment
+   *
+   * @param request - Request object
+   * @param response - Response object
+   */
   emit(request: any, response: any): void {
     this.server.server.emit('request', request, response)
   }

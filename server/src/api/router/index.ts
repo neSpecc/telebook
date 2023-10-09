@@ -46,7 +46,13 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
   fastify.post(`/bot`, (req, res) => {
     try {
       const update = req.body as TelegramBot.Update;
-      console.log('🤖 ←  ', update.message?.from?.username, update.message?.text);
+
+      if ('message' in update && update.message !== undefined && 'from' in update.message && update.message.from !== undefined) {
+        console.log('🤖 ← ', `@${update.message.from.username || (update.message.from.first_name + update.message.from.last_name) }`, update.message.text || '');
+      } else {
+        console.log('🤖 ← ', update);
+      }
+
       bot.processUpdate(req.body as TelegramBot.Update);
     } catch (e) {
       console.log('error while update processing', e);

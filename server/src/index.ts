@@ -1,16 +1,20 @@
 import Config from './config.js'
 import HttpApi from './api/http.js'
 import Bot from './api/bot.js'
-import { notify } from './infra/utils/notify/index.js';
-// import { VercelRequest, VercelResponse } from '@vercel/node';
 
-
+/**
+ * Create Telegram Bot backend
+ */
 const bot = new Bot(Config)
+
 /**
  * Listen for messages from Telegram
 */
 const botApi = await bot.run();
 
+/**
+ * Create HTTP interface
+ */
 const api = new HttpApi(Config, botApi)
 
 /**
@@ -18,17 +22,10 @@ const api = new HttpApi(Config, botApi)
  */
 api.run()
 
-notify('🤖 Bot started')
-
+/**
+ * Export HTTP server for serverless calls
+ */
 export default api
-
-
-// export default async function handler(request: VercelRequest, response: VercelResponse): Promise<any> {
-//   await api.ready();
-
-//   api.emit(request, response);
-// }
-
 
 /**
  * Handler for 'error' event that can be emitted by worker
