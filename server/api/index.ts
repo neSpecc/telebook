@@ -20,15 +20,11 @@ api.run()
 
 notify('🤖 Bot started')
 
-console.log('Test log')
-
-
 export default async function handler(request: VercelRequest, response: VercelResponse): Promise<any> {
   await api.ready();
 
   api.emit(request, response);
 }
-
 
 /**
  * Handler for 'error' event that can be emitted by worker

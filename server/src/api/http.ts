@@ -34,6 +34,14 @@ export default class HttpApi {
       bot: this.bot,
     })
 
+    this.server.setErrorHandler((error, request, reply) => {
+      console.error(error)
+
+      reply.status(500).send({
+        error: 'Internal Server Error',
+      })
+    })
+
 
     // this.server.listen({
     //   port: parseInt(this.config.port),
@@ -44,6 +52,7 @@ export default class HttpApi {
     //   }
     //   console.log(`🫡  ${this.config.appName || 'Server'} API listening at ${address}`)
     // })
+
 
     /**
      * Allow cors for allowed origins from config
