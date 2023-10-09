@@ -3,7 +3,7 @@ import { Amount } from '@/presentation/components'
 
 defineProps<{
   /**
-   * Number to be formatted
+   * Rating value 0 — 5
    */
   value: number;
 }>()

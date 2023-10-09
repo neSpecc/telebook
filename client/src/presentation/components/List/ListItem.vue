@@ -11,25 +11,62 @@ const props = defineProps<{
     src?: string;
     placeholder?: string;
   };
+
+  /**
+   * Name of the icon that will be shown instead of avatar
+   */
   transactionIcon?: string;
+
+  /**
+   * Name of the icon that will be shown instead of avatar
+   */
   icon?: string;
+
+  /**
+   * Title of the list item (used along with subtitle)
+   */
   title?: string;
-  label?: string;
+
+  /**
+   * Subtitle of the list item
+   */
   subtitle?: string;
+
+  /**
+   * Label of the list item
+   */
+  label?: string;
+
+  /**
+   * Name of the icon that will be shown on the right side of the list item
+   */
   rightIcon?: string;
+
+  /**
+   * Label of the right icon
+   */
   rightIconLabel?: string;
+
+  /**
+   * Whether to display list item as a standalone island
+   */
   standalone?: boolean;
+
+  /**
+   * Router link
+   */
   to?: string;
+
+  /**
+   * Whether to display avatar as a big one
+   */
   bigAvatar?: boolean;
+
+  /**
+   * Whether to display subtitle in one line
+   */
   nowrap?: boolean;
 }>()
-
-// /**
-//  * Determines if the left column should be rendered
-//  */
-// const hasLeftCol = computed(() => {
-//   return props.avatar !== undefined || props.transactionIcon !== undefined || props.icon !== undefined
-// })
 
 const slots = useSlots()
 

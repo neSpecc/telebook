@@ -22,7 +22,7 @@ Telegram Mini Application for booking hotels *
 
 Use this project as an example or template for the creation of your app:
 
-1. 🧩 Meet Telegram Vue.js UI Kit — build native-like interfaces with ready-to-use components
+1. 🧩 Meet Telegram Vue UI Kit — build native-like interfaces with ready-to-use components
 2. ✨ Advanced DX — fast build, hot reloading, modern code style and linters, well-documented code
 3. 💎 Clean but simple architecture — easy to scale and maintain
 4. 📦 Production-ready deployment setup

@@ -11,11 +11,9 @@ const props = defineProps<{
 const source = ref('')
 
 onMounted(async () => {
-  const s = await import(`../../assets/icons/${props.name}.svg?raw`)
+  const svg = await import(`../../assets/icons/${props.name}.svg?raw`)
 
-  console.log('s', s)
-
-  source.value = s.default
+  source.value = svg.default
 })
 </script>
 

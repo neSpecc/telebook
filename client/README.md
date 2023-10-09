@@ -23,24 +23,30 @@ Telebook — is a fictional hotel booking service integrated to Telegram. It use
 - ✨ Hot Reloading
 - 💰 Payments support
 
-## Vue Telegram UI Kit
+## Telegram Vue UI Kit
 
 It contains ready-to-use collection of components that could be used to create native-like views that will look perfect on iOS, Android and other devices
 
-- [Amount](./src/presentation/components/Amount)
-- [Avatar](./src/presentation/components/Avatar)
-- [Data Overview](./src/presentation/components/DataOverview)
-- [Date Picker](./src/presentation/components/DatePicker)
-- [Icon](./src/presentation/components/Icon)
-- [Input](./src/presentation/components/Input)
-- [List](./src/presentation/components/List)
-- [Page With Header](./src/presentation/components/Page)
-- [Fixed Footer](./src/presentation/components/Page/)
-- [Placeholder](./src/presentation/components/Placeholder)
-- [Rating](./src/presentation/components/Rating)
-- [Section](./src/presentation/components/Section)
-- [Text ](./src/presentation/components/Text )
+- [Amount](./src/presentation/components/README.md#amount)
+- [Avatar](./src/presentation/components/README.md#avatar)
+- [DataOverview](./src/presentation/components/README.md#dataoverview)
+- [DatePicker](./src/presentation/components/README.md#datepicker)
+- [DatePickerCompact ](./src/presentation/components/README.md#datepickercompact)
+- [Icon](./src/presentation/components/README.md#icon)
+- [Input](./src/presentation/components/README.md#input)
+- [List](./src/presentation/components/README.md#list)
+- [ListItem](./src/presentation/components/README.md#listitem)
+- [ListCard](./src/presentation/components/README.md#listcard)
+- [ListItemExpandable](./src/presentation/components/README.md#listitemexpandable)
+- [FixedFooter](./src/presentation/components/README.md#fixedfooter)
+- [PageWithHeader](./src/presentation/components/README.md#pagewithheader)
+- [Placeholder](./src/presentation/components/README.md#placeholder)
+- [Rating](./src/presentation/components/README.md#rating)
+- [Section](./src/presentation/components/README.md#section)
+- [Sections](./src/presentation/components/README.md#sections)
+- [Text](./src/presentation/components/README.md#text)
 
+Read more in [Telegram Vue UI Kit](./src/presentation/components/) documentation
 
 ## Get started
 

@@ -1,17 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-
-withDefaults(defineProps<{
-  /**
-   * Bottom offset
-   */
-  bottom?: number;
-}>(), {
-  bottom: 0,
-})
-
-onMounted(() => {
-})
 </script>
 <template>
   <div

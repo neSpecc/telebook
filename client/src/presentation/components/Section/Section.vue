@@ -11,7 +11,7 @@ defineProps<{
   padded?: boolean;
 
   /**
-   * @deprecated
+   * Whether to display list as a standalone island
    */
   standalone?: boolean;
 

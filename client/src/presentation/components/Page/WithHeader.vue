@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-// const { setAppBackground } = useAppStyle()
-
 const header = ref<HTMLDivElement | null>(null)
 const headerHeight = ref(59)
 
