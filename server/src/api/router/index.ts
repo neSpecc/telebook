@@ -56,8 +56,9 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
    * Create invoice route: POST /createInvoice
    */
   fastify.post('/createInvoice', async (request: FastifyRequest, reply: FastifyReply) => {
+    const logPrefix = '🛍️ POST /createInvoice: ';
 
-    console.log(`Got ${request.method} request to ${request.url} from ${request.ip}`)
+    console.log(`${logPrefix} ${request.body}`)
 
     const {
       title,
@@ -70,16 +71,14 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
       photo_height,
     } = request.body as any;
 
-    console.log('body', request.body);
-
     const payload = 'Order #' + Math.random().toString(36).substring(7);
 
-    notify(`🛍️ Create Invoice:  \n\n **${payload}: ${title} ${description}`);
+    notify(`${logPrefix}  \n\n **${payload}: ${title} ${description}`);
 
 
     try {
       // @ts-ignore — 'createInvoiceLink supported by the library, but does not defined in types
-      const invoiceLink = await this.bot.createInvoiceLink(title, description, payload, this.config.providerToken, 'USD', prices, {
+      const invoiceLink = await opts.bot.createInvoiceLink(title, description, payload, this.config.providerToken, 'USD', prices, {
         need_name,
         photo_url,
         photo_size,
@@ -87,7 +86,7 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
         photo_height,
       })
 
-      notify(`🛍️ Create Invoice: Success ${invoiceLink} `)
+      notify(`${logPrefix} Success ${invoiceLink} `)
 
       return reply
         .send({
