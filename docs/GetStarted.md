@@ -2,8 +2,8 @@
 
 This guide describes base aspects of this example implementation
 
-- 🏠 [Frontend tech guide](./client/README.md) - how to setup Client
-- 🎁 [Backend tech guide](./server/README.md) - how to setup Backend
+- 🏠 [Frontend tech guide](../client/README.md) - how to setup Client
+- 🎁 [Backend tech guide](../server/README.md) - how to setup Backend
 
 ## Local Development
 
