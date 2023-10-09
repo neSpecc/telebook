@@ -43,10 +43,10 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
   fastify.post(`/bot`, (req, res) => {
     console.log('got bot update: ', req.body);
 
-    try {
-      opts.bot.processUpdate(req.body as TelegramBot.Update);
-    } catch (e) {
-      console.log('error while update processing', e);
+    //   try {
+    //   opts.bot.processUpdate(req.body as TelegramBot.Update);
+    // } catch (e) {
+    //   console.log('error while update processing', e);
     }
 
     res.code(200);
