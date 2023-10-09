@@ -85,7 +85,7 @@ export default class Bot {
       await this.sendMessageQueue(chatId, [
         { text: '🎉' },
         { text: 'Your order was accepted! Have a nice trip!' },
-        { text: 'It is not a real payment, so you\'re not charged. The hotel exists only in our imagination. Thanks for testing!' },
+        { text: 'It is not a real payment, so you\'re not charged. The hotel exists only in our imagination. Thanks for testing! \n\nDiscover the source code and documentation: \nhttps://github.com/neSpecc/telebook' },
       ])
 
       return;

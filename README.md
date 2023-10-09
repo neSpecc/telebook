@@ -63,6 +63,12 @@ List of resources that can be useful when building your own Telegram Mini App
 - [@DurgerKingBot](https://t.me/durgerkingbot/menu) - simple official example demonstrating what Mini Apps is
 - [@wallet](https://t.me/@wallet) - full featured example of how Mini App could be
 
+### Guides
+
+- [Telegram Mini Apps](https://core.telegram.org/bots/webapps) — official platform documentation
+- Web Apps ([docs.twa.dev](https://docs.twa.dev/docs/introduction/about-platform)) — more detailed platform documentation by community
+- Ton Community / [What are Mini Apps?](https://docs.ton.org/develop/dapps/telegram-apps/) — guide from Ton Community
+
 ### Development
 
 - [@twa-dev/SDK](https://github.com/twa-dev/SDK) - Node.js API wrapper and type definitions
@@ -77,12 +83,6 @@ List of resources that can be useful when building your own Telegram Mini App
 - [Telegram Mini Apps dev community](https://github.com/twa-dev) - A community of builders that enhances developer experience for the Telegram Mini Apps (TMA) platform with tools, docs, and tutorials
 - [Telegram Developers Community](https://t.me/+1mQMqTopB1FkNjIy) - Telegram chat for mini apps developers
 - [Telegram Apps](https://www.tapps.center) — Telegram Apps catalog
-
-### Guides
-
-- [Telegram Mini Apps](https://core.telegram.org/bots/webapps) — official platform documentation
-- Web Apps ([docs.twa.dev](https://docs.twa.dev/docs/introduction/about-platform)) — more detailed platform documentation by community
-- Ton Community / [What are Mini Apps?](https://docs.ton.org/develop/dapps/telegram-apps/) — guide from Ton Community
 
 ### Payments
 
