@@ -7,12 +7,7 @@ import { useTelegram, useScroll } from '@/application/services'
 import { hotels } from '@/infra/store/hotels/mock/hotels'
 import { shortNumber } from '@/infra/utils/number'
 import { Vue3Lottie } from 'vue3-lottie'
-import SearchAnimation from '@/presentation/assets/lottie/run.json'
-import EyesAnimation from '@/presentation/assets/lottie/eyes.json'
-import KrtekAnimation from '@/presentation/assets/lottie/krtek.json'
-import RushAnimation from '@/presentation/assets/lottie/rush.json'
 import SimpAnimation from '@/presentation/assets/lottie/simp.json'
-import TouristAnimation from '@/presentation/assets/lottie/tourist.json'
 
 import { type Hotel } from '@/domain/entities'
 
@@ -51,7 +46,7 @@ const isSearchFinished = ref(false)
  */
 const result = ref<Hotel[]>([])
 
-const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight, showAlert, platform } = useTelegram()
+const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight } = useTelegram()
 const { scrollTo } = useScroll()
 
 const searchSettings = ref<InstanceType<typeof Section> | null>(null)

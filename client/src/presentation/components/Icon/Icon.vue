@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useIcon } from '@/application/services/useIcon'
+import { onMounted, ref } from 'vue'
 
 const props = defineProps<{
   /**
@@ -8,7 +8,15 @@ const props = defineProps<{
   name: string;
 }>()
 
-const { source } = useIcon(props.name)
+const source = ref('')
+
+onMounted(async () => {
+  const s = await import(`../../assets/icons/${props.name}.svg?raw`)
+
+  console.log('s', s)
+
+  source.value = s.default
+})
 </script>
 
 <template>

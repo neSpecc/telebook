@@ -160,12 +160,6 @@ onMounted(() => {
   footerShowingDelay.value = setTimeout(() => {
     isPriceFooterShowed.value = true
   }, 300)
-
-  // setTimeout(() => {
-    // requestAnimationFrame(() => {
-      // window.scrollTo(0, 0)
-    // })
-  // }, 200)
 })
 
 onBeforeUnmount(() => {
