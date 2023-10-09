@@ -27,6 +27,9 @@ interface RouterOptions extends FastifyServerOptions {
  * @param opts - Server options
  */
 export default async function router(fastify: FastifyInstance, opts: RouterOptions) {
+
+  const { bot, config } = opts;
+
   /**
    * Home route for the API: GET /
    */
@@ -44,7 +47,7 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
     try {
       const update = req.body as TelegramBot.Update;
       console.log('🤖 ←  ', update.message?.from?.username, update.message?.text);
-      opts.bot.processUpdate(req.body as TelegramBot.Update);
+      bot.processUpdate(req.body as TelegramBot.Update);
     } catch (e) {
       console.log('error while update processing', e);
     }
@@ -78,7 +81,7 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
 
     try {
       // @ts-ignore — 'createInvoiceLink supported by the library, but does not defined in types
-      const invoiceLink = await opts.bot.createInvoiceLink(title, description, payload, this.config.providerToken, 'USD', prices, {
+      const invoiceLink = await bot.createInvoiceLink(title, description, payload, config.providerToken, 'USD', prices, {
         need_name,
         photo_url,
         photo_size,
