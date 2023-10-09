@@ -319,8 +319,6 @@ onBeforeUnmount(() => {
   z-index: 9;
   will-change: border-radius, left, top, height, width, box-shadow;
   user-select: none;
-  /* box-shadow: 0 0 10px rgba(0,0,0,0.2), 0 3px 20px -5px rgba(0,0,0,0.14); */
-  /* box-shadow: 0 0 24px -10px rgba(0,0,0,0.74); */
 
   @apply --safari-overflow-hidden-fix;
   transform: translateZ(0);

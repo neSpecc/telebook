@@ -91,6 +91,29 @@ function isSelectedDay(day: number | string): boolean {
 }
 
 /**
+ * Check if passed day is disabled
+ *
+ * @param day - Day to check
+ */
+function isDisabledDate(day: number | string): boolean {
+  if (typeof day === 'string') {
+    return false
+  }
+
+  const date = new Date(year.value, month.value, day)
+
+  if (props.minDate !== undefined && date < props.minDate) {
+    return true
+  }
+
+  if (props.maxDate !== undefined && date > props.maxDate) {
+    return true
+  }
+
+  return false
+}
+
+/**
  * Reference to days container
  */
 const daysRef = ref<HTMLElement | null>(null)
@@ -189,6 +212,18 @@ const emit = defineEmits<{
   datePick: [date: Date];
 }>()
 
+const props = defineProps<{
+  /**
+   * Minimum date that can be selected
+   */
+  minDate?: Date;
+
+  /**
+   * Maximum date that can be selected
+   */
+  maxDate?: Date;
+}>()
+
 /**
  * Day select handler
  *
@@ -196,6 +231,10 @@ const emit = defineEmits<{
  */
 function onDateSelected(day: number | string): void {
   if (typeof day === 'string') {
+    return
+  }
+
+  if (isDisabledDate(day)) {
     return
   }
 
@@ -255,7 +294,8 @@ onBeforeUnmount(() => {
         class="day"
         :class="{
           'day--current': isCurrentDay(day),
-          'day--selected': isSelectedDay(day)
+          'day--selected': isSelectedDay(day),
+          'day--disabled': isDisabledDate(day),
         }"
         @click="onDateSelected(day)"
       >
@@ -410,6 +450,11 @@ onBeforeUnmount(() => {
     &::before {
       opacity: 1;
     }
+  }
+
+  &--disabled {
+    color: var(--color-hint);
+    cursor: default;
   }
 }
 

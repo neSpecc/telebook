@@ -112,7 +112,8 @@ Date picker component is used to select a date.
 
 | Prop name | Type | Default value | Description |
 | --------- | ---- | ------------- | ----------- |
-| date | Date | - | Selected date |
+| minDate | Date | - | Days before this day will be inactive |
+| maxDate | Date | - | Days after this day will be inactive |
 
 ### Events
 

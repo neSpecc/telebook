@@ -100,13 +100,14 @@ function search(): void {
   setTimeout(() => {
     onAfterSearch()
 
+    /**
+     * Shuffle mocks to make it look more real
+     */
     const hotelsShuffled = hotels.sort(() => Math.random() - 0.5)
 
-    setTimeout(() => {
-      hotelsShuffled.forEach((hotel, i) => {
-        result.value.push(hotel)
-      })
-    }, 150)
+    hotelsShuffled.forEach((hotel, i) => {
+      result.value.push(hotel)
+    })
   }, 3000)
 }
 
@@ -162,6 +163,10 @@ watch([
   () => trip.endDate,
 ], () => {
   resetSearch()
+
+  if (trip.startDate.getTime() > trip.endDate.getTime()) {
+    setEndDate(new Date(trip.startDate.getTime() + 24 * 60 * 60 * 1000))
+  }
 })
 
 onMounted(() => {
@@ -221,8 +226,14 @@ onBeforeUnmount(() => {
       </template>
     </Placeholder>
     <Sections>
-      <Section ref="searchSettings" padded>
-        <List with-background standalone>
+      <Section
+        ref="searchSettings"
+        padded
+      >
+        <List
+          with-background
+          standalone
+        >
           <ListItem label="Travel date">
             <template #right>
               <DatePickerCompact
@@ -236,6 +247,7 @@ onBeforeUnmount(() => {
           >
             <DatePicker
               ref="startDatePicker"
+              :min-date="new Date()"
               @date-pick="(date) => setStartDate(date)"
             />
           </ListItemExpandable>
@@ -250,8 +262,11 @@ onBeforeUnmount(() => {
           <ListItemExpandable
             :opened="endDatePickerShowed"
           >
+            <!-- Max date is start + 60 -->
             <DatePicker
               ref="endDatePicker"
+              :min-date="trip.startDate || new Date()"
+              :max-date="new Date(trip.startDate.getTime() + 60 * 24 * 60 * 60 * 1000)"
               @date-pick="(date) => setEndDate(date)"
             />
           </ListItemExpandable>
