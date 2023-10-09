@@ -43,8 +43,9 @@ It uses mocked data:
 
 Use following instructions
 
+- 💗 [Get Started](./docs/GetStarted.md) - basic info about Mini Apps development
 - 🏠 [Frontend tech guide](./client/README.md) - how to setup Client
 - 🎁 [Backend tech guide](./server/README.md) - how to setup Backend
 - 🛍️ [Telegram Vue UI Kit](./client/src/presentation/components/README.md) - UI Kit guide
-- 💰 [How to setup Payments](./docs/Payments.md)
+- 💰 [How to setup Payments](./docs/Payments.md) - useful information about Payments integration
 - 😎 [Awesome List](./docs/Awesome.md) - list of resources that can be useful when building your own Telegram Mini App
