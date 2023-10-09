@@ -30,7 +30,7 @@
     --color-hint: var(--tg-theme-hint-color, #8e8e93);
     --color-link: var(--tg-theme-link-color, #007aff);
 
-    --separator-color: rgba(204, 204, 204, 0.5);
+    --separator-color: rgba(204, 204, 204, 0.36);
     --color-overlay-floating: rgba(19, 19, 19, 0.79);
   }
 

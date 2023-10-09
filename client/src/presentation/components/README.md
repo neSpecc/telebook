@@ -269,7 +269,7 @@ This component does not have any props.
 
 ## PageWithHeader
 
-A component that displays a page with a header and a content.
+A component that displays a page with a fixed header and a content.
 
 ![PageWithHeader](../../../../docs/assets/ui/PageWithHeader.png)
 

@@ -27,6 +27,7 @@ onBeforeMount(() => {
 
 <template>
   <div class="app">
+    <div class="app-header"></div><!--Teleport location for PageWithHeader component-->
     <RouterView v-slot="{ Component }">
       <transition
         name="default-segue"
@@ -78,6 +79,13 @@ body {
 .app {
   color: var(--color-text);
   position: relative;
+}
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .default-segue-leave-active {

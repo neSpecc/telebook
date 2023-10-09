@@ -13,12 +13,14 @@ onMounted(() => {
 })
 </script>
 <template>
-  <div
-    ref="header"
-    class="page-header"
-  >
-    <slot name="header" />
-  </div>
+  <Teleport to=".app-header">
+      <div
+        ref="header"
+        class="page-header"
+      >
+      <slot name="header" />
+    </div>
+  </Teleport>
   <div class="page">
     <div class="page-content">
       <slot name="content" />
@@ -32,10 +34,13 @@ onMounted(() => {
 }
 .page-header {
   background-color: var(--color-bg);
-  /* position: fixed; */
-  top: 0;
-  transform: translateZ(0);
-  z-index: 2;
+  animation: header-in 200ms ease;
+}
+
+@keyframes header-in {
+  from {
+    transform: translateY(-100%);
+  }
 }
 
 .page-content {

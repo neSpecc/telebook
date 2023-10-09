@@ -351,6 +351,7 @@ onBeforeUnmount(() => {
       }
 
       &:deep(.list-item .title),
+      &:deep(.list-item .right > *),
       &:deep(.list-item .subtitle),
       &:deep(.list-item .right) {
         color: var(--color-text-button);
