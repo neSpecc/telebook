@@ -6,14 +6,9 @@ import './presentation/styles/index.css'
 import { loadCities } from '@/infra/store/cities'
 import { useTelegram } from '@/application/services'
 
-
 /**
- * @todo "Back" segue transition
  * @todo Close confirmation
  * @todo cancel payment toast
- * @todo picture slider on Rooms page
- * @todo documentation
- * @todo share order
  * @todo test in all clients
  * @todo add "4 viewing right now" with 👀 animation
  */
@@ -24,6 +19,7 @@ if (platform !== 'unknown') {
   switch (platform) {
     case 'android':
     case 'android_x':
+    case 'web':
       document.body.classList.add('is-material')
       break
     case 'ios':
@@ -35,6 +31,12 @@ if (platform !== 'unknown') {
       break
   }
 }
+
+/**
+ * Some clients may use material/apple base styles, but has some overrides
+ * For instance, WebK uses material but more rounded and clean
+ */
+document.body.classList.add(`is-exact-${platform}`)
 
 /**
  * Prepare app data

@@ -13,7 +13,7 @@ interface useTelegramComposableState {
   expand: () => void;
   getViewportHeight: () => number;
   colorScheme: 'light' | 'dark' | undefined;
-  platform: 'android' | 'android_x' | 'ios' | 'macos' | 'tdesktop' | 'weba' | 'webk' | 'unigram' | 'unknown';
+  platform: 'android' | 'android_x' | 'ios' | 'macos' | 'tdesktop' | 'web' | 'weba' | 'webk' | 'unigram' | 'unknown';
 }
 
 /**
