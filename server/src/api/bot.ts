@@ -72,10 +72,10 @@ export default class Bot {
 
     switch (msg.text) {
       case '/start':
-        this.replyStartMessage(chatId)
-        return;
+        await this.replyStartMessage(chatId)
+        return
       case '/help':
-        this.replyHelpMessage(chatId)
+        await this.replyHelpMessage(chatId)
         return
     }
 
@@ -104,6 +104,8 @@ export default class Bot {
    */
   private async replyStartMessage(chatId: number): Promise<void> {
     try {
+      console.log('replyStartMessage', this.bot !== null ? 'bot is ready' : 'bot is not ready');
+
       const r1 = await this.bot!.sendMessage(chatId, 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨')
 
       console.log('r1', r1);
