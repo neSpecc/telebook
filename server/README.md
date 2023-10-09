@@ -4,11 +4,11 @@ You can use this project as an example of how to implement your own backend for 
 
 ## Features
 
-- 🤖 /start and /help commands handlers
+- 🤖 `/start` and `/help` commands handlers
 - 🎹 Inline Keyboard
 - 💰 Payments support
 - ✨ Hot Reloading
-- ▲ Serverless Vercel Deployment setup
+-  ▲  Serverless Vercel Deployment setup
 
 ## Getting Started
 
@@ -42,6 +42,14 @@ cp .env.example .env
 | `yarn dev` | Start dev server with Hot Reloading |
 | `yarn build` | Compile TS and prepare bundle for production |
 | `yarn start` | Run production server |
+
+## Development
+
+During development it is useful to use [Ngrok](https://ngrok.com) for forwarding your local port to the Internet.
+
+1. Run `yarn dev` and see what port is occupied
+2. In a separate terminal session run `ngrok http YOUR_PORT`
+3. Insert given link to the Frontend app's `.env`
 
 ## Tech Stack and credits
 
