@@ -78,15 +78,22 @@ export default class Bot {
         return
     }
 
-
     if (msg.successful_payment) {
       console.log('💰 successful_payment', msg.successful_payment);
 
-      await this.sendMessageQueue(chatId, [
-        { text: '🎉' },
-        { text: 'Your order was accepted! Have a nice trip!' },
-        { text: 'It is not a real payment, so you\'re not charged. The hotel exists only in our imagination. Thanks for testing! \n\nDiscover the source code and documentation: \nhttps://github.com/neSpecc/telebook' },
-      ])
+      await this.bot!.sendMessage(chatId, '*Your order was accepted! Have a nice trip! 🎉* \n\nIt is not a real payment, so you\'re not charged. The hotel exists only in our imagination. Thanks for testing! \n\nDiscover the source code and documentation: \nhttps://github.com/neSpecc/telebook', {
+        parse_mode: 'Markdown',
+        reply_markup: {
+          inline_keyboard: [
+            [{
+              text: `🦄 Open ${this.config.appName}`,
+              web_app: {
+                url: this.config.webAppUrl,
+              },
+            }],
+          ],
+        }
+      })
 
       return;
     }
