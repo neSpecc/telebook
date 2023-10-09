@@ -47,9 +47,9 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
     //   opts.bot.processUpdate(req.body as TelegramBot.Update);
     // } catch (e) {
     //   console.log('error while update processing', e);
-    }
+    // }
 
-    res.code(200);
+    res.code(200).send("OK")
   });
 
   /**
