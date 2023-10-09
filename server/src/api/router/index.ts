@@ -78,7 +78,6 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
 
     notify(`${logPrefix}  \n\n **${payload}: ${title} ${description}`);
 
-
     try {
       // @ts-ignore — 'createInvoiceLink supported by the library, but does not defined in types
       const invoiceLink = await bot.createInvoiceLink(title, description, payload, config.providerToken, 'USD', prices, {
