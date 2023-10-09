@@ -206,9 +206,10 @@ export default class Bot {
    * @param messages - array of messages to send
    */
   private async sendMessageQueue(chatId: TelegramBot.ChatId, messages: {text: string, options?: TelegramBot.SendMessageOptions}[]): Promise<void> {
-    for (const message of messages) {
-      await this.bot!.sendMessage(chatId, message.text, message.options)
-      await new Promise((resolve) => setTimeout(resolve, 1300))
-    }
+    messages.forEach((message, index) => {
+      setTimeout(async () => {
+        await this.bot!.sendMessage(chatId, message.text, message.options)
+      }, index * 500);
+    })
   }
 }
