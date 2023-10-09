@@ -103,8 +103,8 @@ export default class Bot {
    * @param chatId - chat id to send message to
    */
   private async replyStartMessage(chatId: number): Promise<void> {
-    await this.bot!.sendMessage(chatId, 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨')
-    await this.sendAppButton(chatId)
+    this.bot!.sendMessage(chatId, 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨')
+    this.sendAppButton(chatId)
   }
 
   /**
@@ -113,8 +113,8 @@ export default class Bot {
    * @param chatId - chat id to send message to
    */
   private async replyHelpMessage(chatId: number): Promise<void> {
-    await this.bot!.sendMessage(chatId, 'Actually I\'m just an example bot, so all I can do is to send you a link to the mini-app 🤖')
-    await this.sendAppButton(chatId)
+    this.bot!.sendMessage(chatId, 'Actually I\'m just an example bot, so all I can do is to send you a link to the mini-app 🤖')
+    this.sendAppButton(chatId)
   }
 
   /**
