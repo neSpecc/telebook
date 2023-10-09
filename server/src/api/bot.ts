@@ -64,7 +64,7 @@ export default class Bot {
    *
    * @param msg - object that the bot got from Telegram
    */
-  private onMessage(msg: TelegramBot.Message): void {
+  private async onMessage(msg: TelegramBot.Message): Promise<void> {
     const chatId = msg.chat.id
 
     console.log('📥', msg);
@@ -84,9 +84,9 @@ export default class Bot {
       console.log('💰 successful_payment', msg.successful_payment);
 
 
-      this.bot!.sendMessage(chatId, '🎉')
-      this.bot!.sendMessage(chatId, 'Your order was accepted! Have a nice trip!')
-      this.bot!.sendMessage(chatId, 'It is not a real payment, so you\'re not charged. The hotel exists only in our imagination. Thanks for testing!')
+      await this.bot!.sendMessage(chatId, '🎉')
+      await this.bot!.sendMessage(chatId, 'Your order was accepted! Have a nice trip!')
+      await this.bot!.sendMessage(chatId, 'It is not a real payment, so you\'re not charged. The hotel exists only in our imagination. Thanks for testing!')
 
       return;
     }
@@ -103,8 +103,13 @@ export default class Bot {
    * @param chatId - chat id to send message to
    */
   private async replyStartMessage(chatId: number): Promise<void> {
-    this.bot!.sendMessage(chatId, 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨')
-    this.sendAppButton(chatId)
+    const r1 = await this.bot!.sendMessage(chatId, 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨')
+
+    console.log('r1', r1);
+
+    const r2 = await this.sendAppButton(chatId)
+
+    console.log('r2', r2);
   }
 
   /**
