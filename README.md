@@ -93,8 +93,8 @@ List of resources that can be useful when building your own Telegram Mini App
 
 ### Design
 
-- [Figma / Telegram Library](https://www.figma.com/@firststagelabs) — basic design system for iOS and Android
-- [Figma / Apple iOS 17 UI Kit](https://www.figma.com/community/file/1247769024068708989/apple-ios-17-ui-kit-variables) - Figma with iOS 17 components
-- [Figma / iOS 17 and iPadOS 17 ](https://www.figma.com/file/tYi5KTNYSPGBsyrxz4SZaG/Apple-Design-Resources-%E2%80%93-iOS-17-and-iPadOS-17-(Community)?type=design&node-id=209-55480&mode=design&t=BA25hDUllNQGDsAa-0) - Apple Design Resources community library
+- Figma / [Telegram Library](https://www.figma.com/@firststagelabs) — basic design system for iOS and Android
+- Figma / [Apple iOS 17 UI Kit](https://www.figma.com/community/file/1247769024068708989/apple-ios-17-ui-kit-variables) - Figma with iOS 17 components
+- Figma / [iOS 17 and iPadOS 17 ](https://www.figma.com/file/tYi5KTNYSPGBsyrxz4SZaG/Apple-Design-Resources-%E2%80%93-iOS-17-and-iPadOS-17-(Community)?type=design&node-id=209-55480&mode=design&t=BA25hDUllNQGDsAa-0) - Apple Design Resources community library
 - [Material 3](https://m3.material.io) — Material 3 Design Guidelines
 - Figma / [Material 3](https://www.figma.com/community/file/1035203688168086460/material-3-design-kit) — Material 3 Design Kit
