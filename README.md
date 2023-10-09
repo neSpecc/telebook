@@ -2,6 +2,8 @@
 
 Telegram Mini Application for booking hotels *
 
+* — it's just a demonstration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) platform. No real hotels and payments.
+
 <p align="center">
   <a href="https://t.me/tebook_bot/telebook">
     <picture>
@@ -15,10 +17,8 @@ Telegram Mini Application for booking hotels *
 <p align="center">
  <a href="https://t.me/tebook_bot/telebook">@tebook_bot/telebook</a> |
   <a href="https://core.telegram.org/bots/webapps">Telegram Mini Apps</a> |
-  <a href="#how-to-use-repo">Documentation</a>
+  <a href="#-how-to-use-repo">Documentation</a>
 </p>
-
-* — it's just a demonstration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) platform. No real hotels and payments.
 
 Use this project as an example or template for the creation of your app:
 
