@@ -69,7 +69,6 @@ export default class Bot {
 
     console.log('📥', msg);
 
-
     switch (msg.text) {
       case '/start':
         await this.replyStartMessage(chatId)
@@ -83,10 +82,11 @@ export default class Bot {
     if (msg.successful_payment) {
       console.log('💰 successful_payment', msg.successful_payment);
 
-
-      await this.bot!.sendMessage(chatId, '🎉')
-      await this.bot!.sendMessage(chatId, 'Your order was accepted! Have a nice trip!')
-      await this.bot!.sendMessage(chatId, 'It is not a real payment, so you\'re not charged. The hotel exists only in our imagination. Thanks for testing!')
+      await this.sendMessageQueue(chatId, [
+        { text: '🎉' },
+        { text: 'Your order was accepted! Have a nice trip!' },
+        { text: 'It is not a real payment, so you\'re not charged. The hotel exists only in our imagination. Thanks for testing!' },
+      ])
 
       return;
     }
@@ -103,19 +103,11 @@ export default class Bot {
    * @param chatId - chat id to send message to
    */
   private async replyStartMessage(chatId: number): Promise<void> {
-    try {
-      console.log('replyStartMessage', this.bot !== null ? 'bot is ready' : 'bot is not ready');
+    await this.sendMessageQueue(chatId, [
+      { text: 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨' },
+    ])
 
-      const r1 = await this.bot!.sendMessage(chatId, 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨')
-
-      console.log('r1', r1);
-
-      const r2 = await this.sendAppButton(chatId)
-
-      console.log('r2', r2);
-    } catch (error){
-      console.log('replyStartMessage error', error);
-    }
+    await this.sendAppButton(chatId)
   }
 
   /**
@@ -124,7 +116,7 @@ export default class Bot {
    * @param chatId - chat id to send message to
    */
   private async replyHelpMessage(chatId: number): Promise<void> {
-    this.bot!.sendMessage(chatId, 'Actually I\'m just an example bot, so all I can do is to send you a link to the mini-app 🤖')
+    this.sendMessageQueue(chatId, [{ text: 'Actually I\'m just an example bot, so all I can do is to send you a link to the mini-app 🤖' }])
     this.sendAppButton(chatId)
   }
 
@@ -187,6 +179,19 @@ export default class Bot {
     } catch (e) {
       console.warn('Can not set Telegram Webhook')
       console.warn(e)
+    }
+  }
+
+  /**
+   * To send several messages at once we need to add a small timeout between them
+   *
+   * @param chatId - chat id to send message to
+   * @param messages - array of messages to send
+   */
+  private async sendMessageQueue(chatId: TelegramBot.ChatId, messages: {text: string, options?: TelegramBot.SendMessageOptions}[]): Promise<void> {
+    for (const message of messages) {
+      await this.bot!.sendMessage(chatId, message.text, message.options)
+      await new Promise((resolve) => setTimeout(resolve, 1000))
     }
   }
 }
