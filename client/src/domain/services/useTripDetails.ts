@@ -141,7 +141,7 @@ export const useTripDetails = createSharedComposable((): useTripDetailsComposabl
    */
   const days = computed(() => {
     const diffTime = Math.abs(trip.endDate.getTime() - trip.startDate.getTime())
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    return Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 1)
   })
 
   /**
