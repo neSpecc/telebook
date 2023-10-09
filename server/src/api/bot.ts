@@ -103,13 +103,17 @@ export default class Bot {
    * @param chatId - chat id to send message to
    */
   private async replyStartMessage(chatId: number): Promise<void> {
-    const r1 = await this.bot!.sendMessage(chatId, 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨')
+    try {
+      const r1 = await this.bot!.sendMessage(chatId, 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨')
 
-    console.log('r1', r1);
+      console.log('r1', r1);
 
-    const r2 = await this.sendAppButton(chatId)
+      const r2 = await this.sendAppButton(chatId)
 
-    console.log('r2', r2);
+      console.log('r2', r2);
+    } catch (error){
+      console.log('replyStartMessage error', error);
+    }
   }
 
   /**

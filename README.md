@@ -58,6 +58,11 @@ Use following instructions
 
 List of resources that can be useful when building your own Telegram Mini App
 
+### Examples
+
+- [@DurgerKingBot](https://t.me/durgerkingbot/menu) - simple official example demonstrating what Mini Apps is
+- [@wallet](https://t.me/@wallet) - full featured example of how Mini App could be
+
 ### Development
 
 - [@twa-dev/SDK](https://github.com/twa-dev/SDK) - Node.js API wrapper and type definitions
@@ -67,10 +72,6 @@ List of resources that can be useful when building your own Telegram Mini App
 - [@twa-dev/vite-boilerplate](https://github.com/twa-dev/vite-boilerplate) -  React + TypeScript + Vite boilerplate
 - [@yagop/node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api) - Telegram Bot API for NodeJS
 
-### Examples
-
-- [@DurgerKingBot](https://t.me/durgerkingbot/menu) - simple official example demonstrating what Mini Apps is
-- [@wallet](https://t.me/@wallet) - full featured example of how Mini App could be
 ### Community
 
 - [Telegram Mini Apps dev community](https://github.com/twa-dev) - A community of builders that enhances developer experience for the Telegram Mini Apps (TMA) platform with tools, docs, and tutorials
