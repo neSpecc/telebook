@@ -62,6 +62,8 @@ const viewportHeight = ref(window.innerHeight)
  * Hook called before search
  */
 function onBeforeSearch(): void {
+  result.value = []
+
   requestAnimationFrame(() => {
     isLoading.value = true
     isSearchFinished.value = false
@@ -98,8 +100,10 @@ function search(): void {
   setTimeout(() => {
     onAfterSearch()
 
+    const hotelsShuffled = hotels.sort(() => Math.random() - 0.5)
+
     setTimeout(() => {
-      hotels.forEach((hotel, i) => {
+      hotelsShuffled.forEach((hotel, i) => {
         result.value.push(hotel)
       })
     }, 150)
