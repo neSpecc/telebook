@@ -39,13 +39,6 @@ It uses mocked data:
 - Reviews
 - All mock pictures are generated using [Shedevrum AI](https://shedevrum.ai)
 
-It uses following Telegram Web App features:
-
-- [ThemeParams](https://core.telegram.org/bots/webapps#themeparams)
-- [Payments API](https://core.telegram.org/bots/payments)
-- [MainButton](https://core.telegram.org/bots/webapps#mainbutton) and [BackButton](https://core.telegram.org/bots/webapps#backbutton)
-- and other
-
 ## 📖 How to use repo
 
 Use following instructions
