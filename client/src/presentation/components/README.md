@@ -33,7 +33,7 @@ Built with respect to:
 
 Amount component is used to display a number with optional prefix and postfix.
 
-![Amount](../../../../../docs/assets/ui/Amount.png)
+![Amount](../../../../docs/assets/ui/Amount.png)
 
 ### Props
 
@@ -54,7 +54,7 @@ Amount component is used to display a number with optional prefix and postfix.
 
 Avatar component is used to display a picture or a placeholder.
 
-![Avatar](../../../../../docs/assets/ui/Avatar.png)
+![Avatar](../../../../docs/assets/ui/Avatar.png)
 
 ### Props
 
@@ -69,7 +69,7 @@ Avatar component is used to display a picture or a placeholder.
 
 DataOverview component is used to display rating, awards and charts place.
 
-![DataOverview](../../../../../docs/assets/ui/DataOverview.png)
+![DataOverview](../../../../docs/assets/ui/DataOverview.png)
 
 ### Props
 
@@ -106,7 +106,7 @@ DataOverview component is used to display rating, awards and charts place.
 
 Date picker component is used to select a date.
 
-![DatePicker](../../../../../docs/assets/ui/DatePicker.png)
+![DatePicker](../../../../docs/assets/ui/DatePicker.png)
 
 ### Props
 
@@ -124,7 +124,7 @@ Date picker component is used to select a date.
 
 Date picker compact is a component that displays a date in a compact format.
 
-![DatePickerCompact](../../../../../docs/assets/ui/DatePickerCompact.png)
+![DatePickerCompact](../../../../docs/assets/ui/DatePickerCompact.png)
 
 ### Props
 
@@ -146,7 +146,7 @@ Icon is a component that displays an icon.
 
 Input is a component that allows user to input text.
 
-![Input](../../../../../docs/assets/ui/Input.png)
+![Input](../../../../docs/assets/ui/Input.png)
 
 ### Props
 
@@ -166,7 +166,7 @@ Input is a component that allows user to input text.
 
 List is a component that displays a list of items.
 
-![List](../../../../../docs/assets/ui/List.png)
+![List](../../../../docs/assets/ui/List.png)
 
 ### Props
 
@@ -180,7 +180,7 @@ List is a component that displays a list of items.
 
 ListItem is a component that displays a list item.
 
-![ListItem](../../../../../docs/assets/ui/ListItem.png)
+![ListItem](../../../../docs/assets/ui/ListItem.png)
 
 ### Props
 
@@ -210,7 +210,7 @@ ListItem is a component that displays a list item.
 
 ListCard is a component that displays a card with a picture and content below it.
 
-![ListCard](../../../../../docs/assets/ui/ListCard.png)
+![ListCard](../../../../docs/assets/ui/ListCard.png)
 
 ### Props
 
@@ -230,7 +230,7 @@ ListCard is a component that displays a card with a picture and content below it
 
 ListItemExpandable is a component that displays a list item that can be expanded.
 
-![ListItemExpandable](../../../../../docs/assets/ui/ListItemExpandable.png)
+![ListItemExpandable](../../../../docs/assets/ui/ListItemExpandable.png)
 
 ### Props
 
@@ -248,7 +248,7 @@ ListItemExpandable is a component that displays a list item that can be expanded
 
 ListItemIcon is a component that displays an icon inside a list item.
 
-![ListItemIcon](../../../../../docs/assets/ui/ListItemIcon.png)
+![ListItemIcon](../../../../docs/assets/ui/ListItemIcon.png)
 
 ### Props
 
@@ -261,7 +261,7 @@ ListItemIcon is a component that displays an icon inside a list item.
 
 FixedFooter is a component that displays a footer that is fixed to the bottom of the screen.
 
-![FixedFooter](../../../../../docs/assets/ui/FixedFooter.png)
+![FixedFooter](../../../../docs/assets/ui/FixedFooter.png)
 
 ### Props
 
@@ -271,7 +271,7 @@ This component does not have any props.
 
 A component that displays a page with a header and a content.
 
-![PageWithHeader](../../../../../docs/assets/ui/PageWithHeader.png)
+![PageWithHeader](../../../../docs/assets/ui/PageWithHeader.png)
 
 ### Props
 
@@ -281,7 +281,7 @@ This component has no props.
 
 Placeholder is a component that displays a placeholder with a title, caption and a picture.
 
-![Placeholder](../../../../../docs/assets/ui/Placeholder.png)
+![Placeholder](../../../../docs/assets/ui/Placeholder.png)
 
 ### Props
 
@@ -303,7 +303,7 @@ Placeholder is a component that displays a placeholder with a title, caption and
 
 Rating is a component that displays a rating.
 
-![Rating](../../../../../docs/assets/ui/Rating.png)
+![Rating](../../../../docs/assets/ui/Rating.png)
 
 ### Props
 
@@ -315,7 +315,7 @@ Rating is a component that displays a rating.
 
 Section is a component that displays a section of content.
 
-![Section](../../../../../docs/assets/ui/Section.png)
+![Section](../../../../docs/assets/ui/Section.png)
 
 ### Props
 
@@ -336,7 +336,7 @@ Section is a component that displays a section of content.
 
 Sections is a component that displays a list of sections.
 
-![Sections](../../../../../docs/assets/ui/Sections.png)
+![Sections](../../../../docs/assets/ui/Sections.png)
 
 ### Props
 
@@ -346,7 +346,7 @@ This component has no props.
 
 Text block is a component that displays a text block with a background.
 
-![Text](../../../../../docs/assets/ui/Text.png)
+![Text](../../../../docs/assets/ui/Text.png)
 
 ### Props
 
