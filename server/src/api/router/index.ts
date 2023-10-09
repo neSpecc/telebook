@@ -41,9 +41,9 @@ export default async function router(fastify: FastifyInstance, opts: RouterOptio
    * Route for receiving Telegram bot updates (set via setWebHook, @see bot.ts)
    */
   fastify.post(`/bot`, (req, res) => {
-    console.log('got bot update: ', req.body);
-
     try {
+      const update = req.body as TelegramBot.Update;
+      console.log('🤖 ←  ', update.message?.from?.username, update.message?.text);
       opts.bot.processUpdate(req.body as TelegramBot.Update);
     } catch (e) {
       console.log('error while update processing', e);
