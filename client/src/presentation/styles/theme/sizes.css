@@ -30,3 +30,9 @@
   --size-border-radius-big: 0px;
   --size-cell-min-height: 48px;
 }
+
+.is-exact-web {
+  --size-border-radius-small: 5px;
+  --size-border-radius-big: 10px;
+  --size-avatar-big: 68px;
+}
