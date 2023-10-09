@@ -103,11 +103,18 @@ export default class Bot {
    * @param chatId - chat id to send message to
    */
   private async replyStartMessage(chatId: number): Promise<void> {
-    await this.sendMessageQueue(chatId, [
-      { text: 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨' },
-    ])
-
-    await this.sendAppButton(chatId)
+    await this.bot!.sendMessage(chatId, 'Welcome to the hotel booking bot! Hope you enjoy the application I have 🏨', {
+      reply_markup: {
+        inline_keyboard: [
+          [{
+            text: `🦄 Open ${this.config.appName}`,
+            web_app: {
+              url: this.config.webAppUrl,
+            },
+          }],
+        ],
+      }
+    });
   }
 
   /**
@@ -116,8 +123,18 @@ export default class Bot {
    * @param chatId - chat id to send message to
    */
   private async replyHelpMessage(chatId: number): Promise<void> {
-    this.sendMessageQueue(chatId, [{ text: 'Actually I\'m just an example bot, so all I can do is to send you a link to the mini-app 🤖' }])
-    this.sendAppButton(chatId)
+    await this.bot!.sendMessage(chatId, 'Actually I\'m just an example bot, so all I can do is to send you a link to the mini-app 🤖', {
+      reply_markup: {
+        inline_keyboard: [
+          [{
+            text: `🦄 Open ${this.config.appName}`,
+            web_app: {
+              url: this.config.webAppUrl,
+            },
+          }],
+        ],
+      }
+    });
   }
 
   /**
@@ -191,7 +208,7 @@ export default class Bot {
   private async sendMessageQueue(chatId: TelegramBot.ChatId, messages: {text: string, options?: TelegramBot.SendMessageOptions}[]): Promise<void> {
     for (const message of messages) {
       await this.bot!.sendMessage(chatId, message.text, message.options)
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1300))
     }
   }
 }
