@@ -5,6 +5,8 @@ import { useCities } from '@/domain/services/useCities'
 import { useTripDetails } from '@/domain/services/useTripDetails'
 import useTelegram from '@/application/services/useTelegram'
 import { useRouter } from 'vue-router'
+import EyesAnimation from '@/presentation/assets/lottie/eyes.json'
+import { Vue3Lottie } from 'vue3-lottie'
 
 /**
  * Cities list
@@ -109,7 +111,11 @@ onBeforeUnmount(() => {
         :compact="true"
       >
         <template #picture>
-          👀
+          <Vue3Lottie
+            :animation-data="EyesAnimation"
+            width="50px"
+            height="50px"
+          />
         </template>
       </Placeholder>
     </Sections>
