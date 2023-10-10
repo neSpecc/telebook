@@ -1,8 +1,8 @@
 # Telebook
 
-Telegram Mini Application for booking hotels *
+Telegram Mini App for booking hotels *
 
-* — it's just a demonstration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) platform. No real hotels and payments.
+* — it's a demonstration of [Telegram Mini Apps](https://core.telegram.org/bots/webapps) platform. No real hotels and payments.
 
 <p align="center">
   <a href="https://t.me/tebook_bot/telebook">
