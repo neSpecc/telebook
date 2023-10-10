@@ -1,5 +1,6 @@
 import { imageToBase64 } from '@/infra/utils/dom'
 import { type Ref, onMounted, ref } from 'vue'
+import ImageCache from '@/infra/store/thumbs/ImageCache'
 
 interface useThumbnailComposableState {
   /**
@@ -23,6 +24,18 @@ interface useThumbnailComposableState {
  */
 export default function useThumbnail(src: string, thumbData: string): useThumbnailComposableState {
   /**
+   * Get cached data if exists.
+   */
+  const cachedData = ImageCache.get(src)
+
+  if (cachedData !== undefined) {
+    return {
+      pictureUrl: ref(cachedData),
+      isPictureLoaded: ref(true),
+    }
+  }
+
+  /**
    * Loading state of the picture.
    */
   const isPictureLoaded = ref(false)
@@ -37,6 +50,8 @@ export default function useThumbnail(src: string, thumbData: string): useThumbna
       .then(base64 => {
         data.value = base64
         isPictureLoaded.value = true
+
+        ImageCache.set(src, base64)
       })
   })
 
