@@ -53,6 +53,8 @@ defineEmits(['update:modelValue'])
     align-content: center;
     justify-content: center;
     self-align: center;
+    width: 22px;
+    height: 22px;
   }
 
   :deep(svg) {

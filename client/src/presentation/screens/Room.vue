@@ -178,7 +178,7 @@ onBeforeUnmount(() => {
     >
       <template #header>
         <ListItem
-          :avatar="{src: '/pics/hotel-3.jpg', placeholder: hotel.title, pictureThumb: hotel.pictureThumb}"
+          :avatar="{src: hotel.picture, placeholder: hotel.title, pictureThumb: hotel.pictureThumb}"
           :title="hotel.title"
           :subtitle="hotel.subtitle"
           :to="`/hotel/${hotel.id}`"
