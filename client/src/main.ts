@@ -6,14 +6,12 @@ import { loadCities } from '@/infra/store/cities'
 import { useTelegram } from '@/application/services'
 
 /**
- * @todo async lottie loading
+ * @todo async lottie-player loading
  * @todo preload all icons
  * @todo describe thumbnail generation and work
  * @todo describe next/main buttons simulation
- * @todo Close confirmation
+ * @todo close confirmation
  * @todo cancel payment toast
- * @todo test in all clients
- * @todo add "4 viewing right now" with 👀 animation
  */
 
 const { platform, ready } = useTelegram()

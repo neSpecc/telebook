@@ -50,6 +50,7 @@ Use following instructions
 - 🎁 [Backend tech guide](./server/README.md) - how to setup Backend
 - 🛍️ [Telegram Vue UI Kit](./client/src/presentation/components/README.md) - UI Kit guide
 - 💰 [How to setup Payments](./docs/Payments.md) - useful information about Payments integration
+- ⛅️ [Deployment guide](./docs/Deployment.md) - how to deploy
 - 😎 [Awesome List](./docs/Awesome.md) - list of resources that can be useful when building your own Telegram Mini App
 
 Feel free to [Open Issue](https://github.com/neSpecc/telebook/issues/new) with your question or suggestion

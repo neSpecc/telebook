@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { List, ListItem, Sections, Section, Amount, Placeholder, DataOverview, Avatar, Text, Rating, Lottie } from '@/presentation/components'
 import { useHotel } from '@/domain/services/useHotel'
-import { type ComputedRef, computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { type ComputedRef, computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { reviews } from '@/infra/store/reviews/mock/reviews'
 import { useTelegram, useThumbnail, useLottie } from '@/application/services'
 import { useRouter } from 'vue-router'
