@@ -107,3 +107,51 @@ List of libraries the project relies on
 - [Vue Router](https://router.vuejs.org) — helps handling of navigation
 - [vue3-lottie](https://vue3-lottie.vercel.app) — Lottie animations player
 
+## Directory structure
+
+The directory structure introduces the simple variation of [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
+We separate the application into layers, where each layer has its own responsibility. The layers are:
+
+- `/presentation` - responsible for the UI. Contains all the UI components, screens, and assets
+- `/application` - responsible for the presentation-related business logic. It contains the application services, which are actually Vue Composables.
+- `/domain` - responsible for the domain logic. It contains the entities and business rules (domain services)
+- `/infra` - responsible for transport, store, and utils
+
+```
+client
+├── application
+│   ├── services
+│   │   ├── ...
+│   │   └── vue composables used by presentation layer
+│   └── router.ts - vue-router instance
+├── domain
+│   ├── entities
+│   │   ├── ...
+│   │   └── domain entities (things from the real world)
+│   └── services
+│       ├── ...
+│       └── domain services (business rules)
+├── infra
+│   ├── store
+│   │   ├── ...
+│   │   └── storages used by domain layer
+│   ├── transport
+│   │   ├── ...
+│   │   └── transport layer (telebook api, etc)
+│   └── utils
+│       ├── ...
+│       └── utils used by any layer
+└── presentation
+    ├── assets
+    │   ├── ...
+    │   └── icons, fonts, lottie, etc
+    ├── components
+    │   ├── ...
+    │   └── Telegram Vue UI Kit
+    ├── screens
+    │   ├── ...
+    │   └── application screens (pages) used by router
+    └── styles
+        ├── ...
+        └── styles used by presentation layer
+```
