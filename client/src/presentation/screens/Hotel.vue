@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { List, ListItem, Sections, Section, Amount, Placeholder, DataOverview, Avatar, Text, Rating } from '@/presentation/components'
+import { List, ListItem, Sections, Section, Amount, Placeholder, DataOverview, Avatar, Text, Rating, Lottie } from '@/presentation/components'
 import { useHotel } from '@/domain/services/useHotel'
-import { type ComputedRef, computed, onBeforeUnmount, onMounted } from 'vue'
+import { type ComputedRef, computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { reviews } from '@/infra/store/reviews/mock/reviews'
-import { useTelegram, useThumbnail } from '@/application/services'
+import { useTelegram, useThumbnail, useLottie } from '@/application/services'
 import { useRouter } from 'vue-router'
 
 const props = defineProps({
@@ -16,21 +16,98 @@ const id = computed(() => {
   return props.id
 })
 
+/**
+ * Hotel got by router param
+ */
 const { hotel } = id.value !== undefined ? useHotel(id as ComputedRef<number>) : { hotel: undefined }
+
+/**
+ * Methods for Showing/hiding Back button
+ */
 const { showBackButton, hideBackButton } = useTelegram()
+
+/**
+ * Router instance
+ */
 const router = useRouter()
+
+/**
+ * Thumbnail url and loading state
+ */
 const { pictureUrl, isPictureLoaded } = hotel?.value?.pictureThumb !== undefined
   ? useThumbnail(hotel.value.picture, hotel.value.pictureThumb)
   : { pictureUrl: undefined, isPictureLoaded: false }
+
+/**
+ * Lottie animation used when no cities found
+ */
+const { animationData } = useLottie('eyes')
+
+const viewingRoomsIds = ref<number[]>([])
+const viewingRoomsIdsTimeout = ref<ReturnType<typeof setTimeout> | undefined>(undefined)
+const timeoutBeforeView = ref<ReturnType<typeof setTimeout> | undefined>(undefined)
+
+/**
+ * Easter egg: simulate action like "someone is viewing this right now"
+ */
+const easterEgg = {
+  /**
+   * After 10 seconds, show animation
+   */
+  start() {
+    timeoutBeforeView.value = setTimeout(() => {
+      if (hotel?.value === undefined) {
+        return
+      }
+
+      const randomRoom = hotel.value.rooms[Math.floor(Math.random() * hotel.value.rooms.length)]
+
+      viewingRoomsIds.value = [randomRoom.id]
+
+      if (viewingRoomsIdsTimeout.value !== undefined) {
+        clearTimeout(viewingRoomsIdsTimeout.value)
+
+        viewingRoomsIdsTimeout.value = undefined
+      }
+
+      viewingRoomsIdsTimeout.value = setTimeout(() => {
+        viewingRoomsIds.value = []
+      }, 4000)
+    }, 10000)
+  },
+
+  /**
+   * Clear memory
+   */
+  stop() {
+    viewingRoomsIds.value = []
+
+    if (timeoutBeforeView.value !== undefined) {
+      clearTimeout(timeoutBeforeView.value)
+
+      timeoutBeforeView.value = undefined
+    }
+
+    if (viewingRoomsIdsTimeout.value !== undefined) {
+      clearTimeout(viewingRoomsIdsTimeout.value)
+
+      viewingRoomsIdsTimeout.value = undefined
+    }
+  },
+}
 
 onMounted(() => {
   showBackButton(() => {
     void router.push('/')
   })
+
+  easterEgg.start()
 })
 
 onBeforeUnmount(() => {
   hideBackButton()
+
+  easterEgg.stop()
 })
 </script>
 <template>
@@ -82,11 +159,30 @@ onBeforeUnmount(() => {
             :key="hotel.id + '@' + room.id"
             :title="room.title"
             :subtitle="room.subtitle"
-            :avatar="{ src: room.picture, placeholder: room.title, pictureThumb: room.pictureThumb }"
             :to="`/room/${hotel.id}/${room.id}`"
             big-avatar
             standalone
           >
+            <template #picture>
+              <Avatar
+                :src="room.picture"
+                :picture-thumb="room.pictureThumb"
+                big
+              />
+              <Transition name="view">
+                <div
+                  v-if="viewingRoomsIds.includes(room.id)"
+                  class="viewed"
+                >
+                  <Lottie
+                    v-if="animationData"
+                    :animation-data="animationData"
+                    width="40px"
+                    height="40px"
+                  />
+                </div>
+              </Transition>
+            </template>
             <template #right>
               <div class="room-cell-right">
                 <Amount>
@@ -179,5 +275,25 @@ onBeforeUnmount(() => {
     height: 100%;
     backdrop-filter: blur(20px);
   }
+}
+
+.viewed {
+  position: absolute;
+  background-color: var(--color-overlay-floating);
+  width: var(--size-avatar-big);
+  height: var(--size-avatar-big);
+  display: flex;
+  align-items: center;
+  border-radius: var(--size-border-radius-medium);
+}
+
+.view-enter-from ,
+.view-leave-to {
+  opacity: 0;
+}
+
+.view-enter-active,
+.view-leave-active {
+  transition: opacity 250ms ease;
 }
 </style>

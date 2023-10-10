@@ -21,6 +21,9 @@ const searchQuery = ref('')
  */
 const selectedId = ref(0)
 
+/**
+ * Lottie animation used when no cities found
+ */
 const { animationData } = useLottie('eyes')
 
 /**
