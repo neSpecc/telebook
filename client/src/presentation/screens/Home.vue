@@ -1,14 +1,11 @@
 <!-- eslint-disable clean-timer/assign-timer-id -->
 <script setup lang="ts">
-import { Placeholder, List, ListItem, ListItemExpandable, Sections, Section, ListCard, DatePicker, DatePickerCompact, Amount, Rating, Text } from '@/presentation/components'
+import { Placeholder, List, ListItem, ListItemExpandable, Sections, Section, ListCard, DatePicker, DatePickerCompact, Amount, Rating, Text, Lottie } from '@/presentation/components'
 import { onMounted, ref, onBeforeUnmount, watchEffect, watch } from 'vue'
 import { useTripDetails } from '@/domain/services/useTripDetails'
-import { useTelegram, useScroll } from '@/application/services'
+import { useTelegram, useScroll, useLottie } from '@/application/services'
 import { hotels } from '@/infra/store/hotels/mock/hotels'
 import { shortNumber } from '@/infra/utils/number'
-import { Vue3Lottie } from 'vue3-lottie'
-import SimpAnimation from '@/presentation/assets/lottie/simp.json'
-
 import { type Hotel } from '@/domain/entities'
 
 const {
@@ -48,6 +45,7 @@ const result = ref<Hotel[]>([])
 
 const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight, vibrate } = useTelegram()
 const { scrollTo } = useScroll()
+const { animationData } = useLottie('simp')
 
 /**
  * Reference to the dates/location form wrapper
@@ -241,10 +239,9 @@ onBeforeUnmount(() => {
               aria-hidden="true"
               width="68"
             >
-            <Vue3Lottie
-              v-else
-              class="run"
-              :animation-data="SimpAnimation"
+            <Lottie
+              v-else-if="animationData !== null"
+              :animation-data="animationData"
               width="110px"
               height="110px"
             />
@@ -498,23 +495,6 @@ onBeforeUnmount(() => {
 
   :deep(.amount){
     text-align: center;
-  }
-}
-
-.run {
-  /* animation: run 3.5s ease-in-out forwards; */
-  /* right: 0; */
-  /* position: absolute; */
-  /* will-change: transform; */
-}
-
-@keyframes run {
-  0% {
-    transform: translateX(0)
-  }
-
-  100% {
-    transform: translateX(-350px)
   }
 }
 

@@ -23,6 +23,7 @@ Built with respect to:
 - [ListItem](#listitem)
 - [ListCard](#listcard)
 - [ListItemExpandable](#listitemexpandable)
+- [Lottie](#lottie)
 - [FixedFooter](#fixedfooter)
 - [PageWithHeader](#pagewithheader)
 - [Placeholder](#placeholder)
@@ -261,6 +262,21 @@ ListItemIcon is a component that displays an icon inside a list item.
 | --------- | ---- | ------------- | ----------- |
 | icon | string | - | Icon name |
 | type | 'square' \| 'circle' | - | Icon type |
+
+## Lottie
+
+Lottie component allows you to render an animation from a JSON file. You can find more information about Lottie [here](https://airbnb.design/lottie/).
+
+![Lottie](../../../../docs/assets/ui/Lottie.png)
+
+
+## Props
+
+| Name | Type | Default | Description |
+| --- | --- | --- | --- |
+| animationData | `object` | `undefined` | The animation data. |
+| width | `string` | `undefined` | The width of the animation. |
+| height | `string` | `undefined` | The height of the animation. |
 
 ## FixedFooter
 

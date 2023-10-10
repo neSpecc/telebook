@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { List, ListItem, Sections, Section, Input, Placeholder } from '@/presentation/components'
+import { List, ListItem, Sections, Section, Input, Placeholder, Lottie } from '@/presentation/components'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useCities } from '@/domain/services/useCities'
 import { useTripDetails } from '@/domain/services/useTripDetails'
-import useTelegram from '@/application/services/useTelegram'
+import { useTelegram, useLottie } from '@/application/services'
 import { useRouter } from 'vue-router'
-import EyesAnimation from '@/presentation/assets/lottie/eyes.json'
-import { Vue3Lottie } from 'vue3-lottie'
 
 /**
  * Cities list
@@ -22,6 +20,8 @@ const searchQuery = ref('')
  * Selected city id
  */
 const selectedId = ref(0)
+
+const { animationData } = useLottie('eyes')
 
 /**
  * Search result
@@ -119,10 +119,12 @@ onBeforeUnmount(() => {
         caption="Try searching for something else"
       >
         <template #picture>
-          <Vue3Lottie
-            :animation-data="EyesAnimation"
+          <Lottie
+            v-if="animationData"
+            :animation-data="animationData"
             width="50px"
             height="50px"
+            class="pic"
           />
         </template>
       </Placeholder>
@@ -153,10 +155,7 @@ onBeforeUnmount(() => {
   }
 
   :deep(.placeholder .pic) {
-    width: 40px;
-    height: 40px;
     margin-top: 20px;
-    font-size: 36px;
     padding-bottom: 6px;
     animation: jump-in 250ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }

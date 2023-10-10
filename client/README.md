@@ -19,7 +19,7 @@ Telebook — is a fictional hotel booking service integrated to Telegram. It use
 - 📦 Vue Telegram UI Kit
 - 📲 Declarative screens construction
 - ✈️ `useTelegram()` composable that simplifies usage of Telegram Web App SDK
-- ❤️‍🔥 Instant picture thumbnails and on-device cache
+- ❤️‍🔥 Instant picture previews and on-device cache
 - 💎 Clean but simple architecture
 - ✨ Hot Reloading
 - 💰 Payments support
@@ -39,6 +39,7 @@ It contains ready-to-use collection of components that could be used to create n
 - [ListItem](./src/presentation/components/README.md#listitem)
 - [ListCard](./src/presentation/components/README.md#listcard)
 - [ListItemExpandable](./src/presentation/components/README.md#listitemexpandable)
+- [Lottie](./src/presentation/components/README.md#lottie)
 - [FixedFooter](./src/presentation/components/README.md#fixedfooter)
 - [PageWithHeader](./src/presentation/components/README.md#pagewithheader)
 - [Placeholder](./src/presentation/components/README.md#placeholder)
