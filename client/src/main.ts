@@ -7,6 +7,10 @@ import { loadCities } from '@/infra/store/cities'
 import { useTelegram } from '@/application/services'
 
 /**
+ * @todo async lottie loading
+ * @todo preload all icons
+ * @todo describe thumbnail generation and work
+ * @todo describe next/main buttons simulation
  * @todo Close confirmation
  * @todo cancel payment toast
  * @todo test in all clients

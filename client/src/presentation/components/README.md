@@ -210,7 +210,7 @@ ListItem is a component that displays a list item.
 
 ## ListCard
 
-ListCard is a component that displays a card with a picture and content below it.
+ListCard is a component that displays a card with a picture and content below it. The card will be opened with smooth animation just from the list.
 
 ![ListCard](../../../../docs/assets/ui/ListCard.png)
 
