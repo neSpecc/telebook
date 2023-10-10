@@ -4,4 +4,5 @@ export default interface Room {
   subtitle: string;
   price: number;
   picture: string;
+  pictureThumb?: string;
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useHotel, useTripDetails, useInvoice } from '@/domain/services'
-import { useScroll, useTelegram } from '@/application/services'
+import { useTelegram } from '@/application/services'
 import { PageWithHeader, Placeholder, Icon, Section, Sections, List, ListItem, Amount, Avatar, FixedFooter } from '@/presentation/components'
 import { amenities } from '@/infra/store/hotels/mock/amenities'
 import { formatDate } from '@/infra/utils/date'
@@ -139,8 +139,6 @@ async function buttonClicked(): Promise<void> {
   })
 }
 
-
-
 /**
  * We show footer after some delay, so this variable contains the state of footer visibility
  */
@@ -180,7 +178,7 @@ onBeforeUnmount(() => {
     >
       <template #header>
         <ListItem
-          :avatar="{src: '/pics/hotel-3.jpg', placeholder: hotel.title}"
+          :avatar="{src: '/pics/hotel-3.jpg', placeholder: hotel.title, pictureThumb: hotel.pictureThumb}"
           :title="hotel.title"
           :subtitle="hotel.subtitle"
           :to="`/hotel/${hotel.id}`"
@@ -198,6 +196,7 @@ onBeforeUnmount(() => {
               <template #picture>
                 <Avatar
                   :src="room.picture"
+                  :picture-thumb="room.pictureThumb"
                   big
                 />
               </template>

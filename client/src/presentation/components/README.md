@@ -62,6 +62,7 @@ Avatar component is used to display a picture or a placeholder.
 | --------- | ---- | ------------- | ----------- |
 | `id` | `number` | `undefined` | Entity ID |
 | `src` | `string` | `undefined` | Picture src |
+| `pictureThumb` | `string` | `undefined` | Base64 of picture 10x10 used as thumbnail |
 | `placeholder` | `string` | `undefined` | Used when the image is not available |
 | `big` | `boolean` | `undefined` | Whether the avatar should be big |
 
@@ -187,7 +188,7 @@ ListItem is a component that displays a list item.
 
 | Name | Type | Default | Description |
 | ---- | ---- | ------- | ----------- |
-| avatar | object | - | Avatar object. See [Avatar](/docs/components/avatar) component for details |
+| avatar | object | - | Avatar object. See [Avatar](#avatar) component for details |
 | transactionIcon | string | - | Name of the icon that will be shown instead of avatar |
 | icon | string | - | Name of the icon that will be shown instead of avatar |
 | title | string | - | Title of the list item. Used along with subtitle |
@@ -219,6 +220,7 @@ ListCard is a component that displays a card with a picture and content below it
 | --------- | ---- | ------------- | ----------- |
 | title | string | - | Name of the card |
 | picture | string | - | Picture src |
+| `pictureThumb` | `string` | `undefined` | Base64 of picture 10x10 used as thumbnail |
 
 ### Slots
 

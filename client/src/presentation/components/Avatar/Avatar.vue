@@ -1,29 +1,26 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useThumbnail } from '@/application/services'
+import type EntityPicture from '@/domain/entities/EntityPicture'
 
-const props = defineProps<{
-  /**
-   * Entity ID
-   *
-   * @todo support string ids
-   */
-  id?: number;
-
-  /**
-   * Picture src
-   */
-  src?: string;
-
-  /**
-   * Used when the image is not available
-   */
-  placeholder?: string;
-
+/**
+ * Available props of the avatar component
+ */
+interface AvatarProps extends EntityPicture {
   /**
    * Whether the avatar should be big
    */
   big?: boolean;
-}>()
+}
+
+/**
+ * Props to be passed to the component
+ */
+const props = defineProps<AvatarProps>()
+
+const { pictureUrl, isPictureLoaded } = props.src !== undefined && props.pictureThumb !== undefined
+  ? useThumbnail(props.src, props.pictureThumb)
+  : { pictureUrl: undefined, isPictureLoaded: undefined }
 
 /**
  * Colors for placeholder background gradient
@@ -80,7 +77,7 @@ const backgroundColor = computed(() => {
     class="avatar"
     :class="{
       'avatar--with-placeholder': !src,
-      'avatar--big': big === true
+      'avatar--big': big === true,
     }"
     :style="{
       backgroundImage: backgroundColor
@@ -88,7 +85,7 @@ const backgroundColor = computed(() => {
   >
     <img
       v-if="src"
-      :src="src"
+      :src="pictureThumb ? pictureUrl : src"
       :alt="placeholder ?? ''"
     >
     <div
@@ -97,6 +94,10 @@ const backgroundColor = computed(() => {
     >
       {{ abbreviation }}
     </div>
+    <div
+      v-show="pictureThumb && !isPictureLoaded"
+      class="loader"
+    />
   </div>
 </template>
 
@@ -134,6 +135,14 @@ const backgroundColor = computed(() => {
     font-feature-settings: 'tnum' on, 'lnum' on;
     transform: translateX(0.6px);
     color: #fff;
+  }
+
+  .loader {
+    position: absolute;
+    width: var(--size);
+    height: var(--size);
+    border-radius: var(--radius);
+    backdrop-filter: blur(20px);
   }
 }
 </style>

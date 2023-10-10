@@ -1,16 +1,13 @@
 <script setup lang="ts">
+import type EntityPicture from '@/domain/entities/EntityPicture'
 import { Avatar, Icon, ListItemIcon } from '@/presentation/components'
 import { computed, useSlots } from 'vue'
 
 const props = defineProps<{
   /**
-   * Picture src
+   * List item picture data
    */
-  avatar?: {
-    id?: number;
-    src?: string;
-    placeholder?: string;
-  };
+  avatar?: EntityPicture;
 
   /**
    * Name of the icon that will be shown instead of avatar
@@ -144,9 +141,7 @@ const pictureStyle = computed(() => {
       <slot name="picture" />
       <Avatar
         v-if="avatar"
-        :id="avatar.id"
-        :src="avatar.src"
-        :placeholder="avatar.placeholder"
+        v-bind="avatar"
         :big="bigAvatar"
       />
       <ListItemIcon

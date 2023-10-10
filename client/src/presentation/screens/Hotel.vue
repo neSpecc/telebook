@@ -3,7 +3,7 @@ import { List, ListItem, Sections, Section, Amount, Placeholder, DataOverview, A
 import { useHotel } from '@/domain/services/useHotel'
 import { type ComputedRef, computed, onBeforeUnmount, onMounted } from 'vue'
 import { reviews } from '@/infra/store/reviews/mock/reviews'
-import { useTelegram } from '@/application/services'
+import { useTelegram, useThumbnail } from '@/application/services'
 import { useRouter } from 'vue-router'
 
 const props = defineProps({
@@ -19,6 +19,9 @@ const id = computed(() => {
 const { hotel } = id.value !== undefined ? useHotel(id as ComputedRef<number>) : { hotel: undefined }
 const { showBackButton, hideBackButton } = useTelegram()
 const router = useRouter()
+const { pictureUrl, isPictureLoaded } = hotel?.value?.pictureThumb !== undefined
+  ? useThumbnail(hotel.value.picture, hotel.value.pictureThumb)
+  : { pictureUrl: undefined, isPictureLoaded: false }
 
 onMounted(() => {
   showBackButton(() => {
@@ -34,8 +37,11 @@ onBeforeUnmount(() => {
   <div v-if="hotel">
     <div
       class="cover"
+      :class="{
+        'cover--loading': !isPictureLoaded
+      }"
       :style="{
-        backgroundImage: `url('${hotel.picture}')`
+        backgroundImage: `url('${pictureUrl}')`
       }"
     />
     <Sections>
@@ -46,6 +52,7 @@ onBeforeUnmount(() => {
         <template #picture>
           <Avatar
             :src="hotel.picture"
+            :picture-thumb="hotel.pictureThumb"
             big
           />
         </template>
@@ -75,7 +82,7 @@ onBeforeUnmount(() => {
             :key="hotel.id + '@' + room.id"
             :title="room.title"
             :subtitle="room.subtitle"
-            :avatar="{ src: room.picture, placeholder: room.title }"
+            :avatar="{ src: room.picture, placeholder: room.title, pictureThumb: room.pictureThumb }"
             :to="`/room/${hotel.id}/${room.id}`"
             big-avatar
             standalone
@@ -157,9 +164,20 @@ onBeforeUnmount(() => {
 }
 
 .cover {
+  position: relative;
   height: 200px;
   background-color: var(--color-bg);
   background-size: cover;
   background-position: 50% 50%;
+
+  &--loading::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    backdrop-filter: blur(20px);
+  }
 }
 </style>

@@ -49,13 +49,36 @@ const result = ref<Hotel[]>([])
 const { showMainButton, hideMainButton, setButtonLoader, expand, getViewportHeight, vibrate } = useTelegram()
 const { scrollTo } = useScroll()
 
+/**
+ * Reference to the dates/location form wrapper
+ */
 const searchSettings = ref<InstanceType<typeof Section> | null>(null)
+
+/**
+ * Height of the dates/location form wrapper. Used in CSS to calculate landing height
+ */
+const searchSettingsHeight = ref(130)
+
+/**
+ * Reference to the date pickers
+ */
 const startDatePicker = ref<InstanceType<typeof DatePicker> | null>(null)
 const endDatePicker = ref<InstanceType<typeof DatePicker> | null>(null)
+
+/**
+ * Reference to the landing
+ */
 const landing = ref<InstanceType<typeof Placeholder> | null>(null)
+
+/**
+ * Height of the date pickers. Changed after opening of DatePicker, used in CSS to calculate landing height
+ */
 const startDatePickerHeight = ref(0)
 const endDatePickerHeight = ref(0)
-const searchSettingsHeight = ref(130)
+
+/**
+ * Viewport height. Used in CSS to calculate landing height
+ */
 const viewportHeight = ref(window.innerHeight)
 
 /**
@@ -298,12 +321,12 @@ onBeforeUnmount(() => {
               v-if="index === 3 || index === 5"
               :title="index === 3 ? 'Users choice' : 'Hotel of the year'"
               :picture="hotel.picture"
-              :picture-thumb="hotel.pictureThumb"
+              :picture-thumb="(hotel.pictureThumb as string)"
             >
               <template #visible>
                 <ListItem
                   :id="1"
-                  :avatar="{src: hotel.picture, placeholder: hotel.title}"
+                  :avatar="{src: hotel.picture, placeholder: hotel.title, pictureThumb: hotel.pictureThumb}"
                   :title="hotel.title"
                   :subtitle="hotel.subtitle"
                   nowrap
@@ -342,7 +365,7 @@ onBeforeUnmount(() => {
             <ListItem
               v-else
               :id="hotel.id"
-              :avatar="{src: hotel.picture, placeholder: hotel.title}"
+              :avatar="{src: hotel.picture, placeholder: hotel.title, pictureThumb: hotel.pictureThumb}"
               :title="hotel.title"
               :subtitle="hotel.subtitle"
               :to="`/hotel/${hotel.id}`"
