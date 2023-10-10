@@ -7,6 +7,7 @@ Built with respect to:
 - [Telegram community UI Library](https://www.figma.com/@firststagelabs) — basic design system for iOS and Android
 - Apple Design Resources and guidelines
 - Material Design System
+- Telegram WebK design
 
 ## Table of content
 

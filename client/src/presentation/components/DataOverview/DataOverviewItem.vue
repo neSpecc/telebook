@@ -29,6 +29,7 @@ defineProps<{
   display: grid;
   grid-gap: 4px;
   padding-inline: 10px;
+  min-width: 95px;
 
   color: var(--color-hint);
 

@@ -9,9 +9,9 @@ class ImageCache {
   private readonly cache = new Map<string, string>()
 
   /**
-   * Max size of the cache
+   * @param maxSize — Max size of the cache. If cache is full, first element will be removed
    */
-  private readonly maxSize: number = 15
+  constructor(private readonly maxSize = 100) {}
 
   /**
    * Get image data from cache
@@ -27,14 +27,27 @@ class ImageCache {
    * @param data image data
    */
   public set(url: string, data: string): void {
+    /**
+     * Check if image already exists in cache
+     */
+    if (this.cache.has(url)) {
+      return
+    }
+
+    /**
+     * If cache is full, remove first element
+     */
     if (this.cache.size >= this.maxSize) {
       const firstKey = this.cache.keys().next().value
 
       this.cache.delete(firstKey)
     }
 
+    /**
+     * Add new image data to cache
+     */
     this.cache.set(url, data)
   }
 }
 
-export default new ImageCache()
+export default new ImageCache(15)

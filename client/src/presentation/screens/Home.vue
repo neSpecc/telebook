@@ -131,9 +131,9 @@ function search(): void {
        */
       const hotelsShuffled = hotels.sort(() => Math.random() - 0.5)
 
-      hotelsShuffled.forEach((hotel, i) => {
-        result.value.push(hotel)
-      })
+      // hotelsShuffled.forEach((hotel, i) => {
+      result.value = hotelsShuffled
+      // })
     }, 200) // wait until Telegram expand is finished to prevent Cards going to minimized state
   }, 3000)
 }

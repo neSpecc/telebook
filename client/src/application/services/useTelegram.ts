@@ -13,6 +13,7 @@ interface useTelegramComposableState {
   expand: () => void;
   getViewportHeight: () => number;
   vibrate: (style?: 'light' | 'medium' | 'heavy' | 'rigid' | 'soft' | 'error' | 'warning' | 'success') => void;
+  ready: () => void;
   colorScheme: 'light' | 'dark' | undefined;
   platform: 'android' | 'android_x' | 'ios' | 'macos' | 'tdesktop' | 'web' | 'weba' | 'webk' | 'unigram' | 'unknown';
 }
@@ -223,6 +224,13 @@ export default function useTelegram(): useTelegramComposableState {
   }
 
   /**
+   * Tells Telegram
+   */
+  function ready(): void {
+    WebApp.ready()
+  }
+
+  /**
    * The current color scheme of the device. Can be light or dark.
    * If app is launched in a browser, the value will be undefined.
    */
@@ -244,8 +252,9 @@ export default function useTelegram(): useTelegramComposableState {
     getViewportHeight,
     showBackButton,
     hideBackButton,
+    vibrate,
+    ready,
     colorScheme,
     platform,
-    vibrate,
   }
 }

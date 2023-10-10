@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import WebApp from '@twa-dev/sdk'
 import Router from '@/application/router'
 import './presentation/styles/index.css'
 import { loadCities } from '@/infra/store/cities'
@@ -17,7 +16,7 @@ import { useTelegram } from '@/application/services'
  * @todo add "4 viewing right now" with 👀 animation
  */
 
-const { platform } = useTelegram()
+const { platform, ready } = useTelegram()
 
 if (platform !== 'unknown') {
   switch (platform) {
@@ -56,6 +55,6 @@ void loadCities()
     app.mount('#app')
 
     requestAnimationFrame(() => {
-      WebApp.ready()
+      ready()
     })
   })
