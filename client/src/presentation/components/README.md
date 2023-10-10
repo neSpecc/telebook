@@ -8,6 +8,7 @@ Built with respect to:
 - Apple Design Resources and guidelines
 - Material Design System
 - Telegram WebK design
+- Telegram Desktop design
 
 ## Table of content
 
