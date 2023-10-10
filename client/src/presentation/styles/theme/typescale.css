@@ -64,6 +64,15 @@
     --line-height-body: 20px;
   }
 
+  .is-exact-tdesktop {
+    @font-face {
+      font-family: 'Open Sans';
+      src: url('../../assets/fonts/OpenSans.ttf') format('truetype');
+    }
+
+    --family: 'Open Sans',"Lucida Grande","Lucida Sans Unicode",Arial,Helvetica,Verdana,sans-serif;
+  }
+
   --title-1 {
     font-size: 28px;
     line-height: 34px;
