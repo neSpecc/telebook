@@ -16,6 +16,8 @@ interface useTelegramComposableState {
   ready: () => void;
   colorScheme: 'light' | 'dark' | undefined;
   platform: 'android' | 'android_x' | 'ios' | 'macos' | 'tdesktop' | 'web' | 'weba' | 'webk' | 'unigram' | 'unknown';
+  headerColor: string;
+  setHeaderColor: (color: 'bg_color' | 'secondary_bg_color' | `#${string}`) => void;
 }
 
 /**
@@ -231,6 +233,13 @@ export default function useTelegram(): useTelegramComposableState {
   }
 
   /**
+   * Sets the header color of the app wrapper
+   */
+  function setHeaderColor(color: 'bg_color' | 'secondary_bg_color' | `#${string}`): void {
+    WebApp.setHeaderColor(color)
+  }
+
+  /**
    * The current color scheme of the device. Can be light or dark.
    * If app is launched in a browser, the value will be undefined.
    */
@@ -240,6 +249,11 @@ export default function useTelegram(): useTelegramComposableState {
    * The current platform of the device.
    */
   const platform = WebApp.platform
+
+  /**
+   * The current header color of the app wrapper
+   */
+  const headerColor = WebApp.headerColor
 
   return {
     showMainButton,
@@ -256,5 +270,7 @@ export default function useTelegram(): useTelegramComposableState {
     ready,
     colorScheme,
     platform,
+    headerColor,
+    setHeaderColor,
   }
 }
