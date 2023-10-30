@@ -495,6 +495,10 @@ onBeforeUnmount(() => {
   }
 }
 
+.is-exact-macos.dark .day--disabled {
+  opacity: 0.64;
+}
+
 @keyframes circle-enter {
   from {
     transform: scale(1.1);
