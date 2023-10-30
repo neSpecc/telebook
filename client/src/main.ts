@@ -21,6 +21,7 @@ if (platform !== 'unknown') {
     case 'android':
     case 'android_x':
     case 'web':
+    case 'weba':
     case 'tdesktop':
       document.body.classList.add('is-material')
       break
