@@ -76,7 +76,7 @@ defineProps<{
     box-shadow: 0 -1px 0 0 var(--color-island-shadow);
     color: var(--color-link);
 
-    @apply --subheadline-1;
+    @apply --body;
     font-weight: 500;
     letter-spacing: 0;
     text-transform: unset;
