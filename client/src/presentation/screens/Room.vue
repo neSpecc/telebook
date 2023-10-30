@@ -284,7 +284,7 @@ onBeforeUnmount(() => {
   margin: calc(var(--size-cell-h-margin) / 2);
   padding: 4px;
   background-color: var(--color-overlay-floating);
-  color: var(--color-text-button);
+  color: #fff;
   backdrop-filter: blur(14px);
   border-radius: var(--size-border-radius-big);
   animation: fade-in 200ms ease;
