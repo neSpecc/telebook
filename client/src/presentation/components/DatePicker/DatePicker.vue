@@ -1,6 +1,27 @@
 <script setup lang="ts">
-import { ref, computed, nextTick, onBeforeUnmount } from 'vue'
+import { ref, computed, nextTick, onBeforeUnmount, watch } from 'vue'
 import { Icon } from '@/presentation/components'
+
+const props = withDefaults(defineProps<{
+  /**
+   * Minimum date that can be selected
+   */
+  minDate?: Date;
+
+  /**
+   * Maximum date that can be selected
+   */
+  maxDate?: Date;
+
+  /**
+   * Currently selected date
+   */
+  value?: Date;
+}>(), {
+  maxDate: undefined,
+  minDate: undefined,
+  value: () => new Date(),
+})
 
 /**
  * Now date
@@ -16,7 +37,16 @@ const month = ref(currentDate.getMonth())
 /**
  * Current selected date
  */
-const selectedDate = ref(currentDate)
+const selectedDate = ref(props.value)
+
+watch(() => props.value, (value) => {
+  selectedDate.value = value
+
+  if (value !== undefined) {
+    year.value = value.getFullYear()
+    month.value = value.getMonth()
+  }
+})
 
 /**
  * Name of the current month
@@ -100,14 +130,32 @@ function isDisabledDate(day: number | string): boolean {
     return false
   }
 
-  const date = new Date(year.value, month.value, day)
+  if (props.minDate !== undefined) {
+    if (year.value < props.minDate.getFullYear()) {
+      return true
+    }
 
-  if (props.minDate !== undefined && date < props.minDate) {
-    return true
+    if (year.value === props.minDate.getFullYear() && month.value < props.minDate.getMonth()) {
+      return true
+    }
+
+    if (year.value === props.minDate.getFullYear() && month.value === props.minDate.getMonth() && day < props.minDate.getDate()) {
+      return true
+    }
   }
 
-  if (props.maxDate !== undefined && date > props.maxDate) {
-    return true
+  if (props.maxDate !== undefined) {
+    if (year.value > props.maxDate.getFullYear()) {
+      return true
+    }
+
+    if (year.value === props.maxDate.getFullYear() && month.value > props.maxDate.getMonth()) {
+      return true
+    }
+
+    if (year.value === props.maxDate.getFullYear() && month.value === props.maxDate.getMonth() && day > props.maxDate.getDate()) {
+      return true
+    }
   }
 
   return false
@@ -212,18 +260,6 @@ const emit = defineEmits<{
   datePick: [date: Date];
 }>()
 
-const props = defineProps<{
-  /**
-   * Minimum date that can be selected
-   */
-  minDate?: Date;
-
-  /**
-   * Maximum date that can be selected
-   */
-  maxDate?: Date;
-}>()
-
 /**
  * Day select handler
  *
@@ -293,9 +329,9 @@ onBeforeUnmount(() => {
         :key="`${index}:${month}:${year}`"
         class="day"
         :class="{
+          'day--disabled': isDisabledDate(day),
           'day--current': isCurrentDay(day),
           'day--selected': isSelectedDay(day),
-          'day--disabled': isDisabledDate(day),
         }"
         @click="onDateSelected(day)"
       >

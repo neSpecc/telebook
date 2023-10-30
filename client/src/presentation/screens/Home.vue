@@ -291,6 +291,7 @@ onBeforeUnmount(() => {
               ref="endDatePicker"
               :min-date="trip.startDate || new Date()"
               :max-date="new Date(trip.startDate.getTime() + 60 * 24 * 60 * 60 * 1000)"
+              :value="trip.endDate"
               @date-pick="(date) => setEndDate(date)"
             />
           </ListItemExpandable>

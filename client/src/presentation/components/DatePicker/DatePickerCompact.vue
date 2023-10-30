@@ -36,5 +36,9 @@ const dateVisible = computed(() => {
   border-radius: var(--size-border-radius-small);
   background-color: var(--color-bg-tertiary);
   user-select: none;
+
+  @media (hover: hover) {
+    cursor: pointer;
+  }
 }
 </style>

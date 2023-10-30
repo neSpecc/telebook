@@ -1,6 +1,6 @@
-import postcssNested from 'postcss-nested';
-import postcssPresetEnv from 'postcss-preset-env';
-import postcssApply from 'postcss-apply';
+import postcssNested from 'postcss-nested'
+import postcssPresetEnv from 'postcss-preset-env'
+import postcssApply from 'postcss-apply'
 
 export default function () {
   return {
@@ -16,5 +16,5 @@ export default function () {
       }),
       postcssApply(),
     ],
-  };
+  }
 }

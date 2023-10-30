@@ -79,6 +79,7 @@ body {
 .app {
   color: var(--color-text);
   position: relative;
+  user-select: none;
 }
 
 .app-header {

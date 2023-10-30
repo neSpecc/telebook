@@ -87,6 +87,7 @@ defineProps<{
     @apply --title-2-semibold;
 
     margin-top: var(--spacing-10);
+    user-select: text;
   }
 
   &--compact .title {
