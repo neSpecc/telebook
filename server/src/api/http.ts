@@ -3,7 +3,12 @@ import Fastify from 'fastify'
 import cors from '@fastify/cors';
 import TelegramBot from 'node-telegram-bot-api'
 import Router from './router/index.js'
+import fastifyStatic from '@fastify/static';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * HTTP server implementation using Fastify.
@@ -32,6 +37,10 @@ export default class HttpApi {
       config: this.config,
       bot: this.bot,
     })
+
+    this.server.register(fastifyStatic, {
+      root: path.join(__dirname, '../../public'),
+    });
 
     this.server.setErrorHandler((error, request, reply) => {
       console.error(error)

@@ -1,6 +1,6 @@
 {
   "name": "telebook-bot",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "repository": "https://github.com/neSpecc/telebook",
   "author": "Specc",
@@ -9,6 +9,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "postbuild": "copyfiles -u 1 public/**/* dist/public",
     "start": "node ./dist/index.js",
     "start:dev": "yarn build && node dist/src/index.js",
     "dev": "nodemon --watch './src/**/*.ts' --ext ts --exec 'yarn start:dev'",
@@ -20,6 +21,8 @@
   },
   "dependencies": {
     "@fastify/cors": "^8.4.0",
+    "@fastify/static": "^7.0.4",
+    "copyfiles": "^2.4.1",
     "dotenv": "^16.3.1",
     "fastify": "^4.23.2",
     "node-telegram-bot-api": "^0.63.0",

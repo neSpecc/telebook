@@ -29,6 +29,7 @@ Use this project as an example or template for the creation of your app:
 5. 💎 Clean but simple architecture — easy to scale and maintain
 6. 📦 Production-ready deployment setup
 7. 💵 Payments support
+8. 📋 Privacy Policy template
 
 ## 👋 About the example
 
