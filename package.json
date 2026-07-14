@@ -1,0 +1,15 @@
+{
+  "name": "telebook",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "build:ui": "yarn workspace @telebook/ui build"
+  },
+  "resolutions": {
+    "typescript": "5.4.5"
+  }
+}
